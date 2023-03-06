@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/imxrt/imxrt_ehci.h
+ * arch/arm64/src/a64/a64_ehci.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_IMXRT_IMXRT_EHCI_H
-#define __ARCH_ARM_SRC_IMXRT_IMXRT_EHCI_H
+#ifndef __ARCH_ARM_SRC_A64_A64_EHCI_H
+#define __ARCH_ARM_SRC_A64_A64_EHCI_H
 
 /****************************************************************************
  * Included Files
@@ -56,7 +56,7 @@ extern "C"
  ****************************************************************************/
 
 /****************************************************************************
- * Name: imxrt_usbhost_vbusdrive
+ * Name: a64_usbhost_vbusdrive
  *
  * Description:
  *   Enable/disable driving of VBUS 5V output.  This function must be
@@ -65,7 +65,7 @@ extern "C"
  *
  * Input Parameters:
  *   rhport - Selects root hub port to be powered host interface. Since the
- *   IMXRT has only a downstream port, zero is the only possible value for
+ *   A64 has only a downstream port, zero is the only possible value for
  *           this parameter.
  *   enable - true: enable VBUS power; false: disable VBUS power
  *
@@ -74,10 +74,10 @@ extern "C"
  *
  ****************************************************************************/
 
-extern void imxrt_usbhost_vbusdrive(int rhport, bool enable);
+extern void a64_usbhost_vbusdrive(int rhport, bool enable);
 
 /****************************************************************************
- * Name: imxrt_setup_overcurrent
+ * Name: a64_setup_overcurrent
  *
  * Description:
  *   Setup to receive an interrupt-level callback if an over-current
@@ -93,10 +93,10 @@ extern void imxrt_usbhost_vbusdrive(int rhport, bool enable);
  *
  ****************************************************************************/
 
-extern int imxrt_setup_overcurrent(xcpt_t handler, void *arg);
+extern int a64_setup_overcurrent(xcpt_t handler, void *arg);
 
 /****************************************************************************
- * Name: imxrt_ehci_initialize
+ * Name: a64_ehci_initialize
  *
  * Description:
  *   Initialize USB EHCI host controller hardware.
@@ -120,9 +120,9 @@ extern int imxrt_setup_overcurrent(xcpt_t handler, void *arg);
  *
  ****************************************************************************/
 
-#if defined(CONFIG_IMXRT_USBOTG) && defined(CONFIG_USBHOST)
+#if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 struct usbhost_connection_s;
-struct usbhost_connection_s *imxrt_ehci_initialize(int controller);
+struct usbhost_connection_s *a64_ehci_initialize(int controller);
 #endif
 
 #undef EXTERN
@@ -131,4 +131,4 @@ struct usbhost_connection_s *imxrt_ehci_initialize(int controller);
 #endif
 
 #endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_IMXRT_IMXRT_EHCI_H */
+#endif /* __ARCH_ARM_SRC_A64_A64_EHCI_H */
