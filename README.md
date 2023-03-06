@@ -1,2 +1,3 @@
-# pinephone-nuttx-usb
-PinePhone USB Driver for Apache NuttX RTOS
+# PinePhone USB Driver for Apache NuttX RTOS
+
+TODO
