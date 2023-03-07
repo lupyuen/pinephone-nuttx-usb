@@ -41,10 +41,10 @@
 
 #include <a64_ehci.h>
 
-#include "hardware/a64_pinmux.h"
-#include "hardware/a64_usbotg.h"
-#include "a64_periphclks.h"
-#include "a641020-evk.h"
+// TODO #include "hardware/a64_pinmux.h"
+// TODO #include "hardware/a64_usbotg.h"
+// TODO #include "a64_periphclks.h"
+// TODO #include "a641020-evk.h"
 
 #include <arch/board/board.h>  /* Must always be included last */
 

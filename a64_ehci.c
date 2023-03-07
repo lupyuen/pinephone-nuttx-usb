@@ -44,10 +44,10 @@
 #include <nuttx/usb/usbhost_devaddr.h>
 #include <nuttx/usb/usbhost_trace.h>
 
-#include "arm_internal.h"
+#include "arm64_internal.h"
 #include "chip.h"
-#include "hardware/a64_usbotg.h"
-#include "a64_periphclks.h"
+// TODO #include "hardware/a64_usbotg.h"
+// TODO #include "a64_periphclks.h"
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 
