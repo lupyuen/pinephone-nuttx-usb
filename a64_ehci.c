@@ -51,6 +51,8 @@
 
 #define CONFIG_A64_USBOTG // TODO
 #define CONFIG_USBHOST // TODO
+#define CONFIG_DEBUG_USB_INFO // TODO
+#define CONFIG_A64_EHCI_REGDEBUG // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO
 
