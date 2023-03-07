@@ -54,6 +54,7 @@
 #define CONFIG_DEBUG_USB_INFO // TODO
 #define CONFIG_A64_EHCI_REGDEBUG // TODO
 #define CONFIG_USBHOST_INT_DISABLE // TODO
+#define ARMV7M_DCACHE_LINESIZE 32 // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO
 #define A64_EHCI_NRHPORT                 1     /* There is only a single root hub port */
@@ -487,9 +488,9 @@ static struct a64_qtd_s *a64_qtd_setupphase(
 static struct a64_qtd_s *a64_qtd_dataphase(struct a64_epinfo_s *epinfo,
          void *buffer, int buflen, uint32_t tokenbits);
 static struct a64_qtd_s *a64_qtd_statusphase(uint32_t tokenbits);
-static ssize_t a64a64_virtramaddr_async_setup(
-         struct a64_rhport_s *rhport, struct a64_epinfo_s *epinfo,
-         const struct usb_ctrlreq_s *req, uint8_t *buffer, size_t buflen);
+// static ssize_t a64a64_virtramaddr_async_setup(
+//          struct a64_rhport_s *rhport, struct a64_epinfo_s *epinfo,
+//          const struct usb_ctrlreq_s *req, uint8_t *buffer, size_t buflen);
 #ifndef CONFIG_USBHOST_INT_DISABLE
 static int a64_intr_setup(struct a64_rhport_s *rhport,
          struct a64_epinfo_s *epinfo, uint8_t *buffer, size_t buflen);
