@@ -49,11 +49,9 @@
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 
-#define CONFIG_A64_USBOTG // TODO: Rename this
-#define CONFIG_A64_EHCI_REGDEBUG // TODO
 #define CONFIG_USBHOST_INT_DISABLE // TODO
-#define CONFIG_USBHOST_ASYNCH //
 #define CONFIG_DEBUG_USB_INFO // TODO
+#define CONFIG_A64_EHCI_REGDEBUG // TODO
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO

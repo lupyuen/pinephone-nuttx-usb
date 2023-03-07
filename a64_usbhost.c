@@ -48,9 +48,6 @@
 
 #include <arch/board/board.h>  /* Must always be included last */
 
-#define CONFIG_A64_USBOTG // TODO
-#define CONFIG_USBHOST_HUB // TODO
-
 #if defined(CONFIG_A64_USBOTG) || defined(CONFIG_USBHOST)
 
 /****************************************************************************
