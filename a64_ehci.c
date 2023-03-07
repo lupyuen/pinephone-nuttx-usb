@@ -51,6 +51,8 @@
 
 #define CONFIG_A64_USBOTG // TODO
 #define CONFIG_USBHOST // TODO
+#undef uinfo // TODO
+#define uinfo _info // TODO
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 
@@ -119,6 +121,10 @@
  * However, for the case of the A64 EHCI, we know apriori that locations
  * of these register blocks.
  */
+
+// USB_HCI1
+#define A64_USBOTG_HCCR_BASE 0x01c1b000 // TODO
+#define A64_USBOTG_HCOR_BASE (A64_USBOTG_HCCR_BASE + 0x10) // TODO
 
 /* Host Controller Capability Registers */
 
