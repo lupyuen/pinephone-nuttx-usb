@@ -1805,7 +1805,8 @@ static struct a64_qh_s *a64_qh_create(struct a64_rhport_s *rhport,
    * but would not work for devices connected to downstream hubs.
    */
 
-#warning Missing logic
+// TODO
+// #warning Missing logic
   hubaddr = rhport->ep0.devaddr;
   hubport = rhpndx + 1;
 #else
