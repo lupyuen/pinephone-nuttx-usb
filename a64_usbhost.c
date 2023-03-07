@@ -1,5 +1,5 @@
 /****************************************************************************
- * boards/arm/imxrt/imxrt1020-evk/src/imxrt_usbhost.c
+ * boards/arm64/a64/a641020-evk/src/a64_usbhost.c
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -39,16 +39,16 @@
 #include <nuttx/usb/usbdev_trace.h>
 #include <nuttx/usb/ehci.h>
 
-#include <imxrt_ehci.h>
+#include <a64_ehci.h>
 
-#include "hardware/imxrt_pinmux.h"
-#include "hardware/imxrt_usbotg.h"
-#include "imxrt_periphclks.h"
-#include "imxrt1020-evk.h"
+#include "hardware/a64_pinmux.h"
+#include "hardware/a64_usbotg.h"
+#include "a64_periphclks.h"
+#include "a641020-evk.h"
 
 #include <arch/board/board.h>  /* Must always be included last */
 
-#if defined(CONFIG_IMXRT_USBOTG) || defined(CONFIG_USBHOST)
+#if defined(CONFIG_A64_USBOTG) || defined(CONFIG_USBHOST)
 
 /****************************************************************************
  * Pre-processor Definitions
@@ -119,7 +119,7 @@ static int ehci_waiter(int argc, char *argv[])
  ****************************************************************************/
 
 /****************************************************************************
- * Name: imxrt_usbhost_initialize
+ * Name: a64_usbhost_initialize
  *
  * Description:
  *   Called at application startup time to initialize the USB host
@@ -129,23 +129,23 @@ static int ehci_waiter(int argc, char *argv[])
  *
  ****************************************************************************/
 
-int imxrt_usbhost_initialize(void)
+int a64_usbhost_initialize(void)
 {
   int ret;
 
-  imxrt_clockall_usboh3();
+  a64_clockall_usboh3();
 
   /* Make sure we don't accidentally switch on USB bus power */
 
-  *((uint32_t *)IMXRT_USBNC_USB_OTG1_CTRL) = USBNC_PWR_POL;
+  *((uint32_t *)A64_USBNC_USB_OTG1_CTRL) = USBNC_PWR_POL;
   *((uint32_t *)0x400d9030)                = (1 << 21);
   *((uint32_t *)0x400d9000)                = 0;
 
   /* Setup pins, with power initially off */
 
-  imxrt_config_gpio(GPIO_USBOTG_PWR);
-  imxrt_config_gpio(GPIO_USBOTG_OC);
-  imxrt_config_gpio(GPIO_USBOTG_ID);
+  a64_config_gpio(GPIO_USBOTG_PWR);
+  a64_config_gpio(GPIO_USBOTG_OC);
+  a64_config_gpio(GPIO_USBOTG_ID);
 
   /* First, register all of the class drivers needed to support the drivers
    * that we care about
@@ -194,11 +194,11 @@ int imxrt_usbhost_initialize(void)
 
   /* Then get an instance of the USB EHCI interface. */
 
-  g_ehciconn = imxrt_ehci_initialize(0);
+  g_ehciconn = a64_ehci_initialize(0);
 
   if (!g_ehciconn)
     {
-      uerr("ERROR: imxrt_ehci_initialize failed\n");
+      uerr("ERROR: a64_ehci_initialize failed\n");
       return -ENODEV;
     }
 
@@ -217,7 +217,7 @@ int imxrt_usbhost_initialize(void)
 }
 
 /****************************************************************************
- * Name: imxrt_usbhost_vbusdrive
+ * Name: a64_usbhost_vbusdrive
  *
  * Description:
  *   Enable/disable driving of VBUS 5V output.  This function must be
@@ -226,7 +226,7 @@ int imxrt_usbhost_initialize(void)
  *
  * Input Parameters:
  *   rhport - Selects root hub port to be powered host interface.
- *            Since the IMXRT has only a downstream port, zero is
+ *            Since the A64 has only a downstream port, zero is
  *            the only possible value for this parameter.
  *   enable - true: enable VBUS power; false: disable VBUS power
  *
@@ -235,15 +235,15 @@ int imxrt_usbhost_initialize(void)
  *
  ****************************************************************************/
 
-#define HCOR ((volatile struct ehci_hcor_s *)IMXRT_USBOTG_HCOR_BASE)
+#define HCOR ((volatile struct ehci_hcor_s *)A64_USBOTG_HCOR_BASE)
 
-void imxrt_usbhost_vbusdrive(int rhport, bool enable)
+void a64_usbhost_vbusdrive(int rhport, bool enable)
 {
   uint32_t regval;
 
   uinfo("RHPort%d: enable=%d\n", rhport + 1, enable);
 
-  /* The IMXRT has only a single root hub port */
+  /* The A64 has only a single root hub port */
 
   if (rhport == 0)
     {
@@ -261,7 +261,7 @@ void imxrt_usbhost_vbusdrive(int rhport, bool enable)
 }
 
 /****************************************************************************
- * Name: imxrt_setup_overcurrent
+ * Name: a64_setup_overcurrent
  *
  * Description:
  *   Setup to receive an interrupt-level callback if an overcurrent condition
@@ -278,7 +278,7 @@ void imxrt_usbhost_vbusdrive(int rhport, bool enable)
  ****************************************************************************/
 
 #if 0 /* Not ready yet */
-int imxrt_setup_overcurrent(xcpt_t handler, void *arg)
+int a64_setup_overcurrent(xcpt_t handler, void *arg)
 {
   irqstate_t flags;
 
@@ -297,4 +297,4 @@ int imxrt_setup_overcurrent(xcpt_t handler, void *arg)
 }
 #endif /* 0 */
 
-#endif /* CONFIG_IMXRT_USBOTG || CONFIG_USBHOST */
+#endif /* CONFIG_A64_USBOTG || CONFIG_USBHOST */
