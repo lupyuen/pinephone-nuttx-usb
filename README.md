@@ -40,6 +40,8 @@ Select these options in `menuconfig`...
 
 -   Enable "System Type > Allwinner A64 Peripheral Selection > USB EHCI"
 
+-   Enable "RTOS Features > Work queue support > Low priority (kernel) worker thread"
+
 -   Enable "Device Drivers > USB Host Driver Support"
 
 -   Enable "Device Drivers > USB Host Driver Support > USB Hub Support"

@@ -120,9 +120,6 @@ extern int a64_setup_overcurrent(xcpt_t handler, void *arg);
  *
  ****************************************************************************/
 
-#define CONFIG_A64_USBOTG // TODO
-#define CONFIG_USBHOST // TODO
-
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 struct usbhost_connection_s;
 struct usbhost_connection_s *a64_ehci_initialize(int controller);
