@@ -49,7 +49,7 @@
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 
-#define CONFIG_A64_USBOTG // TODO
+#define CONFIG_A64_USBOTG // TODO: Rename this
 #define CONFIG_A64_EHCI_REGDEBUG // TODO
 #define CONFIG_USBHOST_INT_DISABLE // TODO
 #define CONFIG_USBHOST_ASYNCH //
