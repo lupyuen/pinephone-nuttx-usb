@@ -18,4 +18,12 @@ ln -s pinephone-nuttx-usb/a64_ehci.h .
 ln -s pinephone-nuttx-usb/a64_usbhost.c .
 ```
 
+Add the USB Driver to the Makefile...
+
+https://github.com/lupyuen2/wip-pinephone-nuttx/pull/26/files#diff-90722370fba9b923c4e5e0a9f6dad7ca4d9f4884867e107b4d0380a056ef9e09
+
+Add the USB Driver to PinePhone Bringup...
+
+https://github.com/lupyuen2/wip-pinephone-nuttx/pull/26/files#diff-112a7881b2d4b766a1ec106dfa92a4e963f7001ef7efebdadf7b6310d64c517e
+
 TODO
