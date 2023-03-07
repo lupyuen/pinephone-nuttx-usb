@@ -46,7 +46,7 @@
 
 #include "arm64_internal.h"
 #include "chip.h"
-// TODO #include "hardware/a64_usbotg.h"
+#include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 
 #define CONFIG_A64_USBOTG // TODO
