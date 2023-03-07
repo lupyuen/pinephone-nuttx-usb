@@ -19,7 +19,12 @@ ln -s pinephone-nuttx-usb/a64_usbhost.c .
 pushd hardware
 ln -s ../pinephone-nuttx-usb/a64_usbotg.h .
 popd
+make menuconfig
 ```
+
+Select these options in `menuconfig`...
+
+-   Enable "Device Drivers > USB Host Driver Support"
 
 Add the USB Driver to the Makefile...
 
@@ -28,5 +33,7 @@ Add the USB Driver to the Makefile...
 Add the USB Driver to PinePhone Bringup...
 
 -   [boards/arm64/a64/pinephone/src/pinephone_bringup.c](https://github.com/lupyuen2/wip-pinephone-nuttx/pull/26/files#diff-112a7881b2d4b766a1ec106dfa92a4e963f7001ef7efebdadf7b6310d64c517e)
+
+
 
 TODO
