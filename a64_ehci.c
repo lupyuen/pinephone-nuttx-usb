@@ -50,10 +50,11 @@
 // TODO #include "a64_periphclks.h"
 
 #define CONFIG_A64_USBOTG // TODO
-#define CONFIG_USBHOST // TODO
-#define CONFIG_DEBUG_USB_INFO // TODO
 #define CONFIG_A64_EHCI_REGDEBUG // TODO
+#define CONFIG_USBHOST // TODO
 #define CONFIG_USBHOST_INT_DISABLE // TODO
+#define CONFIG_USBHOST_ASYNCH //
+#define CONFIG_DEBUG_USB_INFO // TODO
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO
@@ -5128,12 +5129,14 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* EHCI Hardware Configuration ********************************************/
 
-  a64_clockall_usboh3();
+  // TODO
+  // a64_clockall_usboh3();
 
   /* Reset the controller from the OTG peripheral */
 
-  putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
-  while ((getreg32(A64_USBDEV_USBCMD) & USBDEV_USBCMD_RST) != 0);
+  // TODO
+  // putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
+  // while ((getreg32(A64_USBDEV_USBCMD) & USBDEV_USBCMD_RST) != 0);
 
   /* Program the controller to be the USB host controller Fixed selections:
    * CM = Host mode ES = 0, Little endian mode.  SLOM Not used in host mode.
@@ -5146,8 +5149,9 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
-           A64_USBDEV_USBMODE);
+  // TODO
+  // putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
+  //          A64_USBDEV_USBMODE);
 #  endif
 
   /* Reset the EHCI hardware */
@@ -5168,8 +5172,9 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
-           A64_USBDEV_USBMODE);
+  // TODO
+  // putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
+  //          A64_USBDEV_USBMODE);
 #  endif
 
   /* Disable all interrupts */
@@ -5309,12 +5314,14 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Interrupt Configuration ************************************************/
 
-  ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
-  if (ret != 0)
-    {
-      usbhost_trace1(EHCI_TRACE1_IRQATTACH_FAILED, A64_IRQ_USBOTG1);
-      return NULL;
-    }
+  // TODO
+  UNUSED(a64_ehci_interrupt);
+  // ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
+  // if (ret != 0)
+  //   {
+  //     usbhost_trace1(EHCI_TRACE1_IRQATTACH_FAILED, A64_IRQ_USBOTG1);
+  //     return NULL;
+  //   }
 
   /* Enable EHCI interrupts.  Interrupts are still disabled at the level of
    * the interrupt controller.
@@ -5324,7 +5331,8 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Enable interrupts at the interrupt controller */
 
-  up_enable_irq(A64_IRQ_USBOTG1);
+  // TODO
+  // up_enable_irq(A64_IRQ_USBOTG1);
 
   /* Drive Vbus +5V (the smoke test) */
 
@@ -5332,7 +5340,8 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
     {
       /* Enable VBUS power for the port */
 
-      a64_usbhost_vbusdrive(i, true);
+      // TODO
+      // a64_usbhost_vbusdrive(i, true);
       up_mdelay(25);
     }
 
