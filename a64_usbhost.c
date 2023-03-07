@@ -141,15 +141,15 @@ int a64_usbhost_initialize(void)
 
   /* Make sure we don't accidentally switch on USB bus power */
 
-  *((uint32_t *)A64_USBNC_USB_OTG1_CTRL) = USBNC_PWR_POL;
-  *((uint32_t *)0x400d9030)                = (1 << 21);
-  *((uint32_t *)0x400d9000)                = 0;
+  // TODO: *((uint32_t *)A64_USBNC_USB_OTG1_CTRL) = USBNC_PWR_POL;
+  // TODO: *((uint32_t *)0x400d9030)                = (1 << 21);
+  // TODO: *((uint32_t *)0x400d9000)                = 0;
 
   /* Setup pins, with power initially off */
 
-  a64_config_gpio(GPIO_USBOTG_PWR);
-  a64_config_gpio(GPIO_USBOTG_OC);
-  a64_config_gpio(GPIO_USBOTG_ID);
+  // TODO: a64_config_gpio(GPIO_USBOTG_PWR);
+  // TODO: a64_config_gpio(GPIO_USBOTG_OC);
+  // TODO: a64_config_gpio(GPIO_USBOTG_ID);
 
   /* First, register all of the class drivers needed to support the drivers
    * that we care about
