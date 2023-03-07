@@ -157,7 +157,8 @@
  */
 
 #define a64_physramaddr(a) (a)
-#define a64_virtramaddr(a) (a)
+// TODO: Check pointer
+#define a64_virtramaddr(a) ((unsigned long)(a))
 
 /* USB trace ****************************************************************/
 
@@ -3285,7 +3286,8 @@ static inline void a64_async_advance_bottomhalf(void)
 
 static void a64_ehci_bottomhalf(void *arg)
 {
-  uint32_t pending = (uint32_t)arg;
+  // TODO: Check pointer
+  unsigned long pending = (unsigned long)arg;
 
   /* We need to have exclusive access to the EHCI data structures.  Waiting
    * here is not a good thing to do on the worker thread, but there is no
@@ -3423,7 +3425,8 @@ static void a64_ehci_bottomhalf(void *arg)
 static int a64_ehci_interrupt(int irq, void *context, void *arg)
 {
   uint32_t usbsts;
-  uint32_t pending;
+  // TODO: Check pointer
+  unsigned long pending;
   uint32_t regval;
 
   /* Read Interrupt Status and mask out interrupts that are not enabled. */
