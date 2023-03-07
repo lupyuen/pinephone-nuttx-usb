@@ -57,7 +57,6 @@
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO
-#define A64_EHCI_NRHPORT                 1     /* There is only a single root hub port */
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 

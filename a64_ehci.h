@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_A64_A64_EHCI_H
-#define __ARCH_ARM_SRC_A64_A64_EHCI_H
+#ifndef __ARCH_ARM64_SRC_A64_A64_EHCI_H
+#define __ARCH_ARM64_SRC_A64_A64_EHCI_H
 
 /****************************************************************************
  * Included Files
@@ -134,4 +134,4 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller);
 #endif
 
 #endif /* __ASSEMBLY__ */
-#endif /* __ARCH_ARM_SRC_A64_A64_EHCI_H */
+#endif /* __ARCH_ARM64_SRC_A64_A64_EHCI_H */

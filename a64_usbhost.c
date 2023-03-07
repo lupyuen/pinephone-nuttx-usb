@@ -42,7 +42,7 @@
 #include <a64_ehci.h>
 
 // TODO #include "hardware/a64_pinmux.h"
-// TODO #include "hardware/a64_usbotg.h"
+#include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 // TODO #include "a641020-evk.h"
 

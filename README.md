@@ -16,6 +16,9 @@ git submodule add https://github.com/lupyuen/pinephone-nuttx-usb
 ln -s pinephone-nuttx-usb/a64_ehci.c .
 ln -s pinephone-nuttx-usb/a64_ehci.h .
 ln -s pinephone-nuttx-usb/a64_usbhost.c .
+pushd hardware
+ln -s ../pinephone-nuttx-usb/a64_usbotg.h .
+popd
 ```
 
 Add the USB Driver to the Makefile...

@@ -1,5 +1,5 @@
 /****************************************************************************
- * arch/arm/src/imxrt/hardware/imxrt_usbotg.h
+ * arch/arm64/src/a64/hardware/NOTUSED_usbotg.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,8 +18,8 @@
  *
  ****************************************************************************/
 
-#ifndef __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_USBOTG_H
-#define __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_USBOTG_H
+#ifndef __ARCH_ARM64_SRC_A64_HARDWARE_NOTUSED_USBOTG_H
+#define __ARCH_ARM64_SRC_A64_HARDWARE_NOTUSED_USBOTG_H
 
 /****************************************************************************
  * Included Files
@@ -31,175 +31,175 @@
  * Pre-processor Definitions
  ****************************************************************************/
 
-#define IMXRT_EHCI_NRHPORT                 1     /* There is only a single root hub port */
+#define A64_EHCI_NRHPORT                 1     /* There is only a single root hub port */
 
-/* USBOTG register offsets (with respect to IMXRT_USB_BASE) *****************/
+/* USBOTG register offsets (with respect to A64_USB_BASE) *****************/
 
                                                  /* 0x000 - 0x0ff: Reserved */
 
 /* Device/host capability registers */
 
-#define IMXRT_USBOTG_HCCR_OFFSET           0x100 /* Offset to EHCI Host Controller Capabiliy registers */
-#define IMXRT_USBOTG_CAPLENGTH_OFFSET      0x100 /* Capability register length (8-bit) */
-#define IMXRT_USBHOST_HCIVERSION_OFFSET    0x102 /* Host interface version number (16-bit) */
-#define IMXRT_USBHOST_HCSPARAMS_OFFSET     0x104 /* Host controller structural parameters */
-#define IMXRT_USBHOST_HCCPARAMS_OFFSET     0x108 /* Host controller capability parameters */
-#define IMXRT_USBDEV_DCIVERSION_OFFSET     0x120 /* Device interface version number */
-#define IMXRT_USBDEV_DCCPARAMS_OFFSET      0x124 /* Device controller capability parameters */
+#define NOTUSED_USBOTG_HCCR_OFFSET           0x100 /* Offset to EHCI Host Controller Capabiliy registers */
+#define NOTUSED_USBOTG_CAPLENGTH_OFFSET      0x100 /* Capability register length (8-bit) */
+#define NOTUSED_USBHOST_HCIVERSION_OFFSET    0x102 /* Host interface version number (16-bit) */
+#define NOTUSED_USBHOST_HCSPARAMS_OFFSET     0x104 /* Host controller structural parameters */
+#define NOTUSED_USBHOST_HCCPARAMS_OFFSET     0x108 /* Host controller capability parameters */
+#define NOTUSED_USBDEV_DCIVERSION_OFFSET     0x120 /* Device interface version number */
+#define NOTUSED_USBDEV_DCCPARAMS_OFFSET      0x124 /* Device controller capability parameters */
 
 /* Device/host/OTG operational registers */
 
-#define IMXRT_USBOTG_HCOR_OFFSET           0x140 /* Offset to EHCI Host Controller Operational Registers */
-#define IMXRT_USBOTG_USBCMD_OFFSET         0x140 /* USB command (both) */
-#define IMXRT_USBOTG_USBSTS_OFFSET         0x144 /* USB status (both) */
-#define IMXRT_USBOTG_USBINTR_OFFSET        0x148 /* USB interrupt enable (both) */
-#define IMXRT_USBOTG_FRINDEX_OFFSET        0x14c /* USB frame index (both) */
+#define NOTUSED_USBOTG_HCOR_OFFSET           0x140 /* Offset to EHCI Host Controller Operational Registers */
+#define NOTUSED_USBOTG_USBCMD_OFFSET         0x140 /* USB command (both) */
+#define NOTUSED_USBOTG_USBSTS_OFFSET         0x144 /* USB status (both) */
+#define NOTUSED_USBOTG_USBINTR_OFFSET        0x148 /* USB interrupt enable (both) */
+#define NOTUSED_USBOTG_FRINDEX_OFFSET        0x14c /* USB frame index (both) */
                                                  /* EHCI 4G Segment Selector (not supported) */
-#define IMXRT_USBOTG_PERIODICLIST_OFFSET   0x154 /* Frame list base address (host) */
-#define IMXRT_USBOTG_DEVICEADDR_OFFSET     0x154 /* USB device address (device) */
-#define IMXRT_USBOTG_ASYNCLISTADDR_OFFSET  0x158 /* Next asynchronous list address (host) */
-#define IMXRT_USBOTG_ENDPOINTLIST_OFFSET   0x158 /* Address of endpoint list in memory (device) */
-#define IMXRT_USBOTG_TTCTRL_OFFSET         0x15c /* Asynchronous buffer status for embedded TT (host) */
-#define IMXRT_USBOTG_BURSTSIZE_OFFSET      0x160 /* Programmable burst size (both) */
-#define IMXRT_USBOTG_TXFILLTUNING_OFFSET   0x164 /* Host transmit pre-buffer packet tuning (host) */
-#define IMXRT_USBOTG_BINTERVAL_OFFSET      0x174 /* Length of virtual frame (both) */
-#define IMXRT_USBOTG_ENDPTNAK_OFFSET       0x178 /* Endpoint NAK (device) */
-#define IMXRT_USBOTG_ENDPTNAKEN_OFFSET     0x17c /* Endpoint NAK Enable (device) */
-#define IMXRT_USBOTG_CONFIGFLAG_OFFSET     0x180 /* Configured flag register (not used in lpc313x) */
-#define IMXRT_USBOTG_PORTSC1_OFFSET        0x184 /* Port status/control 1 (both) */
-#define IMXRT_USBOTG_OTGSC_OFFSET          0x1a4 /* OTG status and control (otg) */
-#define IMXRT_USBOTG_USBMODE_OFFSET        0x1a8 /* USB device mode (both) */
+#define NOTUSED_USBOTG_PERIODICLIST_OFFSET   0x154 /* Frame list base address (host) */
+#define NOTUSED_USBOTG_DEVICEADDR_OFFSET     0x154 /* USB device address (device) */
+#define NOTUSED_USBOTG_ASYNCLISTADDR_OFFSET  0x158 /* Next asynchronous list address (host) */
+#define NOTUSED_USBOTG_ENDPOINTLIST_OFFSET   0x158 /* Address of endpoint list in memory (device) */
+#define NOTUSED_USBOTG_TTCTRL_OFFSET         0x15c /* Asynchronous buffer status for embedded TT (host) */
+#define NOTUSED_USBOTG_BURSTSIZE_OFFSET      0x160 /* Programmable burst size (both) */
+#define NOTUSED_USBOTG_TXFILLTUNING_OFFSET   0x164 /* Host transmit pre-buffer packet tuning (host) */
+#define NOTUSED_USBOTG_BINTERVAL_OFFSET      0x174 /* Length of virtual frame (both) */
+#define NOTUSED_USBOTG_ENDPTNAK_OFFSET       0x178 /* Endpoint NAK (device) */
+#define NOTUSED_USBOTG_ENDPTNAKEN_OFFSET     0x17c /* Endpoint NAK Enable (device) */
+#define NOTUSED_USBOTG_CONFIGFLAG_OFFSET     0x180 /* Configured flag register (not used in lpc313x) */
+#define NOTUSED_USBOTG_PORTSC1_OFFSET        0x184 /* Port status/control 1 (both) */
+#define NOTUSED_USBOTG_OTGSC_OFFSET          0x1a4 /* OTG status and control (otg) */
+#define NOTUSED_USBOTG_USBMODE_OFFSET        0x1a8 /* USB device mode (both) */
 
-#define IMXRT_USBDEV_USBCMD_OFFSET         0x140 /* USB command (both) */
-#define IMXRT_USBDEV_USBSTS_OFFSET         0x144 /* USB status (both) */
-#define IMXRT_USBDEV_USBINTR_OFFSET        0x148 /* USB interrupt enable (both) */
-#define IMXRT_USBDEV_FRINDEX_OFFSET        0x14c /* USB frame index (both) */
-#define IMXRT_USBDEV_DEVICEADDR_OFFSET     0x154 /* USB device address (device) */
-#define IMXRT_USBDEV_ENDPOINTLIST_OFFSET   0x158 /* Address of endpoint list in memory (device) */
-#define IMXRT_USBDEV_BURSTSIZE_OFFSET      0x160 /* Programmable burst size (both) */
-#define IMXRT_USBDEV_BINTERVAL_OFFSET      0x174 /* Length of virtual frame (both) */
-#define IMXRT_USBDEV_ENDPTNAK_OFFSET       0x178 /* Endpoint NAK (device) */
-#define IMXRT_USBDEV_ENDPTNAKEN_OFFSET     0x17c /* Endpoint NAK Enable (device) */
-#define IMXRT_USBDEV_PORTSC1_OFFSET        0x184 /* Port status/control 1 (both) */
-#define IMXRT_USBDEV_USBMODE_OFFSET        0x1a8 /* USB device mode (both) */
+#define NOTUSED_USBDEV_USBCMD_OFFSET         0x140 /* USB command (both) */
+#define NOTUSED_USBDEV_USBSTS_OFFSET         0x144 /* USB status (both) */
+#define NOTUSED_USBDEV_USBINTR_OFFSET        0x148 /* USB interrupt enable (both) */
+#define NOTUSED_USBDEV_FRINDEX_OFFSET        0x14c /* USB frame index (both) */
+#define NOTUSED_USBDEV_DEVICEADDR_OFFSET     0x154 /* USB device address (device) */
+#define NOTUSED_USBDEV_ENDPOINTLIST_OFFSET   0x158 /* Address of endpoint list in memory (device) */
+#define NOTUSED_USBDEV_BURSTSIZE_OFFSET      0x160 /* Programmable burst size (both) */
+#define NOTUSED_USBDEV_BINTERVAL_OFFSET      0x174 /* Length of virtual frame (both) */
+#define NOTUSED_USBDEV_ENDPTNAK_OFFSET       0x178 /* Endpoint NAK (device) */
+#define NOTUSED_USBDEV_ENDPTNAKEN_OFFSET     0x17c /* Endpoint NAK Enable (device) */
+#define NOTUSED_USBDEV_PORTSC1_OFFSET        0x184 /* Port status/control 1 (both) */
+#define NOTUSED_USBDEV_USBMODE_OFFSET        0x1a8 /* USB device mode (both) */
 
-#define IMXRT_USBHOST_USBCMD_OFFSET        0x140 /* USB command (both) */
-#define IMXRT_USBHOST_USBSTS_OFFSET        0x144 /* USB status (both) */
-#define IMXRT_USBHOST_USBINTR_OFFSET       0x148 /* USB interrupt enable (both) */
-#define IMXRT_USBHOST_FRINDEX_OFFSET       0x14c /* USB frame index (both) */
-#define IMXRT_USBHOST_PERIODICLIST_OFFSET  0x154 /* Frame list base address (host) */
-#define IMXRT_USBHOST_ASYNCLISTADDR_OFFSET 0x158 /* Next asynchronous list address (host) */
-#define IMXRT_USBHOST_TTCTRL_OFFSET        0x15c /* Asynchronous buffer status for embedded TT (host) */
-#define IMXRT_USBHOST_BURSTSIZE_OFFSET     0x160 /* Programmable burst size (both) */
-#define IMXRT_USBHOST_TXFILLTUNING_OFFSET  0x164 /* Host transmit pre-buffer packet tuning (host) */
-#define IMXRT_USBHOST_BINTERVAL_OFFSET     0x174 /* Length of virtual frame (both) */
-#define IMXRT_USBHOST_PORTSC1_OFFSET       0x184 /* Port status/control 1 (both) */
-#define IMXRT_USBHOST_USBMODE_OFFSET       0x1a8 /* USB device mode (both) */
+#define NOTUSED_USBHOST_USBCMD_OFFSET        0x140 /* USB command (both) */
+#define NOTUSED_USBHOST_USBSTS_OFFSET        0x144 /* USB status (both) */
+#define NOTUSED_USBHOST_USBINTR_OFFSET       0x148 /* USB interrupt enable (both) */
+#define NOTUSED_USBHOST_FRINDEX_OFFSET       0x14c /* USB frame index (both) */
+#define NOTUSED_USBHOST_PERIODICLIST_OFFSET  0x154 /* Frame list base address (host) */
+#define NOTUSED_USBHOST_ASYNCLISTADDR_OFFSET 0x158 /* Next asynchronous list address (host) */
+#define NOTUSED_USBHOST_TTCTRL_OFFSET        0x15c /* Asynchronous buffer status for embedded TT (host) */
+#define NOTUSED_USBHOST_BURSTSIZE_OFFSET     0x160 /* Programmable burst size (both) */
+#define NOTUSED_USBHOST_TXFILLTUNING_OFFSET  0x164 /* Host transmit pre-buffer packet tuning (host) */
+#define NOTUSED_USBHOST_BINTERVAL_OFFSET     0x174 /* Length of virtual frame (both) */
+#define NOTUSED_USBHOST_PORTSC1_OFFSET       0x184 /* Port status/control 1 (both) */
+#define NOTUSED_USBHOST_USBMODE_OFFSET       0x1a8 /* USB device mode (both) */
 
 /* Device endpoint registers */
 
-#define IMXRT_USBDEV_ENDPTSETUPSTAT_OFFSET 0x1ac /* Endpoint setup status */
-#define IMXRT_USBDEV_ENDPTPRIME_OFFSET     0x1b0 /* Endpoint initialization */
-#define IMXRT_USBDEV_ENDPTFLUSH_OFFSET     0x1b4 /* Endpoint de-initialization */
-#define IMXRT_USBDEV_ENDPTSTATUS_OFFSET    0x1b8 /* Endpoint status */
-#define IMXRT_USBDEV_ENDPTCOMPLETE_OFFSET  0x1bc /* Endpoint complete */
+#define NOTUSED_USBDEV_ENDPTSETUPSTAT_OFFSET 0x1ac /* Endpoint setup status */
+#define NOTUSED_USBDEV_ENDPTPRIME_OFFSET     0x1b0 /* Endpoint initialization */
+#define NOTUSED_USBDEV_ENDPTFLUSH_OFFSET     0x1b4 /* Endpoint de-initialization */
+#define NOTUSED_USBDEV_ENDPTSTATUS_OFFSET    0x1b8 /* Endpoint status */
+#define NOTUSED_USBDEV_ENDPTCOMPLETE_OFFSET  0x1bc /* Endpoint complete */
 
-#define IMXRT_USBDEV_ENDPTCTRL_OFFSET(n)   (IMXRT_USBDEV_ENDPTCTRL0_OFFSET + ((n) * 4))
-#define IMXRT_USBDEV_ENDPTCTRL0_OFFSET     0x1c0 /* Endpoint control 0 */
-#define IMXRT_USBDEV_ENDPTCTRL1_OFFSET     0x1c4 /* Endpoint control 1 */
-#define IMXRT_USBDEV_ENDPTCTRL2_OFFSET     0x1c8 /* Endpoint control 2 */
-#define IMXRT_USBDEV_ENDPTCTRL3_OFFSET     0x1cc /* Endpoint control 3 */
-#define IMXRT_USBDEV_ENDPTCTRL4_OFFSET     0x1d0 /* Endpoint control 4 */
-#define IMXRT_USBDEV_ENDPTCTRL5_OFFSET     0x1d4 /* Endpoint control 5 */
-#define IMXRT_USBDEV_ENDPTCTRL6_OFFSET     0x1d8 /* Endpoint control 6 */
-#define IMXRT_USBDEV_ENDPTCTRL7_OFFSET     0x1dc /* Endpoint control 7 */
+#define NOTUSED_USBDEV_ENDPTCTRL_OFFSET(n)   (NOTUSED_USBDEV_ENDPTCTRL0_OFFSET + ((n) * 4))
+#define NOTUSED_USBDEV_ENDPTCTRL0_OFFSET     0x1c0 /* Endpoint control 0 */
+#define NOTUSED_USBDEV_ENDPTCTRL1_OFFSET     0x1c4 /* Endpoint control 1 */
+#define NOTUSED_USBDEV_ENDPTCTRL2_OFFSET     0x1c8 /* Endpoint control 2 */
+#define NOTUSED_USBDEV_ENDPTCTRL3_OFFSET     0x1cc /* Endpoint control 3 */
+#define NOTUSED_USBDEV_ENDPTCTRL4_OFFSET     0x1d0 /* Endpoint control 4 */
+#define NOTUSED_USBDEV_ENDPTCTRL5_OFFSET     0x1d4 /* Endpoint control 5 */
+#define NOTUSED_USBDEV_ENDPTCTRL6_OFFSET     0x1d8 /* Endpoint control 6 */
+#define NOTUSED_USBDEV_ENDPTCTRL7_OFFSET     0x1dc /* Endpoint control 7 */
 
 /* USB Non-core memory map & register definition */
 
-#define IMXRT_USBNC_USB_OTG1_CTRL_OFFSET        0x0800 /* OTG1 Control Register */
-#define IMXRT_USBNC_USB_OTG1_PHY_CTRL_0_OFFSET  0x0818 /* OTG1 Phy Control Register */
+#define NOTUSED_USBNC_USB_OTG1_CTRL_OFFSET        0x0800 /* OTG1 Control Register */
+#define NOTUSED_USBNC_USB_OTG1_PHY_CTRL_0_OFFSET  0x0818 /* OTG1 Phy Control Register */
 
 /* USBOTG register (virtual) addresses **************************************/
 
 /* Device/host capability registers */
 
-#define IMXRT_USBOTG_HCCR_BASE             (IMXRT_USB_BASE + IMXRT_USBOTG_HCCR_OFFSET)
-#define IMXRT_USBOTG_CAPLENGTH             (IMXRT_USB_BASE + IMXRT_USBOTG_CAPLENGTH_OFFSET)
-#define IMXRT_USBHOST_HCIVERSION           (IMXRT_USB_BASE + IMXRT_USBHOST_HCIVERSION_OFFSET)
-#define IMXRT_USBHOST_HCSPARAMS            (IMXRT_USB_BASE + IMXRT_USBHOST_HCSPARAMS_OFFSET)
-#define IMXRT_USBHOST_HCCPARAMS            (IMXRT_USB_BASE + IMXRT_USBHOST_HCCPARAMS_OFFSET)
-#define IMXRT_USBDEV_DCIVERSION            (IMXRT_USB_BASE + IMXRT_USBDEV_DCIVERSION_OFFSET)
-#define IMXRT_USBDEV_DCCPARAMS             (IMXRT_USB_BASE + IMXRT_USBDEV_DCCPARAMS_OFFSET)
+#define NOTUSED_USBOTG_HCCR_BASE             (NOTUSED_USB_BASE + NOTUSED_USBOTG_HCCR_OFFSET)
+#define NOTUSED_USBOTG_CAPLENGTH             (NOTUSED_USB_BASE + NOTUSED_USBOTG_CAPLENGTH_OFFSET)
+#define NOTUSED_USBHOST_HCIVERSION           (NOTUSED_USB_BASE + NOTUSED_USBHOST_HCIVERSION_OFFSET)
+#define NOTUSED_USBHOST_HCSPARAMS            (NOTUSED_USB_BASE + NOTUSED_USBHOST_HCSPARAMS_OFFSET)
+#define NOTUSED_USBHOST_HCCPARAMS            (NOTUSED_USB_BASE + NOTUSED_USBHOST_HCCPARAMS_OFFSET)
+#define NOTUSED_USBDEV_DCIVERSION            (NOTUSED_USB_BASE + NOTUSED_USBDEV_DCIVERSION_OFFSET)
+#define NOTUSED_USBDEV_DCCPARAMS             (NOTUSED_USB_BASE + NOTUSED_USBDEV_DCCPARAMS_OFFSET)
 
 /* Device/host operational registers */
 
-#define IMXRT_USBOTG_HCOR_BASE             (IMXRT_USB_BASE + IMXRT_USBOTG_HCOR_OFFSET)
-#define IMXRT_USBOTG_USBCMD                (IMXRT_USB_BASE + IMXRT_USBOTG_USBCMD_OFFSET)
-#define IMXRT_USBOTG_USBSTS                (IMXRT_USB_BASE + IMXRT_USBOTG_USBSTS_OFFSET)
-#define IMXRT_USBOTG_USBINTR               (IMXRT_USB_BASE + IMXRT_USBOTG_USBINTR_OFFSET)
-#define IMXRT_USBOTG_FRINDEX               (IMXRT_USB_BASE + IMXRT_USBOTG_FRINDEX_OFFSET)
-#define IMXRT_USBOTG_PERIODICLIST          (IMXRT_USB_BASE + IMXRT_USBOTG_PERIODICLIST_OFFSET)
-#define IMXRT_USBOTG_DEVICEADDR            (IMXRT_USB_BASE + IMXRT_USBOTG_DEVICEADDR_OFFSET)
-#define IMXRT_USBOTG_ASYNCLISTADDR         (IMXRT_USB_BASE + IMXRT_USBOTG_ASYNCLISTADDR_OFFSET)
-#define IMXRT_USBOTG_ENDPOINTLIST          (IMXRT_USB_BASE + IMXRT_USBOTG_ENDPOINTLIST_OFFSET)
-#define IMXRT_USBOTG_TTCTRL                (IMXRT_USB_BASE + IMXRT_USBOTG_TTCTRL_OFFSET)
-#define IMXRT_USBOTG_BURSTSIZE             (IMXRT_USB_BASE + IMXRT_USBOTG_BURSTSIZE_OFFSET)
-#define IMXRT_USBOTG_TXFILLTUNING          (IMXRT_USB_BASE + IMXRT_USBOTG_TXFILLTUNING_OFFSET)
-#define IMXRT_USBOTG_BINTERVAL             (IMXRT_USB_BASE + IMXRT_USBOTG_BINTERVAL_OFFSET)
-#define IMXRT_USBOTG_ENDPTNAK              (IMXRT_USB_BASE + IMXRT_USBOTG_ENDPTNAK_OFFSET)
-#define IMXRT_USBOTG_ENDPTNAKEN            (IMXRT_USB_BASE + IMXRT_USBOTG_ENDPTNAKEN_OFFSET)
-#define IMXRT_USBOTG_PORTSC1               (IMXRT_USB_BASE + IMXRT_USBOTG_PORTSC1_OFFSET)
-#define IMXRT_USBOTG_OTGSC                 (IMXRT_USB_BASE + IMXRT_USBOTG_OTGSC_OFFSET)
-#define IMXRT_USBOTG_USBMODE               (IMXRT_USB_BASE + IMXRT_USBOTG_USBMODE_OFFSET)
+#define NOTUSED_USBOTG_HCOR_BASE             (NOTUSED_USB_BASE + NOTUSED_USBOTG_HCOR_OFFSET)
+#define NOTUSED_USBOTG_USBCMD                (NOTUSED_USB_BASE + NOTUSED_USBOTG_USBCMD_OFFSET)
+#define NOTUSED_USBOTG_USBSTS                (NOTUSED_USB_BASE + NOTUSED_USBOTG_USBSTS_OFFSET)
+#define NOTUSED_USBOTG_USBINTR               (NOTUSED_USB_BASE + NOTUSED_USBOTG_USBINTR_OFFSET)
+#define NOTUSED_USBOTG_FRINDEX               (NOTUSED_USB_BASE + NOTUSED_USBOTG_FRINDEX_OFFSET)
+#define NOTUSED_USBOTG_PERIODICLIST          (NOTUSED_USB_BASE + NOTUSED_USBOTG_PERIODICLIST_OFFSET)
+#define NOTUSED_USBOTG_DEVICEADDR            (NOTUSED_USB_BASE + NOTUSED_USBOTG_DEVICEADDR_OFFSET)
+#define NOTUSED_USBOTG_ASYNCLISTADDR         (NOTUSED_USB_BASE + NOTUSED_USBOTG_ASYNCLISTADDR_OFFSET)
+#define NOTUSED_USBOTG_ENDPOINTLIST          (NOTUSED_USB_BASE + NOTUSED_USBOTG_ENDPOINTLIST_OFFSET)
+#define NOTUSED_USBOTG_TTCTRL                (NOTUSED_USB_BASE + NOTUSED_USBOTG_TTCTRL_OFFSET)
+#define NOTUSED_USBOTG_BURSTSIZE             (NOTUSED_USB_BASE + NOTUSED_USBOTG_BURSTSIZE_OFFSET)
+#define NOTUSED_USBOTG_TXFILLTUNING          (NOTUSED_USB_BASE + NOTUSED_USBOTG_TXFILLTUNING_OFFSET)
+#define NOTUSED_USBOTG_BINTERVAL             (NOTUSED_USB_BASE + NOTUSED_USBOTG_BINTERVAL_OFFSET)
+#define NOTUSED_USBOTG_ENDPTNAK              (NOTUSED_USB_BASE + NOTUSED_USBOTG_ENDPTNAK_OFFSET)
+#define NOTUSED_USBOTG_ENDPTNAKEN            (NOTUSED_USB_BASE + NOTUSED_USBOTG_ENDPTNAKEN_OFFSET)
+#define NOTUSED_USBOTG_PORTSC1               (NOTUSED_USB_BASE + NOTUSED_USBOTG_PORTSC1_OFFSET)
+#define NOTUSED_USBOTG_OTGSC                 (NOTUSED_USB_BASE + NOTUSED_USBOTG_OTGSC_OFFSET)
+#define NOTUSED_USBOTG_USBMODE               (NOTUSED_USB_BASE + NOTUSED_USBOTG_USBMODE_OFFSET)
 
-#define IMXRT_USBDEV_USBCMD                (IMXRT_USB_BASE + IMXRT_USBDEV_USBCMD_OFFSET)
-#define IMXRT_USBDEV_USBSTS                (IMXRT_USB_BASE + IMXRT_USBDEV_USBSTS_OFFSET)
-#define IMXRT_USBDEV_USBINTR               (IMXRT_USB_BASE + IMXRT_USBDEV_USBINTR_OFFSET)
-#define IMXRT_USBDEV_FRINDEX               (IMXRT_USB_BASE + IMXRT_USBDEV_FRINDEX_OFFSET)
-#define IMXRT_USBDEV_DEVICEADDR            (IMXRT_USB_BASE + IMXRT_USBDEV_DEVICEADDR_OFFSET)
-#define IMXRT_USBDEV_ENDPOINTLIST          (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPOINTLIST_OFFSET)
-#define IMXRT_USBDEV_BURSTSIZE             (IMXRT_USB_BASE + IMXRT_USBDEV_BURSTSIZE_OFFSET)
-#define IMXRT_USBDEV_BINTERVAL             (IMXRT_USB_BASE + IMXRT_USBDEV_BINTERVAL_OFFSET)
-#define IMXRT_USBDEV_ENDPTNAK              (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTNAK_OFFSET)
-#define IMXRT_USBDEV_ENDPTNAKEN            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTNAKEN_OFFSET)
-#define IMXRT_USBDEV_PORTSC1               (IMXRT_USB_BASE + IMXRT_USBDEV_PORTSC1_OFFSET)
-#define IMXRT_USBDEV_USBMODE               (IMXRT_USB_BASE + IMXRT_USBDEV_USBMODE_OFFSET)
+#define NOTUSED_USBDEV_USBCMD                (NOTUSED_USB_BASE + NOTUSED_USBDEV_USBCMD_OFFSET)
+#define NOTUSED_USBDEV_USBSTS                (NOTUSED_USB_BASE + NOTUSED_USBDEV_USBSTS_OFFSET)
+#define NOTUSED_USBDEV_USBINTR               (NOTUSED_USB_BASE + NOTUSED_USBDEV_USBINTR_OFFSET)
+#define NOTUSED_USBDEV_FRINDEX               (NOTUSED_USB_BASE + NOTUSED_USBDEV_FRINDEX_OFFSET)
+#define NOTUSED_USBDEV_DEVICEADDR            (NOTUSED_USB_BASE + NOTUSED_USBDEV_DEVICEADDR_OFFSET)
+#define NOTUSED_USBDEV_ENDPOINTLIST          (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPOINTLIST_OFFSET)
+#define NOTUSED_USBDEV_BURSTSIZE             (NOTUSED_USB_BASE + NOTUSED_USBDEV_BURSTSIZE_OFFSET)
+#define NOTUSED_USBDEV_BINTERVAL             (NOTUSED_USB_BASE + NOTUSED_USBDEV_BINTERVAL_OFFSET)
+#define NOTUSED_USBDEV_ENDPTNAK              (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTNAK_OFFSET)
+#define NOTUSED_USBDEV_ENDPTNAKEN            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTNAKEN_OFFSET)
+#define NOTUSED_USBDEV_PORTSC1               (NOTUSED_USB_BASE + NOTUSED_USBDEV_PORTSC1_OFFSET)
+#define NOTUSED_USBDEV_USBMODE               (NOTUSED_USB_BASE + NOTUSED_USBDEV_USBMODE_OFFSET)
 
-#define IMXRT_USBHOST_USBCMD               (IMXRT_USB_BASE + IMXRT_USBHOST_USBCMD_OFFSET)
-#define IMXRT_USBHOST_USBSTS               (IMXRT_USB_BASE + IMXRT_USBHOST_USBSTS_OFFSET)
-#define IMXRT_USBHOST_USBINTR              (IMXRT_USB_BASE + IMXRT_USBHOST_USBINTR_OFFSET)
-#define IMXRT_USBHOST_FRINDEX              (IMXRT_USB_BASE + IMXRT_USBHOST_FRINDEX_OFFSET)
-#define IMXRT_USBHOST_PERIODICLIST         (IMXRT_USB_BASE + IMXRT_USBHOST_PERIODICLIST_OFFSET)
-#define IMXRT_USBHOST_ASYNCLISTADDR        (IMXRT_USB_BASE + IMXRT_USBHOST_ASYNCLISTADDR_OFFSET)
-#define IMXRT_USBHOST_TTCTRL               (IMXRT_USB_BASE + IMXRT_USBHOST_TTCTRL_OFFSET)
-#define IMXRT_USBHOST_BURSTSIZE            (IMXRT_USB_BASE + IMXRT_USBHOST_BURSTSIZE_OFFSET)
-#define IMXRT_USBHOST_TXFILLTUNING         (IMXRT_USB_BASE + IMXRT_USBHOST_TXFILLTUNING_OFFSET)
-#define IMXRT_USBHOST_BINTERVAL            (IMXRT_USB_BASE + IMXRT_USBHOST_BINTERVAL_OFFSET)
-#define IMXRT_USBHOST_PORTSC1              (IMXRT_USB_BASE + IMXRT_USBHOST_PORTSC1_OFFSET)
-#define IMXRT_USBHOST_USBMODE              (IMXRT_USB_BASE + IMXRT_USBHOST_USBMODE_OFFSET)
+#define NOTUSED_USBHOST_USBCMD               (NOTUSED_USB_BASE + NOTUSED_USBHOST_USBCMD_OFFSET)
+#define NOTUSED_USBHOST_USBSTS               (NOTUSED_USB_BASE + NOTUSED_USBHOST_USBSTS_OFFSET)
+#define NOTUSED_USBHOST_USBINTR              (NOTUSED_USB_BASE + NOTUSED_USBHOST_USBINTR_OFFSET)
+#define NOTUSED_USBHOST_FRINDEX              (NOTUSED_USB_BASE + NOTUSED_USBHOST_FRINDEX_OFFSET)
+#define NOTUSED_USBHOST_PERIODICLIST         (NOTUSED_USB_BASE + NOTUSED_USBHOST_PERIODICLIST_OFFSET)
+#define NOTUSED_USBHOST_ASYNCLISTADDR        (NOTUSED_USB_BASE + NOTUSED_USBHOST_ASYNCLISTADDR_OFFSET)
+#define NOTUSED_USBHOST_TTCTRL               (NOTUSED_USB_BASE + NOTUSED_USBHOST_TTCTRL_OFFSET)
+#define NOTUSED_USBHOST_BURSTSIZE            (NOTUSED_USB_BASE + NOTUSED_USBHOST_BURSTSIZE_OFFSET)
+#define NOTUSED_USBHOST_TXFILLTUNING         (NOTUSED_USB_BASE + NOTUSED_USBHOST_TXFILLTUNING_OFFSET)
+#define NOTUSED_USBHOST_BINTERVAL            (NOTUSED_USB_BASE + NOTUSED_USBHOST_BINTERVAL_OFFSET)
+#define NOTUSED_USBHOST_PORTSC1              (NOTUSED_USB_BASE + NOTUSED_USBHOST_PORTSC1_OFFSET)
+#define NOTUSED_USBHOST_USBMODE              (NOTUSED_USB_BASE + NOTUSED_USBHOST_USBMODE_OFFSET)
 
 /* Device endpoint registers */
 
-#define IMXRT_USBDEV_ENDPTSETUPSTAT        (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTSETUPSTAT_OFFSET)
-#define IMXRT_USBDEV_ENDPTPRIME            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTPRIME_OFFSET)
-#define IMXRT_USBDEV_ENDPTFLUSH            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTFLUSH_OFFSET)
-#define IMXRT_USBDEV_ENDPTSTATUS           (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTSTATUS_OFFSET)
-#define IMXRT_USBDEV_ENDPTCOMPLETE         (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCOMPLETE_OFFSET)
+#define NOTUSED_USBDEV_ENDPTSETUPSTAT        (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTSETUPSTAT_OFFSET)
+#define NOTUSED_USBDEV_ENDPTPRIME            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTPRIME_OFFSET)
+#define NOTUSED_USBDEV_ENDPTFLUSH            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTFLUSH_OFFSET)
+#define NOTUSED_USBDEV_ENDPTSTATUS           (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTSTATUS_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCOMPLETE         (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCOMPLETE_OFFSET)
 
-#define IMXRT_USBDEV_ENDPTCTRL(n)          (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL_OFFSET(n))
-#define IMXRT_USBDEV_ENDPTCTRL0            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL0_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL1            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL1_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL2            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL2_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL3            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL3_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL4            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL4_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL5            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL5_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL6            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL6_OFFSET)
-#define IMXRT_USBDEV_ENDPTCTRL7            (IMXRT_USB_BASE + IMXRT_USBDEV_ENDPTCTRL7_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL(n)          (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL_OFFSET(n))
+#define NOTUSED_USBDEV_ENDPTCTRL0            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL0_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL1            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL1_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL2            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL2_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL3            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL3_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL4            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL4_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL5            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL5_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL6            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL6_OFFSET)
+#define NOTUSED_USBDEV_ENDPTCTRL7            (NOTUSED_USB_BASE + NOTUSED_USBDEV_ENDPTCTRL7_OFFSET)
 
 /* Device non-core registers */
 
-#define IMXRT_USBNC_USB_OTG1_CTRL            (IMXRT_USB_BASE + IMXRT_USBNC_USB_OTG1_CTRL_OFFSET)
-#define IMXRT_USBNC_USB_OTG1_PHY_CTRL_0      (IMXRT_USB_BASE + IMXRT_USBNC_USB_OTG1_PHY_CTRL_0_OFFSET)
+#define NOTUSED_USBNC_USB_OTG1_CTRL            (NOTUSED_USB_BASE + NOTUSED_USBNC_USB_OTG1_CTRL_OFFSET)
+#define NOTUSED_USBNC_USB_OTG1_PHY_CTRL_0      (NOTUSED_USB_BASE + NOTUSED_USBNC_USB_OTG1_PHY_CTRL_0_OFFSET)
 
 /* USBOTG register bit definitions ******************************************/
 
@@ -731,4 +731,4 @@
                                                        /* Bit 30: Reserved */
 #define USBNC_WIR                            (1 << 31) /* Bit 31: Wake up interrupt request */
 
-#endif /* __ARCH_ARM_SRC_IMXRT_HARDWARE_IMXRT_USBOTG_H */
+#endif /* __ARCH_ARM64_SRC_A64_HARDWARE_NOTUSED_USBOTG_H */
