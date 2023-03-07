@@ -53,8 +53,10 @@
 #define CONFIG_USBHOST // TODO
 #define CONFIG_DEBUG_USB_INFO // TODO
 #define CONFIG_A64_EHCI_REGDEBUG // TODO
+#define CONFIG_USBHOST_INT_DISABLE // TODO
 #undef uinfo // TODO
 #define uinfo _info // TODO
+#define A64_EHCI_NRHPORT                 1     /* There is only a single root hub port */
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 

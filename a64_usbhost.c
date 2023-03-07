@@ -137,7 +137,7 @@ int a64_usbhost_initialize(void)
 {
   int ret;
 
-  a64_clockall_usboh3();
+  // TODO: a64_clockall_usboh3();
 
   /* Make sure we don't accidentally switch on USB bus power */
 
