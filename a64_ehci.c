@@ -52,6 +52,7 @@
 ////#define CONFIG_USBHOST_INT_DISABLE // TODO CONFIG_USBHOST_INT_DISABLE
 #define CONFIG_A64_EHCI_REGDEBUG // TODO CONFIG_A64_EHCI_REGDEBUG
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO ARMV7M_DCACHE_LINESIZE
+#define up_udelay(x) up_mdelay(x) // TODO up_udelay
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 
@@ -197,6 +198,7 @@ struct a64_qh_s
   struct a64_epinfo_s *epinfo; /* Endpoint used for the transfer */
   uint32_t fqp;                  /* First qTD in the list (physical address) */
   uint8_t pad[8];                /* Padding to assure 32-byte alignment */
+  uint8_t pad2[96 - 72]; // TODO: Pad from 72 to 96 bytes for 64-bit platform
 };
 
 /* Internal representation of the EHCI Queue Element Transfer Descriptor
