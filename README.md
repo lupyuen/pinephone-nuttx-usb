@@ -38,6 +38,8 @@ make menuconfig
 
 Select these options in `menuconfig`...
 
+-   Enable "Build Setup > Debug Options > USB Error, Warninigs and Info"
+
 -   Enable "System Type > Allwinner A64 Peripheral Selection > USB EHCI"
 
 -   Enable "RTOS Features > Work queue support > Low priority (kernel) worker thread"

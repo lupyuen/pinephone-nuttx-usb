@@ -49,12 +49,9 @@
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 
-#define CONFIG_USBHOST_INT_DISABLE // TODO CONFIG_USBHOST_INT_DISABLE
-#define CONFIG_DEBUG_USB_INFO // TODO CONFIG_DEBUG_USB_INFO
+////#define CONFIG_USBHOST_INT_DISABLE // TODO CONFIG_USBHOST_INT_DISABLE
 #define CONFIG_A64_EHCI_REGDEBUG // TODO CONFIG_A64_EHCI_REGDEBUG
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO ARMV7M_DCACHE_LINESIZE
-#undef uinfo // TODO uinfo
-#define uinfo _info // TODO uinfo
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 
@@ -1802,7 +1799,7 @@ static struct a64_qh_s *a64_qh_create(struct a64_rhport_s *rhport,
    * but would not work for devices connected to downstream hubs.
    */
 
-// TODO #warning Missing logic
+// TODO: #warning Missing logic
   hubaddr = rhport->ep0.devaddr;
   hubport = rhpndx + 1;
 #else
@@ -1828,7 +1825,7 @@ static struct a64_qh_s *a64_qh_create(struct a64_rhport_s *rhport,
        * all the same interrupt queue.  That should work but will not give
        * any control over polling rates.
        */
-#warning REVISIT
+// TODO: #warning REVISIT
 
       regval |= ((uint32_t)1               << QH_EPCAPS_SSMASK_SHIFT);
     }
