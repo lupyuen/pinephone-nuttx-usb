@@ -73,6 +73,18 @@ TODO
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L186-L200
 
+TODO
+
+```text
+DEBUGASSERT(sizeof(struct ehci_overlay_s) == SIZEOF_EHCI_OVERLAY);
+```
+
+TODO
+
+```text
+sizeof(struct ehci_overlay_s)=32
+```
+
 # Output Log
 
 ```text

@@ -4988,6 +4988,18 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   _info("sizeof(struct a64_qh_s)=%d\n", sizeof(struct a64_qh_s));////
   _info("sizeof(struct a64_qtd_s)=%d\n", sizeof(struct a64_qtd_s));////
+  _info("sizeof(struct ehci_itd_s)=%d\n", sizeof(struct ehci_itd_s));////
+  _info("sizeof(struct ehci_sitd_s)=%d\n", sizeof(struct ehci_sitd_s));////
+  _info("sizeof(struct ehci_qtd_s)=%d\n", sizeof(struct ehci_qtd_s));////
+  _info("sizeof(struct ehci_overlay_s)=%d\n", sizeof(struct ehci_overlay_s));////
+  _info("sizeof(struct ehci_qh_s)=%d\n", sizeof(struct ehci_qh_s));////
+  _info("sizeof(struct ehci_fstn_s)=%d\n", sizeof(struct ehci_fstn_s));////
+  DEBUGASSERT(sizeof(struct ehci_itd_s) == SIZEOF_EHCI_ITD_S);////
+  DEBUGASSERT(sizeof(struct ehci_sitd_s) == SIZEOF_EHCI_SITD_S);////
+  DEBUGASSERT(sizeof(struct ehci_qtd_s) == SIZEOF_EHCI_QTD_S);////
+  DEBUGASSERT(sizeof(struct ehci_overlay_s) == 32);////
+  DEBUGASSERT(sizeof(struct ehci_qh_s) == 48);////
+  DEBUGASSERT(sizeof(struct ehci_fstn_s) == SIZEOF_EHCI_FSTN_S);////
 
   /* Sanity checks */
 
