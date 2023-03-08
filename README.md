@@ -79,7 +79,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-348793 bytes read in 21 ms (15.8 MiB/s)
+348854 bytes read in 21 ms (15.8 MiB/s)
 Uncompressed size: 10514432 = 0xA07000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -91,8 +91,10 @@ Uncompressed size: 10514432 = 0xA07000
 Starting kernel ...
 
 usbhost_registerclass: Registering class:0x40120658 nids:2
+a64_ehci_initialize: sizeof(struct a64_qh_s)=72
+a64_ehci_initialize: sizeof(struct a64_qtd_s)=32
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: chip/a64_ehci.c:4993 task: nsh_main 0x4008b0d0
+_assert: Assertion failed : at file: chip/a64_ehci.c:4996 task: nsh_main 0x4008b0d0
 up_dump_register: stack = 0x40129660
 up_dump_register: x0:   0x40129660          x1:   0xa
 up_dump_register: x2:   0x20                x3:   0x400efb22
@@ -105,8 +107,8 @@ up_dump_register: x14:  0x0                 x15:  0x1c28000
 up_dump_register: x16:  0x0                 x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
 up_dump_register: x20:  0x40a8d010          x21:  0x400ef92d
-up_dump_register: x22:  0x0                 x23:  0x1381
-up_dump_register: x24:  0x4011e6bd          x25:  0x40120000
+up_dump_register: x22:  0x0                 x23:  0x1384
+up_dump_register: x24:  0x4011e6fe          x25:  0x40120000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
 up_dump_register: x30:  0x4008b078        
@@ -115,7 +117,7 @@ up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
 up_dump_register: SP_EL0:    0x40a8f300        
-up_dump_register: SP_ELX:    0x40a8f260        
+up_dump_register: SP_ELX:    0x40a8f250        
 up_dump_register: TPIDR_EL0: 0x40a8d010        
 up_dump_register: TPIDR_EL1: 0x40a8d010        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
