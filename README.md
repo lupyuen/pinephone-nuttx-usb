@@ -92,13 +92,33 @@ On 64-bit platforms, `a64_qh_s` is now: 48 + 8 + 4 + 8 = 68 bytes
 
 Align to 32-bit = 72 bytes
 
-Need to align to 0x20 = 32
+Need to align to 32 bytes.
 
 So we pad from 72 to 96 bytes...
 
 ```c
-  uint8_t pad2[96 - 72]; // TODO: Pad from 72 to 96 bytes for 64-bit platform
+uint8_t pad2[96 - 72]; // TODO: Pad from 72 to 96 bytes for 64-bit platform
 ```
+
+Like this...
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L190-L202
+
+# USB Halt Timeout
+
+TODO
+
+```text
+EHCI Initializing EHCI Stack
+a64_printreg: 01c1b010<-00000000
+a64_printreg: 01c1b014->00000000
+EHCI ERROR: Timed out waiting for HCHalted. USBSTS: 000000
+EHCI ERROR: a64_reset failed: 110
+```
+
+TODO
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L4831-L4917
 
 # Output Log
 
