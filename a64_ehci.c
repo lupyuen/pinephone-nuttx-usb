@@ -4986,6 +4986,9 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   int ret;
   int i;
 
+  _info("sizeof(struct a64_qh_s)=%d\n", sizeof(struct a64_qh_s));////
+  _info("sizeof(struct a64_qtd_s)=%d\n", sizeof(struct a64_qtd_s));////
+
   /* Sanity checks */
 
   DEBUGASSERT(controller == 0);
