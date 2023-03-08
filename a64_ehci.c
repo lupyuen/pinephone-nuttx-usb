@@ -5139,10 +5139,12 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* EHCI Hardware Configuration ********************************************/
 
+  _info("TODO: a64_clockall_usboh3\n");////
   // TODO: a64_clockall_usboh3();
 
   /* Reset the controller from the OTG peripheral */
 
+  _info("TODO: Reset the controller from the OTG peripheral\n");////
   // TODO: putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
   // while ((getreg32(A64_USBDEV_USBCMD) & USBDEV_USBCMD_RST) != 0);
 
@@ -5157,6 +5159,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
+  _info("TODO: Program the controller to be the USB host controller\n");////
   // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif
@@ -5179,6 +5182,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
+  _info("TODO: Re-program the USB host controller\n");////
   // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif
@@ -5320,6 +5324,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Interrupt Configuration ************************************************/
 
+  _info("TODO: irq_attach\n");////
   // TODO: ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
   UNUSED(a64_ehci_interrupt);
   // if (ret != 0)
@@ -5336,6 +5341,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Enable interrupts at the interrupt controller */
 
+  _info("TODO: up_enable_irq\n");////
   // TODO: up_enable_irq(A64_IRQ_USBOTG1);
 
   /* Drive Vbus +5V (the smoke test) */
@@ -5344,6 +5350,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
     {
       /* Enable VBUS power for the port */
 
+      _info("TODO: a64_usbhost_vbusdrive\n");////
       // TODO: a64_usbhost_vbusdrive(i, true);
       up_mdelay(25);
     }

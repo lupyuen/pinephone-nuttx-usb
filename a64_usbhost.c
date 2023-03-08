@@ -133,16 +133,19 @@ int a64_usbhost_initialize(void)
 {
   int ret;
 
+  _info("TODO: a64_clockall_usboh3\n");////
   // TODO: a64_clockall_usboh3();
 
   /* Make sure we don't accidentally switch on USB bus power */
 
+  _info("TODO: switch off USB bus power\n");////
   // TODO: *((uint32_t *)A64_USBNC_USB_OTG1_CTRL) = USBNC_PWR_POL;
   // TODO: *((uint32_t *)0x400d9030)                = (1 << 21);
   // TODO: *((uint32_t *)0x400d9000)                = 0;
 
   /* Setup pins, with power initially off */
 
+  _info("TODO: Setup pins, with power initially off\n");////
   // TODO: a64_config_gpio(GPIO_USBOTG_PWR);
   // TODO: a64_config_gpio(GPIO_USBOTG_OC);
   // TODO: a64_config_gpio(GPIO_USBOTG_ID);
