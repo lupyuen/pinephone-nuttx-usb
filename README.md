@@ -50,6 +50,29 @@ Select these options in `menuconfig`...
 
 TODO
 
+# Struct Size Failed
+
+TODO
+
+```text
+_assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
+_assert: Assertion failed : at file: chip/a64_ehci.c:4996 task: nsh_main 0x4008b0d0
+```
+
+TODO
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L4996
+
+TODO
+
+```text
+sizeof(struct a64_qh_s)=72
+```
+
+TODO
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L186-L200
+
 # Output Log
 
 ```text
