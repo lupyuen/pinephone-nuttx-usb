@@ -49,12 +49,12 @@
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 
-#define CONFIG_USBHOST_INT_DISABLE // TODO
-#define CONFIG_DEBUG_USB_INFO // TODO
-#define CONFIG_A64_EHCI_REGDEBUG // TODO
-#define ARMV7M_DCACHE_LINESIZE 32 // TODO
-#undef uinfo // TODO
-#define uinfo _info // TODO
+#define CONFIG_USBHOST_INT_DISABLE // TODO CONFIG_USBHOST_INT_DISABLE
+#define CONFIG_DEBUG_USB_INFO // TODO CONFIG_DEBUG_USB_INFO
+#define CONFIG_A64_EHCI_REGDEBUG // TODO CONFIG_A64_EHCI_REGDEBUG
+#define ARMV7M_DCACHE_LINESIZE 32 // TODO ARMV7M_DCACHE_LINESIZE
+#undef uinfo // TODO uinfo
+#define uinfo _info // TODO uinfo
 
 #if defined(CONFIG_A64_USBOTG) && defined(CONFIG_USBHOST)
 
@@ -1802,8 +1802,7 @@ static struct a64_qh_s *a64_qh_create(struct a64_rhport_s *rhport,
    * but would not work for devices connected to downstream hubs.
    */
 
-// TODO
-// #warning Missing logic
+// TODO #warning Missing logic
   hubaddr = rhport->ep0.devaddr;
   hubport = rhpndx + 1;
 #else
@@ -5126,13 +5125,11 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* EHCI Hardware Configuration ********************************************/
 
-  // TODO
-  // a64_clockall_usboh3();
+  // TODO: a64_clockall_usboh3();
 
   /* Reset the controller from the OTG peripheral */
 
-  // TODO
-  // putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
+  // TODO: putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
   // while ((getreg32(A64_USBDEV_USBCMD) & USBDEV_USBCMD_RST) != 0);
 
   /* Program the controller to be the USB host controller Fixed selections:
@@ -5146,8 +5143,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  // TODO
-  // putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
+  // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif
 
@@ -5169,8 +5165,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  // TODO
-  // putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
+  // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif
 
@@ -5311,9 +5306,8 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Interrupt Configuration ************************************************/
 
-  // TODO
+  // TODO: ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
   UNUSED(a64_ehci_interrupt);
-  // ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
   // if (ret != 0)
   //   {
   //     usbhost_trace1(EHCI_TRACE1_IRQATTACH_FAILED, A64_IRQ_USBOTG1);
@@ -5328,8 +5322,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Enable interrupts at the interrupt controller */
 
-  // TODO
-  // up_enable_irq(A64_IRQ_USBOTG1);
+  // TODO: up_enable_irq(A64_IRQ_USBOTG1);
 
   /* Drive Vbus +5V (the smoke test) */
 
@@ -5337,8 +5330,7 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
     {
       /* Enable VBUS power for the port */
 
-      // TODO
-      // a64_usbhost_vbusdrive(i, true);
+      // TODO: a64_usbhost_vbusdrive(i, true);
       up_mdelay(25);
     }
 

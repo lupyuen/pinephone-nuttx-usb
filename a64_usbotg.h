@@ -40,7 +40,7 @@
 /* Device/host capability registers */
 
 // USB_HCI1
-#define A64_USBOTG_HCCR_BASE 0x01c1b000 // TODO
+#define A64_USBOTG_HCCR_BASE 0x01c1b000 // TODO A64_USBOTG_HCCR_BASE
 
 #define NOTUSED_USBOTG_HCCR_OFFSET           0x100 /* Offset to EHCI Host Controller Capabiliy registers */
 #define NOTUSED_USBOTG_CAPLENGTH_OFFSET      0x100 /* Capability register length (8-bit) */
@@ -52,7 +52,7 @@
 
 /* Device/host/OTG operational registers */
 
-#define A64_USBOTG_HCOR_BASE (A64_USBOTG_HCCR_BASE + 0x10) // TODO
+#define A64_USBOTG_HCOR_BASE (A64_USBOTG_HCCR_BASE + 0x10) // TODO A64_USBOTG_HCOR_BASE
 
 #define NOTUSED_USBOTG_HCOR_OFFSET           0x140 /* Offset to EHCI Host Controller Operational Registers */
 #define NOTUSED_USBOTG_USBCMD_OFFSET         0x140 /* USB command (both) */
