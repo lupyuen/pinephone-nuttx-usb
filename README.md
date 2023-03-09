@@ -118,7 +118,7 @@ https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 
 # USB Halt Timeout
 
-The NuttX USB EHCI Driver now halts with a timeout when booting on PinePhone...
+The NuttX USB EHCI Driver fails with a timeout when booting on PinePhone...
 
 ```text
 a64_usbhost_initialize: TODO: a64_clockall_usboh3
@@ -138,11 +138,11 @@ a64_usbhost_initialize: ERROR: a64_ehci_initialize failed
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/b921aa5259ef94ece41610ebf806ebd0fa19dee5/README.md#output-log)
 
-The timeout happens while waiting for the USB Controller to be reset...
+The timeout happens while waiting for the USB Controller to Halt...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L4831-L4917
 
-_What are 01c1b010 and 01c1b014?_
+_What are 01c1 b010 and 01c1 b014?_
 
 ```text
 a64_printreg: 01c1b010<-00000000
@@ -157,11 +157,11 @@ a64_printreg: 01c1b014->00000000
 
 `01c1` `b014` is the USB Status Register USBSTS. [(Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
-The log says that we wrote Command 0 to USB Command Register USBCMD. Which will Halt the USB Controller.
+The log says that we wrote Command 0 (Stop) to USB Command Register USBCMD. Which will Halt the USB Controller.
 
-Then the log says that read USB Status Register USBSTS. Which returns 0, which says that the USB Controller has NOT been halted. (HCHalted = 0)
+Then the log says that we read USB Status Register USBSTS. This returns 0, which means that the USB Controller has NOT been halted. (HCHalted = 0)
 
-That's why the USB Driver stops: It couldn't Halt the USB Controller at startup.
+That's why the USB Driver failed: It couldn't Halt the USB Controller at startup.
 
 _Why?_
 
