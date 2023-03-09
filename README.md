@@ -118,7 +118,7 @@ https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 
 # USB Halt Timeout
 
-The USB EHCI Driver now halts with a timeout when booting on PinePhone...
+The NuttX USB EHCI Driver now halts with a timeout when booting on PinePhone...
 
 ```text
 a64_usbhost_initialize: TODO: a64_clockall_usboh3
