@@ -180,11 +180,17 @@ a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/b921aa5259ef94ece41610ebf806ebd0fa19dee5/README.md#output-log)
 
+And maybe we need to init the USB PHY (Physical Layer)?
+
 _How do we power on the USB Controller?_
 
-TODO: We'll check the U-Boot source code...
+We'll check the U-Boot source code...
 
 -   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+
+# Power On the USB Controller
+
+TODO
 
 # Output Log
 
