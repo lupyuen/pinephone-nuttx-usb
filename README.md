@@ -192,6 +192,10 @@ We'll check the U-Boot source code...
 
 TODO
 
+-   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+
+-   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
+
 # Output Log
 
 ```text
