@@ -73,7 +73,9 @@ Which isn't aligned to 32 bytes...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L186-L200
 
-Because it contains a 64-bit pointer.
+Because it contains a 64-bit pointer `epinfo`...
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L197
 
 _How has `a64_qh_s` changed for 32-bit platforms vs 64-bit platforms?_
 
@@ -116,7 +118,7 @@ We need to fix this typo in NuttX: `SIZEOF_EHCI_OVERLAY` is defined twice...
 
 https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 
-# USB Halt Timeout
+# Halt Timeout for USB Controller
 
 The NuttX USB EHCI Driver fails with a timeout when booting on PinePhone...
 
