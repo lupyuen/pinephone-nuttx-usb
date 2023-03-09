@@ -192,9 +192,62 @@ We'll check the U-Boot source code...
 
 TODO
 
+Sunxi Board
+
 -   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
 
+Generic EHCI Driver
+
 -   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
+
+USB PHY Power Doc
+
+-   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
+
+USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+-   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+-   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+Route USB PHY to EHCI:
+
+```c
+static int sun4i_usb_phy_init(struct phy *phy) {
+    ...
+#ifdef CONFIG_USB_MUSB_SUNXI
+	/* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
+	if (usb_phy->id != 0)
+		sun4i_usb_phy_passby(phy, true);
+
+	/* Route PHY0 to MUSB to allow USB gadget */
+	if (data->cfg->phy0_dual_route)
+		sun4i_usb_phy0_reroute(data, true);
+#else
+	sun4i_usb_phy_passby(phy, true);
+
+	/* Route PHY0 to HCI to allow USB host */
+	if (data->cfg->phy0_dual_route)
+		sun4i_usb_phy0_reroute(data, false);
+#endif
+```
+
+[(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+`CONFIG_USB_MUSB_SUNXI`:
+
+```text
+config USB_MUSB_SUNXI
+	bool "Enable sunxi OTG / DRC USB controller"
+	depends on ARCH_SUNXI
+	select USB_MUSB_PIO_ONLY
+	default y
+	---help---
+	Say y here to enable support for the sunxi OTG / DRC USB controller
+	used on almost all sunxi boards.
+```
+
+[(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/Kconfig#L68-L75)
 
 # Output Log
 
