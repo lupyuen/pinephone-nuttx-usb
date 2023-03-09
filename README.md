@@ -234,6 +234,12 @@ static int sun4i_usb_phy_init(struct phy *phy) {
 
 [(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
+Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
+
+-   [sun4i_usb_phy_passby](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L190-L215)
+
+-   [sun4i_usb_phy0_reroute](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L244-L257)
+
 `CONFIG_USB_MUSB_SUNXI`:
 
 ```text
