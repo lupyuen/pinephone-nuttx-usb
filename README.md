@@ -121,16 +121,68 @@ https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 The USB EHCI Driver now halts with a timeout when booting on PinePhone...
 
 ```text
+a64_usbhost_initialize: TODO: a64_clockall_usboh3
+a64_usbhost_initialize: TODO: switch off USB bus power
+a64_usbhost_initialize: TODO: Setup pins, with power initially off
+usbhost_registerclass: Registering class:0x40124838 nids:2
 EHCI Initializing EHCI Stack
+a64_ehci_initialize: TODO: a64_clockall_usboh3
+a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
+a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 a64_printreg: 01c1b010<-00000000
 a64_printreg: 01c1b014->00000000
 EHCI ERROR: Timed out waiting for HCHalted. USBSTS: 000000
 EHCI ERROR: a64_reset failed: 110
+a64_usbhost_initialize: ERROR: a64_ehci_initialize failed
 ```
 
-TODO
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/b921aa5259ef94ece41610ebf806ebd0fa19dee5/README.md#output-log)
+
+The timeout happens while waiting for the USB Controller to be reset...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L4831-L4917
+
+_What are 01c1b010 and 01c1b014?_
+
+```text
+a64_printreg: 01c1b010<-00000000
+a64_printreg: 01c1b014->00000000
+```
+
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/b921aa5259ef94ece41610ebf806ebd0fa19dee5/README.md#output-log)
+
+`01c1` `b000` is the Base Address of the USB EHCI Controller on Allwinner A64. [(See this)](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
+
+`01c1` `b010` is the USB Command Register USBCMD. [(Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
+
+`01c1` `b014` is the USB Status Register USBSTS. [(Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
+
+The log says that we wrote Command 0 to USB Command Register USBCMD. Which will Halt the USB Controller.
+
+Then the log says that read USB Status Register USBSTS. Which returns 0, which says that the USB Controller has NOT been halted. (HCHalted = 0)
+
+That's why the USB Driver stops: It couldn't Halt the USB Controller at startup.
+
+_Why?_
+
+Probably because we haven't powered on the USB Controller? According to the log...
+
+```text
+a64_usbhost_initialize: TODO: a64_clockall_usboh3
+a64_usbhost_initialize: TODO: switch off USB bus power
+a64_usbhost_initialize: TODO: Setup pins, with power initially off
+a64_ehci_initialize: TODO: a64_clockall_usboh3
+a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
+a64_ehci_initialize: TODO: Program the controller to be the USB host controller
+```
+
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/b921aa5259ef94ece41610ebf806ebd0fa19dee5/README.md#output-log)
+
+_How do we power on the USB Controller?_
+
+TODO: We'll check the U-Boot source code...
+
+-   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
 
 # Output Log
 
