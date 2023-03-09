@@ -48,11 +48,11 @@ Select these options in `menuconfig`...
 
 -   Enable "Device Drivers > USB Host Driver Support > USB Hub Support"
 
-TODO
+Let's boot the NuttX USB EHCI Driver on PinePhone...
 
-# Struct Size Failed
+# 64-Bit Update for EHCI Driver
 
-TODO: Assertion fails...
+When PinePhone boots the NuttX USB EHCI Driver, it halts with an Assertion Failure...
 
 ```text
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
@@ -73,7 +73,25 @@ Which isn't aligned to 32 bytes...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L186-L200
 
-Checking all the struct sizes...
+On 32-bit platforms, `a64_qh_s` was previously 64 bytes. (48 + 4 + 4 + 8)
+
+On 64-bit platforms, `a64_qh_s` is now 72 bytes. (48 + 8 + 4 + 8, round up to 32-bit alignment)
+
+In the EHCI Driver we need to align `a64_qh_s` to 32 bytes. So we pad `a64_qh_s` from 72 bytes to 96 bytes...
+
+```c
+uint8_t pad2[96 - 72]; // TODO: Pad from 72 to 96 bytes for 64-bit platform
+```
+
+Like this...
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L190-L202
+
+We verified the Struct Sizes, to make sure they are still valid for 64-bit platforms...
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L4999-L5004
+
+Here are the Struct Sizes...
 
 ```text
 a64_ehci_initialize: sizeof(struct a64_qh_s)=72
@@ -86,23 +104,9 @@ a64_ehci_initialize: sizeof(struct ehci_qh_s)=48
 a64_ehci_initialize: sizeof(struct ehci_fstn_s)=8
 ```
 
-On 32-bit platforms, `a64_qh_s` was previously: 48 + 4 + 4 + 8 = 64 bytes
+We need to fix this typo in NuttX: `SIZEOF_EHCI_OVERLAY` is defined twice...
 
-On 64-bit platforms, `a64_qh_s` is now: 48 + 8 + 4 + 8 = 68 bytes
-
-Align to 32-bit = 72 bytes
-
-Need to align to 32 bytes.
-
-So we pad from 72 to 96 bytes...
-
-```c
-uint8_t pad2[96 - 72]; // TODO: Pad from 72 to 96 bytes for 64-bit platform
-```
-
-Like this...
-
-https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L190-L202
+https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 
 # USB Halt Timeout
 
