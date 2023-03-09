@@ -75,11 +75,11 @@ https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8
 
 Because it contains a 64-bit pointer.
 
-_Why isn't `a64_qh_s` aligned to 32 bytes?_
+_How has `a64_qh_s` changed for 32-bit platforms vs 64-bit platforms?_
 
 On 32-bit platforms: `a64_qh_s` was previously 64 bytes. (48 + 4 + 4 + 8)
 
-On 64-bit platforms: `a64_qh_s` is now 72 bytes. (48 + 8 + 4 + 8, round up to 4-byte alignment)
+On 64-bit platforms: `a64_qh_s` is now 72 bytes. (48 + 8 + 4 + 8, round up for 4-byte alignment)
 
 In the EHCI Driver we need to align `a64_qh_s` to 32 bytes. So we pad `a64_qh_s` from 72 bytes to 96 bytes...
 
@@ -91,7 +91,7 @@ Like this...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L190-L202
 
-And this fixes the Assertion Failure.
+Which fixes the Assertion Failure.
 
 _What about other structs?_
 
