@@ -59,11 +59,11 @@ _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
 _assert: Assertion failed : at file: chip/a64_ehci.c:4996 task: nsh_main 0x4008b0d0
 ```
 
-Here's the assertion...
+Here's the assertion, which says that the `a64_qh_s` struct must be aligned to 32 bytes...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L4996
 
-Size of the struct is 72 bytes...
+Size of the `a64_qh_s` struct is 72 bytes...
 
 ```text
 sizeof(struct a64_qh_s)=72
@@ -73,9 +73,13 @@ Which isn't aligned to 32 bytes...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/b80499b3b8ec837fe2110e9476e8a6ad0f194cde/a64_ehci.c#L186-L200
 
-On 32-bit platforms, `a64_qh_s` was previously 64 bytes. (48 + 4 + 4 + 8)
+Because it contains a 64-bit pointer.
 
-On 64-bit platforms, `a64_qh_s` is now 72 bytes. (48 + 8 + 4 + 8, round up to 32-bit alignment)
+_Why isn't `a64_qh_s` aligned to 32 bytes?_
+
+On 32-bit platforms: `a64_qh_s` was previously 64 bytes. (48 + 4 + 4 + 8)
+
+On 64-bit platforms: `a64_qh_s` is now 72 bytes. (48 + 8 + 4 + 8, round up to 4-byte alignment)
 
 In the EHCI Driver we need to align `a64_qh_s` to 32 bytes. So we pad `a64_qh_s` from 72 bytes to 96 bytes...
 
@@ -87,7 +91,11 @@ Like this...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L190-L202
 
-We verified the Struct Sizes, to make sure they are still valid for 64-bit platforms...
+And this fixes the Assertion Failure.
+
+_What about other structs?_
+
+To be safe, we verified that the other Struct Sizes are still valid for 64-bit platforms...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/2e1f9ab090b14f88afb8c3a36ec40a0dbbb23d49/a64_ehci.c#L4999-L5004
 
@@ -110,7 +118,7 @@ https://github.com/apache/nuttx/blob/master/include/nuttx/usb/ehci.h#L955-L974
 
 # USB Halt Timeout
 
-TODO
+The USB EHCI Driver now halts with a timeout when booting on PinePhone...
 
 ```text
 EHCI Initializing EHCI Stack
