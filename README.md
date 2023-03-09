@@ -161,7 +161,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-356655 bytes read in 20 ms (17 MiB/s)
+356930 bytes read in 20 ms (17 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -172,6 +172,9 @@ Uncompressed size: 10534912 = 0xA0C000
 
 Starting kernel ...
 
+a64_usbhost_initialize: TODO: a64_clockall_usboh3
+a64_usbhost_initialize: TODO: switch off USB bus power
+a64_usbhost_initialize: TODO: Setup pins, with power initially off
 usbhost_registerclass: Registering class:0x40124838 nids:2
 a64_ehci_initialize: sizeof(struct a64_qh_s)=96
 a64_ehci_initialize: sizeof(struct a64_qtd_s)=32
@@ -182,6 +185,9 @@ a64_ehci_initialize: sizeof(struct ehci_overlay_s)=32
 a64_ehci_initialize: sizeof(struct ehci_qh_s)=48
 a64_ehci_initialize: sizeof(struct ehci_fstn_s)=8
 EHCI Initializing EHCI Stack
+a64_ehci_initialize: TODO: a64_clockall_usboh3
+a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
+a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 a64_printreg: 01c1b010<-00000000
 a64_printreg: 01c1b014->00000000
 EHCI ERROR: Timed out waiting for HCHalted. USBSTS: 000000
