@@ -300,7 +300,7 @@ Which says that the USB Drivers are...
 
     [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
 
-Why so many USB drivers? Let's talk about this...
+Why so many USB drivers? Let's talk about it...
 
 # USB Enhanced Host Controller Interface vs On-The-Go
 
@@ -315,9 +315,9 @@ There are two USB Ports in Allwinner A64: __USB0 and USB1__...
 | __Port USB0__ | USB-OTG-EHCI / OHCI | __`0x01C1` `A000`__ (USB_HCI0)
 | __Port USB1__ | USB-EHCI0 / OHCI0   | __`0x01C1` `B000`__ (USB_HCI1)
 
--   Port USB0 supports [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go). Which means that if we connect PinePhone to a computer, it will appear as a USB Drive. (Assuming the right drivers are installed)
+-   Only Port USB0 supports [USB On-The-Go (OTG)](https://en.wikipedia.org/wiki/USB_On-The-Go). Which means that if we connect PinePhone to a computer, it will appear as a USB Drive. (Assuming the right drivers are installed)
 
--   Ports USB0 and USB1 both support [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb). Which works only as a USB Host (not USB Device)
+-   Ports USB0 and USB1 both support [Enhanced Host Controller Interface (EHCI)](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb). Which will work only as a USB Host (not USB Device)
 
 Today we'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
 
