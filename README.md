@@ -184,9 +184,131 @@ And maybe we need to init the USB PHY (Physical Layer)?
 
 _How do we power on the USB Controller?_
 
-We'll check the U-Boot source code...
+Let's check the U-Boot source code...
 
--   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+# PinePhone USB Drivers in U-Boot Bootloader
+
+Let's find the PinePhone USB Driver in the U-Boot Bootloader, to understand how it powers on the USB Controller.
+
+When we search for PinePhone in the Source Code of the [U-Boot Bootloader](https://github.com/u-boot/u-boot), we find this Build Configuration: [pinephone_defconfig](https://github.com/u-boot/u-boot/blob/master/configs/pinephone_defconfig#L3)
+
+```text
+CONFIG_DEFAULT_DEVICE_TREE="sun50i-a64-pinephone-1.2"
+```
+
+Which refers to this PinePhone Device Tree: [sun50i-a64-pinephone-1.2.dts](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64-pinephone-1.2.dts#L6)
+
+```text
+#include "sun50i-a64-pinephone.dtsi"
+```
+
+Which includes another PinePhone Device Tree: [sun50i-a64-pinephone.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64-pinephone.dtsi#L153-L516)
+
+```text
+#include "sun50i-a64.dtsi"
+#include "sun50i-a64-cpu-opp.dtsi"
+...
+&ehci0 { status = "okay"; };
+&ehci1 { status = "okay"; };
+
+&usb_otg {
+  dr_mode = "peripheral";
+  status = "okay";
+};
+
+&usb_power_supply { status = "okay"; };
+&usbphy { status = "okay"; };
+```
+
+Which includes this Allwinner A64 Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+
+```text
+usb_otg: usb@1c19000 {
+  compatible = "allwinner,sun8i-a33-musb";
+  reg = <0x01c19000 0x0400>;
+  clocks = <&ccu CLK_BUS_OTG>;
+  resets = <&ccu RST_BUS_OTG>;
+  interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
+  interrupt-names = "mc";
+  phys = <&usbphy 0>;
+  phy-names = "usb";
+  extcon = <&usbphy 0>;
+  dr_mode = "otg";
+  status = "disabled";
+};
+
+usbphy: phy@1c19400 {
+  compatible = "allwinner,sun50i-a64-usb-phy";
+  reg = <0x01c19400 0x14>,
+    <0x01c1a800 0x4>,
+    <0x01c1b800 0x4>;
+  reg-names = "phy_ctrl",
+    "pmu0",
+    "pmu1";
+  clocks = <&ccu CLK_USB_PHY0>,
+    <&ccu CLK_USB_PHY1>;
+  clock-names = "usb0_phy",
+    "usb1_phy";
+  resets = <&ccu RST_USB_PHY0>,
+    <&ccu RST_USB_PHY1>;
+  reset-names = "usb0_reset",
+    "usb1_reset";
+  status = "disabled";
+  #phy-cells = <1>;
+};
+
+ehci0: usb@1c1a000 {
+  compatible = "allwinner,sun50i-a64-ehci", "generic-ehci";
+  reg = <0x01c1a000 0x100>;
+  interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+  clocks = <&ccu CLK_BUS_OHCI0>,
+    <&ccu CLK_BUS_EHCI0>,
+    <&ccu CLK_USB_OHCI0>;
+  resets = <&ccu RST_BUS_OHCI0>,
+    <&ccu RST_BUS_EHCI0>;
+  phys = <&usbphy 0>;
+  phy-names = "usb";
+  status = "disabled";
+};
+
+ehci1: usb@1c1b000 {
+  compatible = "allwinner,sun50i-a64-ehci", "generic-ehci";
+  reg = <0x01c1b000 0x100>;
+  interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
+  clocks = <&ccu CLK_BUS_OHCI1>,
+    <&ccu CLK_BUS_EHCI1>,
+    <&ccu CLK_USB_OHCI1>;
+  resets = <&ccu RST_BUS_OHCI1>,
+    <&ccu RST_BUS_EHCI1>;
+  phys = <&usbphy 1>;
+  phy-names = "usb";
+  status = "disabled";
+};
+```
+
+Which says that the USB Drivers are...
+
+-   __USB OTG (On-The-Go):__ "allwinner,sun8i-a33-musb"
+
+    [usb/musb-new/sunxi.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/sunxi.c#L527)
+
+-   __EHCI0 and EHCI1 (Enhanced Host Controller Interface):__ "allwinner,sun50i-a64-ehci", "generic-ehci"
+
+    [usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c#L160)
+
+-   __USB PHY (Physical Layer):__ "allwinner,sun50i-a64-usb-phy"
+
+    [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
+
+Why so many USB drivers? Let's explain...
+
+# USB On-The-Go vs Enhanced Host Controller Interface
+
+TODO
+
+[USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
+
+[Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
 
 # Power On the USB Controller
 
@@ -216,19 +338,19 @@ Route USB PHY to EHCI:
 static int sun4i_usb_phy_init(struct phy *phy) {
     ...
 #ifdef CONFIG_USB_MUSB_SUNXI
-	/* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
-	if (usb_phy->id != 0)
-		sun4i_usb_phy_passby(phy, true);
+  /* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
+  if (usb_phy->id != 0)
+    sun4i_usb_phy_passby(phy, true);
 
-	/* Route PHY0 to MUSB to allow USB gadget */
-	if (data->cfg->phy0_dual_route)
-		sun4i_usb_phy0_reroute(data, true);
+  /* Route PHY0 to MUSB to allow USB gadget */
+  if (data->cfg->phy0_dual_route)
+    sun4i_usb_phy0_reroute(data, true);
 #else
-	sun4i_usb_phy_passby(phy, true);
+  sun4i_usb_phy_passby(phy, true);
 
-	/* Route PHY0 to HCI to allow USB host */
-	if (data->cfg->phy0_dual_route)
-		sun4i_usb_phy0_reroute(data, false);
+  /* Route PHY0 to HCI to allow USB host */
+  if (data->cfg->phy0_dual_route)
+    sun4i_usb_phy0_reroute(data, false);
 #endif
 ```
 
@@ -244,13 +366,13 @@ Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
 
 ```text
 config USB_MUSB_SUNXI
-	bool "Enable sunxi OTG / DRC USB controller"
-	depends on ARCH_SUNXI
-	select USB_MUSB_PIO_ONLY
-	default y
-	---help---
-	Say y here to enable support for the sunxi OTG / DRC USB controller
-	used on almost all sunxi boards.
+  bool "Enable sunxi OTG / DRC USB controller"
+  depends on ARCH_SUNXI
+  select USB_MUSB_PIO_ONLY
+  default y
+  ---help---
+  Say y here to enable support for the sunxi OTG / DRC USB controller
+  used on almost all sunxi boards.
 ```
 
 [(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/Kconfig#L68-L75)
