@@ -310,6 +310,17 @@ TODO
 
 [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
 
+There are two USB Ports in Allwinner A64: __USB0 and USB1__.
+
+Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf)...
+
+| USB Port | Alternate Name | Base Address
+|:--------:|------------------|-------------
+| __Port USB0__ | USB-OTG-EHCI / OHCI | __`0x01C1` `A000`__ (USB_HCI0)
+| __Port USB1__ | USB-EHCI0 / OHCI0   | __`0x01C1` `B000`__ (USB_HCI1)
+
+We'll talk only about __Port USB1__ (Non-OTG), since it's connected to the LTE Modem.
+
 # Power On the USB Controller
 
 TODO
