@@ -306,9 +306,13 @@ Why so many USB drivers? Let's explain...
 
 TODO
 
-[USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
+![USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)](https://lupyuen.github.io/images/usb2-ehci.png)
 
-[Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
+[_USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)_](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf)
+
+-   [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
+
+-   [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
 
 There are two USB Ports in Allwinner A64: __USB0 and USB1__.
 
