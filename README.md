@@ -288,13 +288,13 @@ ehci1: usb@1c1b000 {
 
 Which says that the USB Drivers are...
 
--   __USB OTG (On-The-Go):__ "allwinner,sun8i-a33-musb"
-
-    [usb/musb-new/sunxi.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/sunxi.c#L527)
-
 -   __EHCI0 and EHCI1 (Enhanced Host Controller Interface):__ "allwinner,sun50i-a64-ehci", "generic-ehci"
 
     [usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c#L160)
+
+-   __USB OTG (On-The-Go):__ "allwinner,sun8i-a33-musb"
+
+    [usb/musb-new/sunxi.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/sunxi.c#L527)
 
 -   __USB PHY (Physical Layer):__ "allwinner,sun50i-a64-usb-phy"
 
@@ -302,7 +302,7 @@ Which says that the USB Drivers are...
 
 Why so many USB drivers? Let's explain...
 
-# USB On-The-Go vs Enhanced Host Controller Interface
+# USB Enhanced Host Controller Interface vs On-The-Go
 
 TODO
 
