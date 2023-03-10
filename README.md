@@ -300,30 +300,30 @@ Which says that the USB Drivers are...
 
     [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
 
-Why so many USB drivers? Let's explain...
+Why so many USB drivers? Let's talk about this...
 
 # USB Enhanced Host Controller Interface vs On-The-Go
 
-TODO
+According to the [USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf)...
 
 ![USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)](https://lupyuen.github.io/images/usb2-ehci.png)
 
-[_USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)_](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf)
-
--   [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
-
--   [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
-
 There are two USB Ports in Allwinner A64: __USB0 and USB1__.
-
-Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf)...
 
 | USB Port | Alternate Name | Base Address
 |:--------:|------------------|-------------
 | __Port USB0__ | USB-OTG-EHCI / OHCI | __`0x01C1` `A000`__ (USB_HCI0)
 | __Port USB1__ | USB-EHCI0 / OHCI0   | __`0x01C1` `B000`__ (USB_HCI1)
 
-We'll talk only about __Port USB1__ (Non-OTG), since it's connected to the LTE Modem.
+(Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf))
+
+TODO
+
+-   Port USB0: [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
+
+-   Port USB1: [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
+
+We'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
 
 # Power On the USB Controller
 
