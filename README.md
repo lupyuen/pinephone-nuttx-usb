@@ -308,7 +308,7 @@ According to the [USB Controller Block Diagram in Allwinner A64 User Manual (Pag
 
 ![USB Controller Block Diagram in Allwinner A64 User Manual (Page 583)](https://lupyuen.github.io/images/usb2-ehci.png)
 
-There are two USB Ports in Allwinner A64: __USB0 and USB1__.
+There are two USB Ports in Allwinner A64: __USB0 and USB1__...
 
 | USB Port | Alternate Name | Base Address
 |:--------:|------------------|-------------
@@ -321,7 +321,9 @@ There are two USB Ports in Allwinner A64: __USB0 and USB1__.
 
 -   Ports USB0 and USB1 both support [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb). Which works only as a USB Host (not USB Device)
 
-We'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
+Today we'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
+
+(Port USB0 is exposed as the External USB Port on PinePhone)
 
 # Power On the USB Controller
 
