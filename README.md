@@ -317,11 +317,9 @@ There are two USB Ports in Allwinner A64: __USB0 and USB1__.
 
 (Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf))
 
-TODO
+-   Port USB0 supports [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go). Which means that if we connect PinePhone to a computer, it will appear as a USB Drive. (Assuming the right drivers are installed)
 
--   Port USB0: [USB On-The-Go](https://en.wikipedia.org/wiki/USB_On-The-Go)
-
--   Port USB1: [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
+-   Ports USB0 and USB1 both support [Enhanced Host Controller Interface](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb). Which works only as a USB Host (not USB Device)
 
 We'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
 
