@@ -347,6 +347,80 @@ USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.co
 
 -   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
+TODO: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+```c
+static int sun4i_usb_phy_init(struct phy *phy)
+{
+	struct sun4i_usb_phy_data *data = dev_get_priv(phy->dev);
+	struct sun4i_usb_phy_plat *usb_phy = &data->usb_phy[phy->id];
+	u32 val;
+	int ret;
+
+	ret = clk_enable(&usb_phy->clocks);
+	if (ret) {
+		dev_err(phy->dev, "failed to enable usb_%ldphy clock\n",
+			phy->id);
+		return ret;
+	}
+
+	ret = reset_deassert(&usb_phy->resets);
+	if (ret) {
+		dev_err(phy->dev, "failed to deassert usb_%ldreset reset\n",
+			phy->id);
+		return ret;
+	}
+
+	if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
+		val = readl(usb_phy->pmu + REG_HCI_PHY_CTL);
+		val &= ~data->cfg->hci_phy_ctl_clear;
+		writel(val, usb_phy->pmu + REG_HCI_PHY_CTL);
+	}
+
+	if (data->cfg->type == sun8i_a83t_phy ||
+	    data->cfg->type == sun50i_h6_phy) {
+		if (phy->id == 0) {
+			val = readl(data->base + data->cfg->phyctl_offset);
+			val |= PHY_CTL_VBUSVLDEXT;
+			val &= ~PHY_CTL_SIDDQ;
+			writel(val, data->base + data->cfg->phyctl_offset);
+		}
+	} else {
+		if (usb_phy->id == 0)
+			sun4i_usb_phy_write(phy, PHY_RES45_CAL_EN,
+					    PHY_RES45_CAL_DATA,
+					    PHY_RES45_CAL_LEN);
+
+		/* Adjust PHY's magnitude and rate */
+		sun4i_usb_phy_write(phy, PHY_TX_AMPLITUDE_TUNE,
+				    PHY_TX_MAGNITUDE | PHY_TX_RATE,
+				    PHY_TX_AMPLITUDE_LEN);
+
+		/* Disconnect threshold adjustment */
+		sun4i_usb_phy_write(phy, PHY_DISCON_TH_SEL,
+				    data->cfg->disc_thresh, PHY_DISCON_TH_LEN);
+	}
+
+#ifdef CONFIG_USB_MUSB_SUNXI
+	/* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
+	if (usb_phy->id != 0)
+		sun4i_usb_phy_passby(phy, true);
+
+	/* Route PHY0 to MUSB to allow USB gadget */
+	if (data->cfg->phy0_dual_route)
+		sun4i_usb_phy0_reroute(data, true);
+#else
+	sun4i_usb_phy_passby(phy, true);
+
+	/* Route PHY0 to HCI to allow USB host */
+	if (data->cfg->phy0_dual_route)
+		sun4i_usb_phy0_reroute(data, false);
+#endif
+
+	return 0;
+}
+```
+
 Route USB PHY to EHCI:
 
 ```c
@@ -369,7 +443,7 @@ static int sun4i_usb_phy_init(struct phy *phy) {
 #endif
 ```
 
-[(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+[(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
 
