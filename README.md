@@ -310,42 +310,40 @@ According to the [USB Controller Block Diagram in Allwinner A64 User Manual (Pag
 
 There are two USB Ports in Allwinner A64: __USB0 and USB1__...
 
+-   __Port USB0__ is exposed as the External USB Port on PinePhone
+
+-   __Port USB1__ is connected to the Internal LTE Modem
+
 | USB Port | Alternate Name | Base Address
 |:--------:|------------------|-------------
 | __Port USB0__ | USB-OTG-EHCI / OHCI | __`0x01C1` `A000`__ (USB_HCI0)
 | __Port USB1__ | USB-EHCI0 / OHCI0   | __`0x01C1` `B000`__ (USB_HCI1)
 
+(Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf))
+
 -   Only Port USB0 supports [USB On-The-Go (OTG)](https://en.wikipedia.org/wiki/USB_On-The-Go). Which means if we connect PinePhone to a computer, it will appear as a USB Drive. (Assuming the right drivers are started)
+
+    (That's why Port USB0 is exposed as the External USB Port on PinePhone)
 
 -   Ports USB0 and USB1 both support [Enhanced Host Controller Interface (EHCI)](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb). Which will work only as a USB Host (not USB Device)
 
 Today we'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected to the LTE Modem.
 
-(Port USB0 is exposed as the External USB Port on PinePhone)
-
-(Port USB0 Base Address isn't documented, but it appears in the __Memory Mapping__ (Page 73) of the [__Allwinner A64 User Manual__](https://github.com/lupyuen/pinephone-nuttx/releases/download/doc/Allwinner_A64_User_Manual_V1.1.pdf))
-
 # Power On the USB Controller
 
-TODO
+TODO: Earlier we found the USB Drivers for PinePhone...
 
-Sunxi Board
+-   __EHCI0 and EHCI1 (Enhanced Host Controller Interface):__ "allwinner,sun50i-a64-ehci", "generic-ehci"
 
--   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+    [usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c#L160)
 
-Generic EHCI Driver
+-   __USB OTG (On-The-Go):__ "allwinner,sun8i-a33-musb"
 
--   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
+    [usb/musb-new/sunxi.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/sunxi.c#L527)
 
-USB PHY Power Doc
+-   __USB PHY (Physical Layer):__ "allwinner,sun50i-a64-usb-phy"
 
--   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
-
-USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
-
--   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
-
--   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+    [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
 
 TODO: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
@@ -363,20 +361,34 @@ static int sun4i_usb_phy_init(struct phy *phy)
 			phy->id);
 		return ret;
 	}
+```
 
+TODO: Enable Clocks
+
+TODO: Deassert Reset
+
+```c
 	ret = reset_deassert(&usb_phy->resets);
 	if (ret) {
 		dev_err(phy->dev, "failed to deassert usb_%ldreset reset\n",
 			phy->id);
 		return ret;
 	}
+```
 
+TODO: If PMU and Clear?
+
+```c
 	if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
 		val = readl(usb_phy->pmu + REG_HCI_PHY_CTL);
 		val &= ~data->cfg->hci_phy_ctl_clear;
 		writel(val, usb_phy->pmu + REG_HCI_PHY_CTL);
 	}
+```
 
+TODO: If sun8i_a83t_phy or sun50i_h6_phy
+
+```c
 	if (data->cfg->type == sun8i_a83t_phy ||
 	    data->cfg->type == sun50i_h6_phy) {
 		if (phy->id == 0) {
@@ -385,12 +397,21 @@ static int sun4i_usb_phy_init(struct phy *phy)
 			val &= ~PHY_CTL_SIDDQ;
 			writel(val, data->base + data->cfg->phyctl_offset);
 		}
+```
+
+TODO: If neither sun8i_a83t_phy nor sun50i_h6_phy
+
+```c
 	} else {
 		if (usb_phy->id == 0)
 			sun4i_usb_phy_write(phy, PHY_RES45_CAL_EN,
 					    PHY_RES45_CAL_DATA,
 					    PHY_RES45_CAL_LEN);
+```
 
+TODO
+
+```c
 		/* Adjust PHY's magnitude and rate */
 		sun4i_usb_phy_write(phy, PHY_TX_AMPLITUDE_TUNE,
 				    PHY_TX_MAGNITUDE | PHY_TX_RATE,
@@ -400,7 +421,13 @@ static int sun4i_usb_phy_init(struct phy *phy)
 		sun4i_usb_phy_write(phy, PHY_DISCON_TH_SEL,
 				    data->cfg->disc_thresh, PHY_DISCON_TH_LEN);
 	}
+```
 
+TODO: Route USB PHY to EHCI
+
+TODO: If CONFIG_USB_MUSB_SUNXI
+
+```c
 #ifdef CONFIG_USB_MUSB_SUNXI
 	/* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
 	if (usb_phy->id != 0)
@@ -409,6 +436,11 @@ static int sun4i_usb_phy_init(struct phy *phy)
 	/* Route PHY0 to MUSB to allow USB gadget */
 	if (data->cfg->phy0_dual_route)
 		sun4i_usb_phy0_reroute(data, true);
+```
+
+TODO: Not CONFIG_USB_MUSB_SUNXI
+
+```c
 #else
 	sun4i_usb_phy_passby(phy, true);
 
@@ -420,30 +452,6 @@ static int sun4i_usb_phy_init(struct phy *phy)
 	return 0;
 }
 ```
-
-Route USB PHY to EHCI:
-
-```c
-static int sun4i_usb_phy_init(struct phy *phy) {
-    ...
-#ifdef CONFIG_USB_MUSB_SUNXI
-  /* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
-  if (usb_phy->id != 0)
-    sun4i_usb_phy_passby(phy, true);
-
-  /* Route PHY0 to MUSB to allow USB gadget */
-  if (data->cfg->phy0_dual_route)
-    sun4i_usb_phy0_reroute(data, true);
-#else
-  sun4i_usb_phy_passby(phy, true);
-
-  /* Route PHY0 to HCI to allow USB host */
-  if (data->cfg->phy0_dual_route)
-    sun4i_usb_phy0_reroute(data, false);
-#endif
-```
-
-[(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
 
@@ -465,6 +473,24 @@ config USB_MUSB_SUNXI
 ```
 
 [(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/Kconfig#L68-L75)
+
+Sunxi Board
+
+-   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+
+Generic EHCI Driver
+
+-   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
+
+USB PHY Power Doc
+
+-   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
+
+USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+-   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+-   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
 # Output Log
 
