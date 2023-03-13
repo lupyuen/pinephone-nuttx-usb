@@ -331,21 +331,21 @@ Today we'll talk only about __Port USB1__ (EHCI / Non-OTG), since it's connected
 
 # Power On the USB Controller
 
-TODO: Earlier we found the USB Drivers for PinePhone...
+Earlier we [searched for the USB Drivers](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader) for PinePhone and found these...
 
--   __EHCI0 and EHCI1 (Enhanced Host Controller Interface):__ "allwinner,sun50i-a64-ehci", "generic-ehci"
+-   __EHCI0 and EHCI1 (Enhanced Host Controller Interface):__ 
 
     [usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c#L160)
 
--   __USB OTG (On-The-Go):__ "allwinner,sun8i-a33-musb"
-
-    [usb/musb-new/sunxi.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/sunxi.c#L527)
-
--   __USB PHY (Physical Layer):__ "allwinner,sun50i-a64-usb-phy"
+-   __USB PHY (Physical Layer):__
 
     [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
 
-TODO: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+We dropped the USB OTG Driver because we're only interested in the [EHCI Driver (Non-OTG)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-enhanced-host-controller-interface-vs-on-the-go) for PinePhone.
+
+The USB PHY Driver handles the Physical Layer (physical wires) that connect to the USB Controller.
+
+To power on the USB Controller ourselves, let's look inside the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
 ```c
 static int sun4i_usb_phy_init(struct phy *phy)
