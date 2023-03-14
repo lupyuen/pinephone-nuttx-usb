@@ -492,6 +492,90 @@ USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.co
 
 -   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
+## Enable USB Clocks
+
+TODO
+
+[sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+
+```text
+usbphy: phy@1c19400 {
+  reg = <0x01c19400 0x14>,
+    <0x01c1a800 0x4>,
+    <0x01c1b800 0x4>;
+  reg-names = "phy_ctrl",
+    "pmu0",
+    "pmu1";
+  clocks = <&ccu CLK_USB_PHY0>,
+    <&ccu CLK_USB_PHY1>;
+  clock-names = "usb0_phy",
+    "usb1_phy";
+  resets = <&ccu RST_USB_PHY0>,
+    <&ccu RST_USB_PHY1>;
+  reset-names = "usb0_reset",
+    "usb1_reset";
+  ...
+
+ehci0: usb@1c1a000 {
+  reg = <0x01c1a000 0x100>;
+  clocks = <&ccu CLK_BUS_OHCI0>,
+    <&ccu CLK_BUS_EHCI0>,
+    <&ccu CLK_USB_OHCI0>;
+  resets = <&ccu RST_BUS_OHCI0>,
+    <&ccu RST_BUS_EHCI0>;
+  ...
+
+ehci1: usb@1c1b000 {
+  reg = <0x01c1b000 0x100>;
+  clocks = <&ccu CLK_BUS_OHCI1>,
+    <&ccu CLK_BUS_EHCI1>,
+    <&ccu CLK_USB_OHCI1>;
+  resets = <&ccu RST_BUS_OHCI1>,
+    <&ccu RST_BUS_EHCI1>;
+```
+
+## Deassert Reset
+
+TODO
+
+[sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+
+```text
+usbphy: phy@1c19400 {
+  reg = <0x01c19400 0x14>,
+    <0x01c1a800 0x4>,
+    <0x01c1b800 0x4>;
+  reg-names = "phy_ctrl",
+    "pmu0",
+    "pmu1";
+  clocks = <&ccu CLK_USB_PHY0>,
+    <&ccu CLK_USB_PHY1>;
+  clock-names = "usb0_phy",
+    "usb1_phy";
+  resets = <&ccu RST_USB_PHY0>,
+    <&ccu RST_USB_PHY1>;
+  reset-names = "usb0_reset",
+    "usb1_reset";
+  ...
+
+ehci0: usb@1c1a000 {
+  reg = <0x01c1a000 0x100>;
+  clocks = <&ccu CLK_BUS_OHCI0>,
+    <&ccu CLK_BUS_EHCI0>,
+    <&ccu CLK_USB_OHCI0>;
+  resets = <&ccu RST_BUS_OHCI0>,
+    <&ccu RST_BUS_EHCI0>;
+  ...
+
+ehci1: usb@1c1b000 {
+  reg = <0x01c1b000 0x100>;
+  clocks = <&ccu CLK_BUS_OHCI1>,
+    <&ccu CLK_BUS_EHCI1>,
+    <&ccu CLK_USB_OHCI1>;
+  resets = <&ccu RST_BUS_OHCI1>,
+    <&ccu RST_BUS_EHCI1>;
+```
+
 # Output Log
 
 ```text
