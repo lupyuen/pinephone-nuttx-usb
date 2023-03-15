@@ -423,7 +423,7 @@ TODO
 	}
 ```
 
-TODO: Route USB PHY to EHCI
+TODO: Enable / Disable USB PHY Passby, Route USB PHY to EHCI
 
 TODO: If CONFIG_USB_MUSB_SUNXI
 
@@ -438,7 +438,7 @@ TODO: If CONFIG_USB_MUSB_SUNXI
 		sun4i_usb_phy0_reroute(data, true);
 ```
 
-TODO: Not CONFIG_USB_MUSB_SUNXI
+TODO: If Not CONFIG_USB_MUSB_SUNXI
 
 ```c
 #else
@@ -452,6 +452,10 @@ TODO: Not CONFIG_USB_MUSB_SUNXI
 	return 0;
 }
 ```
+
+TODO: What's `usb_phy->id`?
+
+TODO: What's `data->cfg->phy0_dual_route`?
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
 
@@ -492,9 +496,17 @@ USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.co
 
 -   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
-## Enable USB Clocks
+## USB Controller Clocks
 
-TODO
+TODO: USB Clocks are...
+
+usb0_phy: CLK_USB_PHY0
+
+usb1_phy: CLK_USB_PHY1
+
+CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0 (Why repeated?)
+
+CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1 (Why repeated?)
 
 [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
@@ -534,9 +546,17 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
-## Deassert Reset
+## USB Controller Reset
 
-TODO
+TODO: USB Resets are...
+
+usb0_reset: RST_USB_PHY0
+
+usb1_reset: RST_USB_PHY1
+
+RST_BUS_OHCI0, RST_BUS_EHCI0, 
+
+RST_BUS_OHCI1, RST_BUS_EHCI1
 
 [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
