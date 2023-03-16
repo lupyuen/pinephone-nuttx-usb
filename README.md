@@ -388,6 +388,8 @@ TODO: If PMU and Clear?
 
 TODO: If sun8i_a83t_phy or sun50i_h6_phy
 
+(PinePhone is sun50i_a64_phy)
+
 ```c
 	if (data->cfg->type == sun8i_a83t_phy ||
 	    data->cfg->type == sun50i_h6_phy) {
@@ -400,6 +402,8 @@ TODO: If sun8i_a83t_phy or sun50i_h6_phy
 ```
 
 TODO: If neither sun8i_a83t_phy nor sun50i_h6_phy
+
+(PinePhone is sun50i_a64_phy)
 
 ```c
 	} else {
@@ -455,7 +459,7 @@ TODO: If Not CONFIG_USB_MUSB_SUNXI
 
 TODO: What's `usb_phy->id`?
 
-TODO: What's `data->cfg->phy0_dual_route`?
+`phy0_dual_route` is true for PinePhone
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
 
@@ -495,6 +499,22 @@ USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.co
 -   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
 -   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+## USB Controller Configuration
+
+TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
+
+```c
+static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
+	.num_phys = 2,
+	.type = sun50i_a64_phy,
+	.disc_thresh = 3,
+	.phyctl_offset = REG_PHYCTL_A33,
+	.dedicated_clocks = true,
+	.hci_phy_ctl_clear = PHY_CTL_H3_SIDDQ,
+	.phy0_dual_route = true,
+};
+```
 
 ## USB Controller Clocks
 
