@@ -376,7 +376,7 @@ TODO: Deassert Reset
 	}
 ```
 
-TODO: If PMU and Clear?
+TODO: If PMU and Clear
 
 ```c
 	if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
@@ -385,6 +385,10 @@ TODO: If PMU and Clear?
 		writel(val, usb_phy->pmu + REG_HCI_PHY_CTL);
 	}
 ```
+
+TODO: What's `usb_phy->pmu`?
+
+`data->cfg->hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is (1 << 1)
 
 TODO: If sun8i_a83t_phy or sun50i_h6_phy
 
