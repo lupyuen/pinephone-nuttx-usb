@@ -570,6 +570,14 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
+TODO: Enable Clocks
+
+[sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+```c
+  ret = clk_enable(&usb_phy->clocks);
+```
+
 ## USB Controller Reset
 
 TODO: USB Resets are...
@@ -618,6 +626,12 @@ ehci1: usb@1c1b000 {
     <&ccu CLK_USB_OHCI1>;
   resets = <&ccu RST_BUS_OHCI1>,
     <&ccu RST_BUS_EHCI1>;
+```
+
+TODO: Deassert Reset
+
+```c
+  ret = reset_deassert(&usb_phy->resets);
 ```
 
 # Output Log
