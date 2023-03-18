@@ -341,7 +341,7 @@ Earlier we [searched for the USB Drivers](https://github.com/lupyuen/pinephone-n
 
     [phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L654)
 
-We dropped the USB OTG Driver because we're only interested in the [EHCI Driver (Non-OTG)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-enhanced-host-controller-interface-vs-on-the-go) for PinePhone.
+We disregard the USB OTG Driver because we're only interested in the [EHCI Driver (Non-OTG)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-enhanced-host-controller-interface-vs-on-the-go) for PinePhone.
 
 The USB PHY Driver handles the Physical Layer (physical wires) that connect to the USB Controller.
 
@@ -376,7 +376,7 @@ TODO: Deassert Reset
   }
 ```
 
-TODO: If PMU and Clear
+TODO: Is PMU needed for PinePhone USB PHY?
 
 ```c
   if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
@@ -386,13 +386,9 @@ TODO: If PMU and Clear
   }
 ```
 
-TODO: What's `usb_phy->pmu`?
+`hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is (1 << 1)
 
-`data->cfg->hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is (1 << 1)
-
-TODO: If sun8i_a83t_phy or sun50i_h6_phy
-
-(PinePhone is sun50i_a64_phy)
+We skip this part because PinePhone is `sun50i_a64_phy`...
 
 ```c
   if (data->cfg->type == sun8i_a83t_phy ||
@@ -405,9 +401,7 @@ TODO: If sun8i_a83t_phy or sun50i_h6_phy
     }
 ```
 
-TODO: If neither sun8i_a83t_phy nor sun50i_h6_phy
-
-(PinePhone is sun50i_a64_phy)
+PinePhone is `sun50i_a64_phy`, so we run this...
 
 ```c
   } else {
@@ -415,11 +409,7 @@ TODO: If neither sun8i_a83t_phy nor sun50i_h6_phy
       sun4i_usb_phy_write(phy, PHY_RES45_CAL_EN,
               PHY_RES45_CAL_DATA,
               PHY_RES45_CAL_LEN);
-```
 
-TODO
-
-```c
     /* Adjust PHY's magnitude and rate */
     sun4i_usb_phy_write(phy, PHY_TX_AMPLITUDE_TUNE,
             PHY_TX_MAGNITUDE | PHY_TX_RATE,
@@ -433,7 +423,7 @@ TODO
 
 TODO: Enable / Disable USB PHY Passby, Route USB PHY to EHCI
 
-TODO: If CONFIG_USB_MUSB_SUNXI
+Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip this part...
 
 ```c
 #ifdef CONFIG_USB_MUSB_SUNXI
@@ -446,7 +436,7 @@ TODO: If CONFIG_USB_MUSB_SUNXI
     sun4i_usb_phy0_reroute(data, true);
 ```
 
-TODO: If Not CONFIG_USB_MUSB_SUNXI
+Since `CONFIG_USB_MUSB_SUNXI` is undefined, we run this...
 
 ```c
 #else
@@ -463,15 +453,17 @@ TODO: If Not CONFIG_USB_MUSB_SUNXI
 
 TODO: What's `usb_phy->id`?
 
-`phy0_dual_route` is true for PinePhone
+`phy0_dual_route` is true for PinePhone.
 
-Assume `CONFIG_USB_MUSB_SUNXI` is undefined.
+`sun4i_usb_phy_passby` and `sun4i_usb_phy0_reroute` are defined here...
 
 -   [sun4i_usb_phy_passby](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L190-L215)
 
 -   [sun4i_usb_phy0_reroute](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L244-L257)
 
-`CONFIG_USB_MUSB_SUNXI`:
+_What's `CONFIG_USB_MUSB_SUNXI`?_
+
+`CONFIG_USB_MUSB_SUNXI` enables support for the Mentor Graphics OTG / DRC USB Controller...
 
 ```text
 config USB_MUSB_SUNXI
@@ -486,23 +478,7 @@ config USB_MUSB_SUNXI
 
 [(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/Kconfig#L68-L75)
 
-Sunxi Board
-
--   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
-
-Generic EHCI Driver
-
--   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
-
-USB PHY Power Doc
-
--   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
-
-USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
-
--   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
-
--   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+We'll disable `CONFIG_USB_MUSB_SUNXI` because we won't be using USB OTG for NuttX (yet).
 
 ## USB Controller Configuration
 
@@ -633,6 +609,28 @@ TODO: Deassert Reset
 ```c
   ret = reset_deassert(&usb_phy->resets);
 ```
+
+# TODO
+
+TODO
+
+Sunxi Board
+
+-   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
+
+Generic EHCI Driver
+
+-   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
+
+USB PHY Power Doc
+
+-   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
+
+USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
+
+-   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+-   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
 # Output Log
 
