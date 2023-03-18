@@ -521,6 +521,18 @@ static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
 
 # USB Controller Clocks
 
+Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller).
+
+TODO: Enable Clocks
+
+[sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+```c
+  ret = clk_enable(&usb_phy->clocks);
+```
+
+_What's `usb_phy->clocks`?_
+
 TODO: USB Clocks are...
 
 usb0_phy: CLK_USB_PHY0
@@ -569,15 +581,17 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
-TODO: Enable Clocks
+# USB Controller Reset
 
-[sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller).
+
+TODO: Deassert Reset
 
 ```c
-  ret = clk_enable(&usb_phy->clocks);
+  ret = reset_deassert(&usb_phy->resets);
 ```
 
-# USB Controller Reset
+_What's `usb_phy->resets`?_
 
 TODO: USB Resets are...
 
@@ -625,12 +639,6 @@ ehci1: usb@1c1b000 {
     <&ccu CLK_USB_OHCI1>;
   resets = <&ccu RST_BUS_OHCI1>,
     <&ccu RST_BUS_EHCI1>;
-```
-
-TODO: Deassert Reset
-
-```c
-  ret = reset_deassert(&usb_phy->resets);
 ```
 
 # TODO
