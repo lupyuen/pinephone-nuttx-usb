@@ -365,7 +365,7 @@ static int sun4i_usb_phy_init(struct phy *phy)
 
 In the code above we enable the USB Clocks. We'll explain here...
 
--   ["USB Controller Clocs"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
+-   ["USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
 
 Then we deassert the USB Reset GPIOs...
 
@@ -521,11 +521,11 @@ static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
 
 # USB Controller Clocks
 
-Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller).
+Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)...
 
-TODO: Enable Clocks
+-   ["Power On the USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)
 
-[sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+And we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L266-L271)
 
 ```c
   ret = clk_enable(&usb_phy->clocks);
@@ -585,9 +585,11 @@ ehci1: usb@1c1b000 {
 
 # USB Controller Reset
 
-Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller).
+Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)...
 
-TODO: Deassert Reset
+-   ["Power On the USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)
+
+And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
 
 ```c
   ret = reset_deassert(&usb_phy->resets);
