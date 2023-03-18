@@ -363,9 +363,11 @@ static int sun4i_usb_phy_init(struct phy *phy)
   }
 ```
 
-TODO: Enable Clocks
+In the code above we enable the USB Clocks. We'll explain here...
 
-TODO: Deassert Reset
+-   ["USB Controller Clocs"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
+
+Then we deassert the USB Reset GPIOs...
 
 ```c
   ret = reset_deassert(&usb_phy->resets);
@@ -376,7 +378,11 @@ TODO: Deassert Reset
   }
 ```
 
-TODO: Is PMU needed for PinePhone USB PHY?
+We'll explain the USB Reset here...
+
+-   ["USB Controller Reset"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset)
+
+TODO: Is PMU needed for PinePhone USB PHY? If so, we run this...
 
 ```c
   if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
@@ -388,9 +394,10 @@ TODO: Is PMU needed for PinePhone USB PHY?
 
 `hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is (1 << 1)
 
-We skip this part because PinePhone is `sun50i_a64_phy`...
+We skip the next part because PinePhone is `sun50i_a64_phy`...
 
 ```c
+  // Skip this part because PinePhone is `sun50i_a64_phy`
   if (data->cfg->type == sun8i_a83t_phy ||
       data->cfg->type == sun50i_h6_phy) {
     if (phy->id == 0) {
@@ -401,7 +408,7 @@ We skip this part because PinePhone is `sun50i_a64_phy`...
     }
 ```
 
-PinePhone is `sun50i_a64_phy`, so we run this...
+PinePhone is `sun50i_a64_phy`, so we run this instead...
 
 ```c
   } else {
@@ -421,9 +428,17 @@ PinePhone is `sun50i_a64_phy`, so we run this...
   }
 ```
 
-TODO: Enable / Disable USB PHY Passby, Route USB PHY to EHCI
+Which will...
 
-Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip this part...
+-   Set PHY_RES45_CAL (what's this?)
+
+-   Set USB PHY Magnitude and Rate
+
+-   Disconnect USB PHY Threshold Adjustment
+
+TODO: What's `usb_phy->id`?
+
+Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip the next part...
 
 ```c
 #ifdef CONFIG_USB_MUSB_SUNXI
@@ -436,7 +451,7 @@ Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip this part...
     sun4i_usb_phy0_reroute(data, true);
 ```
 
-Since `CONFIG_USB_MUSB_SUNXI` is undefined, we run this...
+Since `CONFIG_USB_MUSB_SUNXI` is undefined, we run this instead...
 
 ```c
 #else
@@ -450,6 +465,12 @@ Since `CONFIG_USB_MUSB_SUNXI` is undefined, we run this...
   return 0;
 }
 ```
+
+Which will...
+
+-   Enable USB PHY Bypass
+
+-   Route USB PHY0 to EHCI (to support USB host)
 
 TODO: What's `usb_phy->id`?
 
@@ -480,7 +501,7 @@ config USB_MUSB_SUNXI
 
 We'll disable `CONFIG_USB_MUSB_SUNXI` because we won't be using USB OTG for NuttX (yet).
 
-## USB Controller Configuration
+# USB Controller Configuration
 
 TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
 
@@ -496,7 +517,7 @@ static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
 };
 ```
 
-## USB Controller Clocks
+# USB Controller Clocks
 
 TODO: USB Clocks are...
 
@@ -554,7 +575,7 @@ TODO: Enable Clocks
   ret = clk_enable(&usb_phy->clocks);
 ```
 
-## USB Controller Reset
+# USB Controller Reset
 
 TODO: USB Resets are...
 
