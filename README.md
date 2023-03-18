@@ -384,7 +384,9 @@ We'll explain the USB Reset here...
 
 We assume that PMU is not needed for PinePhone Port USB1. (According to the PinePhone Schematic)
 
-So we skip the next part...
+[(FYI: PinePhone Port USB0 is connected to the PMIC, according to PinePhone Schematic Page 6)](https://files.pine64.org/doc/PinePhone/PinePhone%20v1.2b%20Released%20Schematic.pdf)
+
+Since PMU is not needed, we skip this part...
 
 ```c
   // Skip this part because PMU is not needed for PinePhone Port USB1.
@@ -396,7 +398,7 @@ So we skip the next part...
   }
 ```
 
-We skip the next part because PinePhone is `sun50i_a64_phy`...
+PinePhone is `sun50i_a64_phy`, so we skip this part...
 
 ```c
   // Skip this part because PinePhone is `sun50i_a64_phy`
@@ -432,7 +434,7 @@ PinePhone is `sun50i_a64_phy`, so we run this instead...
 
 Which will...
 
--   Set PHY_RES45_CAL (what's this?)
+-   Set PHY_RES45_CAL (TODO: What's this?)
 
 -   Set USB PHY Magnitude and Rate
 
@@ -440,7 +442,7 @@ Which will...
 
 TODO: For Port USB1, is `usb_phy->id` set to 1?
 
-Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip the next part...
+Assume `CONFIG_USB_MUSB_SUNXI` is undefined. So we skip this part...
 
 ```c
 #ifdef CONFIG_USB_MUSB_SUNXI
@@ -453,7 +455,7 @@ Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip the next part...
     sun4i_usb_phy0_reroute(data, true);
 ```
 
-Since `CONFIG_USB_MUSB_SUNXI` is undefined, we run this instead...
+`CONFIG_USB_MUSB_SUNXI` is undefined, so we run this instead...
 
 ```c
 #else
