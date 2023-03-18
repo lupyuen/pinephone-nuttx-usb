@@ -581,6 +581,8 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
+(CCU means Clock Control Unit)
+
 # USB Controller Reset
 
 Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller).
