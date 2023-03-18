@@ -503,7 +503,7 @@ config USB_MUSB_SUNXI
 
 [(Source)](https://github.com/u-boot/u-boot/blob/master/drivers/usb/musb-new/Kconfig#L68-L75)
 
-We'll disable `CONFIG_USB_MUSB_SUNXI` because we won't be using USB OTG for NuttX (yet).
+We assume `CONFIG_USB_MUSB_SUNXI` is disabled because we won't be using USB OTG for NuttX (yet).
 
 # USB Controller Clocks
 
@@ -517,6 +517,8 @@ And we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https
   ret = clk_enable(&usb_phy->clocks);
 ```
 
+[(`clk_enable` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L58-L61)
+
 _What's `usb_phy->clocks`?_
 
 According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader), the USB Clocks are...
@@ -525,9 +527,13 @@ According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nu
 
 -   usb1_phy: CLK_USB_PHY1
 
--   CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0 (Why repeated?)
+-   CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
 
--   CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1 (Why repeated?)
+    (TODO: Why repeated?)
+
+-   CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
+
+    (TODO: Why repeated?)
 
 Here's the definition in the PinePhone Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
@@ -569,6 +575,8 @@ ehci1: usb@1c1b000 {
 
 (CCU means Clock Control Unit)
 
+TODO: What are the values?
+
 # USB Controller Reset
 
 Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)...
@@ -580,6 +588,8 @@ And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init
 ```c
   ret = reset_deassert(&usb_phy->resets);
 ```
+
+[(`reset_deassert` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L66-L69)
 
 _What's `usb_phy->resets`?_
 
@@ -630,6 +640,8 @@ ehci1: usb@1c1b000 {
   resets = <&ccu RST_BUS_OHCI1>,
     <&ccu RST_BUS_EHCI1>;
 ```
+
+TODO: What are the values?
 
 # USB Controller Configuration
 
