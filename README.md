@@ -440,12 +440,13 @@ Which will...
 
 -   Disconnect USB PHY Threshold Adjustment
 
-TODO: For Port USB1, is `usb_phy->id` set to 1?
+    (We assume `usb_phy->id` is set to 1, because PinePhone has only 1 USB PHY)
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined. So we skip this part...
 
 ```c
 #ifdef CONFIG_USB_MUSB_SUNXI
+  // Skip this part because `CONFIG_USB_MUSB_SUNXI` is undefined
   /* Needed for HCI and conflicts with MUSB, keep PHY0 on MUSB */
   if (usb_phy->id != 0)
     sun4i_usb_phy_passby(phy, true);
@@ -474,11 +475,9 @@ Which will...
 
 -   Enable USB PHY Bypass
 
--   Route USB PHY0 to EHCI (to support USB host)
+-   Route USB PHY0 to EHCI (instead of Mentor Graphics OTG MUSB)
 
     (`phy0_dual_route` is true for PinePhone)
-
-TODO: For Port USB1, is `usb_phy->id` set to 1?
 
 `sun4i_usb_phy_passby` and `sun4i_usb_phy0_reroute` are defined here...
 
@@ -505,22 +504,6 @@ config USB_MUSB_SUNXI
 
 We'll disable `CONFIG_USB_MUSB_SUNXI` because we won't be using USB OTG for NuttX (yet).
 
-# USB Controller Configuration
-
-TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
-
-```c
-static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
-  .num_phys = 2,
-  .type = sun50i_a64_phy,
-  .disc_thresh = 3,
-  .phyctl_offset = REG_PHYCTL_A33,
-  .dedicated_clocks = true,
-  .hci_phy_ctl_clear = PHY_CTL_H3_SIDDQ,
-  .phy0_dual_route = true,
-};
-```
-
 # USB Controller Clocks
 
 Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)...
@@ -535,7 +518,7 @@ And we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https
 
 _What's `usb_phy->clocks`?_
 
-TODO: USB Clocks are...
+TODO: According to the PinePhone Device Tree, the USB Clocks are...
 
 usb0_phy: CLK_USB_PHY0
 
@@ -599,7 +582,7 @@ And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init
 
 _What's `usb_phy->resets`?_
 
-TODO: USB Resets are...
+TODO: According to the PinePhone Device Tree, the USB Resets are...
 
 usb0_reset: RST_USB_PHY0
 
@@ -647,25 +630,27 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
+# USB Controller Configuration
+
+TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
+
+```c
+static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
+  .num_phys = 2,
+  .type = sun50i_a64_phy,
+  .disc_thresh = 3,
+  .phyctl_offset = REG_PHYCTL_A33,
+  .dedicated_clocks = true,
+  .hci_phy_ctl_clear = PHY_CTL_H3_SIDDQ,
+  .phy0_dual_route = true,
+};
+```
+
 # TODO
 
 TODO
 
-Sunxi Board
-
--   [u-boot/board/sunxi/board.c](https://github.com/u-boot/u-boot/blob/master/board/sunxi/board.c#L676)
-
-Generic EHCI Driver
-
--   [u-boot/drivers/usb/host/ehci-generic.c](https://github.com/u-boot/u-boot/blob/master/drivers/usb/host/ehci-generic.c)
-
-USB PHY Power Doc
-
--   [u-boot/doc/device-tree-bindings/phy/sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
-
-USB PHY Driver: [u-boot/drivers/phy/allwinner/phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
-
--   [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+-   USB PHY Power Doc: [sun4i-usb-phy.txt](https://github.com/u-boot/u-boot/blob/master/doc/device-tree-bindings/phy/sun4i-usb-phy.txt)
 
 -   [sun4i_usb_phy_power_on](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L217-L231)
 
