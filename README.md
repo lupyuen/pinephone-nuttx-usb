@@ -382,17 +382,19 @@ We'll explain the USB Reset here...
 
 -   ["USB Controller Reset"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset)
 
-TODO: Is PMU needed for PinePhone USB PHY? If so, we run this...
+We assume that PMU is not needed for PinePhone Port USB1. (According to the PinePhone Schematic)
+
+So we skip the next part...
 
 ```c
+  // Skip this part because PMU is not needed for PinePhone Port USB1.
+  // FYI: `hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is `1 << 1`
   if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
     val = readl(usb_phy->pmu + REG_HCI_PHY_CTL);
     val &= ~data->cfg->hci_phy_ctl_clear;
     writel(val, usb_phy->pmu + REG_HCI_PHY_CTL);
   }
 ```
-
-`hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is (1 << 1)
 
 We skip the next part because PinePhone is `sun50i_a64_phy`...
 
@@ -436,7 +438,7 @@ Which will...
 
 -   Disconnect USB PHY Threshold Adjustment
 
-TODO: What's `usb_phy->id`?
+TODO: For Port USB1, is `usb_phy->id` set to 1?
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined. We skip the next part...
 
@@ -472,9 +474,9 @@ Which will...
 
 -   Route USB PHY0 to EHCI (to support USB host)
 
-TODO: What's `usb_phy->id`?
+    (`phy0_dual_route` is true for PinePhone)
 
-`phy0_dual_route` is true for PinePhone.
+TODO: For Port USB1, is `usb_phy->id` set to 1?
 
 `sun4i_usb_phy_passby` and `sun4i_usb_phy0_reroute` are defined here...
 
