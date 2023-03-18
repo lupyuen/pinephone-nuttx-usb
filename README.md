@@ -391,6 +391,7 @@ Since PMU is not needed, we skip this part...
 ```c
   // Skip this part because PMU is not needed for PinePhone Port USB1.
   // FYI: `hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is `1 << 1`
+  // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-configuration
   if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
     val = readl(usb_phy->pmu + REG_HCI_PHY_CTL);
     val &= ~data->cfg->hci_phy_ctl_clear;
@@ -477,7 +478,7 @@ Which will...
 
 -   Route USB PHY0 to EHCI (instead of Mentor Graphics OTG MUSB)
 
-    (`phy0_dual_route` is true for PinePhone)
+    [(`phy0_dual_route` is true for PinePhone)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-configuration)
 
 `sun4i_usb_phy_passby` and `sun4i_usb_phy0_reroute` are defined here...
 
@@ -518,17 +519,17 @@ And we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https
 
 _What's `usb_phy->clocks`?_
 
-TODO: According to the PinePhone Device Tree, the USB Clocks are...
+According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader), the USB Clocks are...
 
-usb0_phy: CLK_USB_PHY0
+-   usb0_phy: CLK_USB_PHY0
 
-usb1_phy: CLK_USB_PHY1
+-   usb1_phy: CLK_USB_PHY1
 
-CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0 (Why repeated?)
+-   CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0 (Why repeated?)
 
-CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1 (Why repeated?)
+-   CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1 (Why repeated?)
 
-[sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+Here's the definition in the PinePhone Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
 ```text
 usbphy: phy@1c19400 {
@@ -582,17 +583,17 @@ And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init
 
 _What's `usb_phy->resets`?_
 
-TODO: According to the PinePhone Device Tree, the USB Resets are...
+According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader), the USB Resets are...
 
-usb0_reset: RST_USB_PHY0
+-   usb0_reset: RST_USB_PHY0
 
-usb1_reset: RST_USB_PHY1
+-   usb1_reset: RST_USB_PHY1
 
-RST_BUS_OHCI0, RST_BUS_EHCI0, 
+-   RST_BUS_OHCI0, RST_BUS_EHCI0, 
 
-RST_BUS_OHCI1, RST_BUS_EHCI1
+-   RST_BUS_OHCI1, RST_BUS_EHCI1
 
-[sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+Here's the definition in the PinePhone Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
 ```text
 usbphy: phy@1c19400 {
@@ -645,6 +646,8 @@ static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
   .phy0_dual_route = true,
 };
 ```
+
+(`PHY_CTL_H3_SIDDQ` is `1 << 1`)
 
 # TODO
 
