@@ -520,19 +520,32 @@ _What's `usb_phy->clocks`?_
 
 According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader), the USB Clocks are...
 
--   usb0_phy: CLK_USB_PHY0
+-   __usb0_phy:__ CLK_USB_PHY0
 
--   usb1_phy: CLK_USB_PHY1
+-   __usb1_phy:__ CLK_USB_PHY1
 
--   CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
+-   __EHCI0:__ CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
 
-    (TODO: Why repeated?)
+-   __EHCI1:__ CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
 
--   CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
+_What are the values of the above USB Clocks?_
 
-    (TODO: Why repeated?)
+According to [sun50i-a64-ccu.h](https://github.com/u-boot/u-boot/blob/master/include/dt-bindings/clock/sun50i-a64-ccu.h)...
 
-Here's the definition in the PinePhone Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+```c
+#define CLK_BUS_EHCI0		42
+#define CLK_BUS_EHCI1		43
+#define CLK_BUS_OHCI0		44
+#define CLK_BUS_OHCI1		45
+#define CLK_USB_PHY0		86
+#define CLK_USB_PHY1		87
+#define CLK_USB_OHCI0		91
+#define CLK_USB_OHCI1		93
+```
+
+Which are consistent with the values in the PinePhone JumpDrive Device Tree: [sun50i-a64-pinephone-1.2.dts](https://github.com/lupyuen/pinephone-nuttx/blob/main/sun50i-a64-pinephone-1.2.dts#L661-L721)
+
+Here's the definition in our U-Boot Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
 ```text
 usbphy: phy@1c19400 {
@@ -550,13 +563,7 @@ usbphy: phy@1c19400 {
   clock-names = 
     "usb0_phy",
     "usb1_phy";
-  resets = 
-    <&ccu RST_USB_PHY0>,
-    <&ccu RST_USB_PHY1>;
-  reset-names = 
-    "usb0_reset",
-    "usb1_reset";
-  ...
+    ...
 
 ehci0: usb@1c1a000 {
   reg = <0x01c1a000 0x100>;
@@ -564,10 +571,7 @@ ehci0: usb@1c1a000 {
     <&ccu CLK_BUS_OHCI0>,
     <&ccu CLK_BUS_EHCI0>,
     <&ccu CLK_USB_OHCI0>;
-  resets = 
-    <&ccu RST_BUS_OHCI0>,
-    <&ccu RST_BUS_EHCI0>;
-  ...
+    ...
 
 ehci1: usb@1c1b000 {
   reg = <0x01c1b000 0x100>;
@@ -609,8 +613,6 @@ According to the Allwinner A64 User Manual (Memory Mapping, Page 73)...
 -   pmu1: `0x01c1` `b800` (Offset `0x4`)
 
     For USB-EHCI0 (USB Port 1)
-
-TODO: What are the values?
 
 # USB Controller Reset
 
@@ -686,7 +688,7 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
-TODO: What are the values?
+TODO: What are the values? RST_USB_PHY1, RST_BUS_OHCI1, RST_BUS_EHCI1
 
 # USB Controller Configuration
 
