@@ -382,15 +382,10 @@ We'll explain the USB Reset here...
 
 -   ["USB Controller Reset"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset)
 
-We assume that PMU is not needed for PinePhone Port USB1. (According to the PinePhone Schematic)
-
-[(FYI: PinePhone Port USB0 is connected to the PMIC, according to PinePhone Schematic Page 6)](https://files.pine64.org/doc/PinePhone/PinePhone%20v1.2b%20Released%20Schematic.pdf)
-
-Since PMU is not needed, we skip this part...
+TODO: Is PMU is needed for PinePhone Port USB1? If PMU is not needed, we skip this part...
 
 ```c
-  // Skip this part because PMU is not needed for PinePhone Port USB1.
-  // FYI: `hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is `1 << 1`
+  // `hci_phy_ctl_clear` is `PHY_CTL_H3_SIDDQ`, which is `1 << 1`
   // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-configuration
   if (usb_phy->pmu && data->cfg->hci_phy_ctl_clear) {
     val = readl(usb_phy->pmu + REG_HCI_PHY_CTL);
@@ -398,6 +393,8 @@ Since PMU is not needed, we skip this part...
     writel(val, usb_phy->pmu + REG_HCI_PHY_CTL);
   }
 ```
+
+[(FYI: PinePhone Port USB0 is connected to the PMIC, according to PinePhone Schematic Page 6)](https://files.pine64.org/doc/PinePhone/PinePhone%20v1.2b%20Released%20Schematic.pdf)
 
 PinePhone is `sun50i_a64_phy`, so we skip this part...
 
@@ -441,7 +438,7 @@ Which will...
 
 -   Disconnect USB PHY Threshold Adjustment
 
-    (We assume `usb_phy->id` is set to 1, because PinePhone has only 1 USB PHY)
+TODO: Is `usb_phy->id` set to 1 for USB Port 1?
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined. So we skip this part...
 
@@ -584,6 +581,34 @@ ehci1: usb@1c1b000 {
 ```
 
 (CCU means Clock Control Unit)
+
+_What are the USB PHY Reg Values from above?_
+
+```text
+usbphy: phy@1c19400 {
+  reg = 
+    <0x01c19400 0x14>,
+    <0x01c1a800 0x4>,
+    <0x01c1b800 0x4>;
+  reg-names = 
+    "phy_ctrl",
+    "pmu0",
+    "pmu1";
+```
+
+According to the Allwinner A64 User Manual (Memory Mapping, Page 73)...
+
+-   phy_ctrl: `0x01c1` `9400` (Offset `0x14`)
+
+    For USB-OTG-Device (USB Port 0)
+
+-   pmu0: `0x01c1` `a800` (Offset `0x4`)
+
+    For USB-OTG-EHCI (USB Port 0)
+
+-   pmu1: `0x01c1` `b800` (Offset `0x4`)
+
+    For USB-EHCI0 (USB Port 1)
 
 TODO: What are the values?
 
