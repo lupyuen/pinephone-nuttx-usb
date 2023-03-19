@@ -239,19 +239,25 @@ usb_otg: usb@1c19000 {
 
 usbphy: phy@1c19400 {
   compatible = "allwinner,sun50i-a64-usb-phy";
-  reg = <0x01c19400 0x14>,
+  reg = 
+    <0x01c19400 0x14>,
     <0x01c1a800 0x4>,
     <0x01c1b800 0x4>;
-  reg-names = "phy_ctrl",
+  reg-names = 
+    "phy_ctrl",
     "pmu0",
     "pmu1";
-  clocks = <&ccu CLK_USB_PHY0>,
+  clocks = 
+    <&ccu CLK_USB_PHY0>,
     <&ccu CLK_USB_PHY1>;
-  clock-names = "usb0_phy",
+  clock-names = 
+    "usb0_phy",
     "usb1_phy";
-  resets = <&ccu RST_USB_PHY0>,
+  resets = 
+    <&ccu RST_USB_PHY0>,
     <&ccu RST_USB_PHY1>;
-  reset-names = "usb0_reset",
+  reset-names = 
+    "usb0_reset",
     "usb1_reset";
   status = "disabled";
   #phy-cells = <1>;
@@ -261,10 +267,12 @@ ehci0: usb@1c1a000 {
   compatible = "allwinner,sun50i-a64-ehci", "generic-ehci";
   reg = <0x01c1a000 0x100>;
   interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-  clocks = <&ccu CLK_BUS_OHCI0>,
+  clocks = 
+    <&ccu CLK_BUS_OHCI0>,
     <&ccu CLK_BUS_EHCI0>,
     <&ccu CLK_USB_OHCI0>;
-  resets = <&ccu RST_BUS_OHCI0>,
+  resets = 
+    <&ccu RST_BUS_OHCI0>,
     <&ccu RST_BUS_EHCI0>;
   phys = <&usbphy 0>;
   phy-names = "usb";
@@ -275,10 +283,12 @@ ehci1: usb@1c1b000 {
   compatible = "allwinner,sun50i-a64-ehci", "generic-ehci";
   reg = <0x01c1b000 0x100>;
   interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
-  clocks = <&ccu CLK_BUS_OHCI1>,
+  clocks = 
+    <&ccu CLK_BUS_OHCI1>,
     <&ccu CLK_BUS_EHCI1>,
     <&ccu CLK_USB_OHCI1>;
-  resets = <&ccu RST_BUS_OHCI1>,
+  resets = 
+    <&ccu RST_BUS_OHCI1>,
     <&ccu RST_BUS_EHCI1>;
   phys = <&usbphy 1>;
   phy-names = "usb";
@@ -530,7 +540,7 @@ According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nu
 
 _What are the values of the above USB Clocks?_
 
-According to [sun50i-a64-ccu.h](https://github.com/u-boot/u-boot/blob/master/include/dt-bindings/clock/sun50i-a64-ccu.h)...
+The USB Clocks are defined in [clock/sun50i-a64-ccu.h](https://github.com/u-boot/u-boot/blob/master/include/dt-bindings/clock/sun50i-a64-ccu.h)...
 
 ```c
 #define CLK_BUS_EHCI0		42
@@ -602,17 +612,17 @@ usbphy: phy@1c19400 {
 
 According to the Allwinner A64 User Manual (Memory Mapping, Page 73)...
 
--   phy_ctrl: `0x01c1` `9400` (Offset `0x14`)
+-   __phy_ctrl:__ `0x01c1` `9400` (Offset `0x14`)
 
-    For USB-OTG-Device (USB Port 0)
+    Belongs to USB-OTG-Device (USB Port 0)
 
--   pmu0: `0x01c1` `a800` (Offset `0x4`)
+-   __pmu0:__ `0x01c1` `a800` (Offset `0x4`)
 
-    For USB-OTG-EHCI (USB Port 0)
+    Belongs to USB-OTG-EHCI (USB Port 0)
 
--   pmu1: `0x01c1` `b800` (Offset `0x4`)
+-   __pmu1:__ `0x01c1` `b800` (Offset `0x4`)
 
-    For USB-EHCI0 (USB Port 1)
+    Belongs to USB-EHCI0 (USB Port 1)
 
 # USB Controller Reset
 
@@ -632,63 +642,52 @@ _What's `usb_phy->resets`?_
 
 According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nuttx-usb#pinephone-usb-drivers-in-u-boot-bootloader), the USB Resets are...
 
--   usb0_reset: RST_USB_PHY0
+-   __usb0_reset:__ RST_USB_PHY0
 
--   usb1_reset: RST_USB_PHY1
+-   __usb1_reset:__ RST_USB_PHY1
 
--   RST_BUS_OHCI0, RST_BUS_EHCI0, 
+-   __EHCI0:__ RST_BUS_OHCI0, RST_BUS_EHCI0, 
 
--   RST_BUS_OHCI1, RST_BUS_EHCI1
+-   __EHCI1:__ RST_BUS_OHCI1, RST_BUS_EHCI1
 
-Here's the definition in the PinePhone Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
+_What are the values of the USB Resets?_
+
+The USB Resets are defined in [reset/sun50i-a64-ccu.h](https://github.com/u-boot/u-boot/blob/master/include/dt-bindings/reset/sun50i-a64-ccu.h)...
+
+```c
+#define RST_USB_PHY0		0
+#define RST_USB_PHY1		1
+#define RST_BUS_EHCI0		19
+#define RST_BUS_EHCI1		20
+#define RST_BUS_OHCI0		21
+#define RST_BUS_OHCI1		22
+```
+
+Which are consistent with the values in the PinePhone JumpDrive Device Tree: [sun50i-a64-pinephone-1.2.dts](https://github.com/lupyuen/pinephone-nuttx/blob/main/sun50i-a64-pinephone-1.2.dts#L661-L721)
+
+Here's the definition in our U-Boot Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
 ```text
 usbphy: phy@1c19400 {
-  reg = 
-    <0x01c19400 0x14>,
-    <0x01c1a800 0x4>,
-    <0x01c1b800 0x4>;
-  reg-names = 
-    "phy_ctrl",
-    "pmu0",
-    "pmu1";
-  clocks = 
-    <&ccu CLK_USB_PHY0>,
-    <&ccu CLK_USB_PHY1>;
-  clock-names = 
-    "usb0_phy",
-    "usb1_phy";
   resets = 
     <&ccu RST_USB_PHY0>,
     <&ccu RST_USB_PHY1>;
   reset-names = 
     "usb0_reset",
     "usb1_reset";
-  ...
+    ...
 
 ehci0: usb@1c1a000 {
-  reg = <0x01c1a000 0x100>;
-  clocks = 
-    <&ccu CLK_BUS_OHCI0>,
-    <&ccu CLK_BUS_EHCI0>,
-    <&ccu CLK_USB_OHCI0>;
   resets = 
     <&ccu RST_BUS_OHCI0>,
     <&ccu RST_BUS_EHCI0>;
-  ...
+    ...
 
 ehci1: usb@1c1b000 {
-  reg = <0x01c1b000 0x100>;
-  clocks = 
-    <&ccu CLK_BUS_OHCI1>,
-    <&ccu CLK_BUS_EHCI1>,
-    <&ccu CLK_USB_OHCI1>;
   resets = 
     <&ccu RST_BUS_OHCI1>,
     <&ccu RST_BUS_EHCI1>;
 ```
-
-TODO: What are the values? RST_USB_PHY1, RST_BUS_OHCI1, RST_BUS_EHCI1
 
 # USB Controller Configuration
 
