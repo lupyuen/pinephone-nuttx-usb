@@ -377,7 +377,7 @@ In the code above we enable the USB Clocks. We'll explain here...
 
 -   ["USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
 
-Then we deassert the USB Reset GPIOs...
+Then we deassert the USB Reset...
 
 ```c
   ret = reset_deassert(&usb_phy->resets);
@@ -632,7 +632,7 @@ Earlier we looked at the Source Code for the [USB PHY Driver for PinePhone](http
 
 -   ["Power On the USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller)
 
-And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
+And we saw this code that will deassert the USB Reset: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
 
 ```c
   ret = reset_deassert(&usb_phy->resets);
@@ -695,21 +695,23 @@ ehci1: usb@1c1b000 {
 
 # Enable USB Controller Clocks
 
-TODO
-
 Earlier we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L266-L271)
 
 ```c
   ret = clk_enable(&usb_phy->clocks);
 ```
 
-[(`clk_enable` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L58-L61)
+[(USB Clocks `usb_phy->clocks` are defined here)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
 
-CCU Register List: Allwinner A64 User Manual, Page 81
+[`clk_enable`](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L58-L61) calls [`sunxi_set_gate`](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L30-L56)
 
-CCU Base Address: `0x01C2` `0000`
+_Which A64 Registers will our NuttX USB Driver set?_
 
-[clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L16-L66)
+Our NuttX USB Driver will set the CCU Registers, defined in Allwinner A64 User Manual, Page 81.
+
+(CCU Base Address is `0x01C2` `0000`)
+
+Based on the [USB Clocks `usb_phy->clocks`)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks), our NuttX USB Driver will set the following CCU Registers: [clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L16-L66)
 
 ```c
 static const struct ccu_clk_gate a64_gates[] = {
@@ -723,23 +725,37 @@ static const struct ccu_clk_gate a64_gates[] = {
   [CLK_USB_OHCI1]		= GATE(0x0cc, BIT(17)),
 ```
 
+So to enable the USB Clock CLK_BUS_EHCI0, we'll set Bit 24 of the CCU Register at `0x060` + `0x01C2` `0000`.
+
+This will be similar to setting SCLK_GATING of DE_CLK_REG as described here...
+
+-   ["Initialising the Allwinner A64 Display Engine"](https://lupyuen.github.io/articles/de#appendix-initialising-the-allwinner-a64-display-engine)
+
 # Reset USB Controller
 
-TODO
-
-Earlier we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
+Earlier we saw this code that will deassert the USB Reset: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
 
 ```c
   ret = reset_deassert(&usb_phy->resets);
 ```
 
-[(`reset_deassert` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L66-L69)
+[(USB Resets `usb_phy->resets` are defined here)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset)
 
-CCU Register List: Allwinner A64 User Manual, Page 81
+[`reset_deassert`](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-uclass.c#L207-L214) calls...
 
-CCU Base Address: `0x01C2` `0000`
+-   [`rst_deassert`](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L71-L75), which calls...
 
-[clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L68-L100)
+-   [`sunxi_reset_deassert`](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L66-L69), which calls...
+
+-   [`sunxi_set_reset`](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L36-L59)
+
+_Which A64 Registers will our NuttX USB Driver set?_
+
+Our NuttX USB Driver will set the CCU Registers, defined in Allwinner A64 User Manual, Page 81.
+
+(CCU Base Address is `0x01C2` `0000`)
+
+Based on the [USB Resets `usb_phy->resets`](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset), our NuttX USB Driver will set the following CCU Registers: [clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L68-L100)
 
 ```c
 static const struct ccu_reset a64_resets[] = {
@@ -750,6 +766,12 @@ static const struct ccu_reset a64_resets[] = {
   [RST_BUS_OHCI0]         = RESET(0x2c0, BIT(28)),
   [RST_BUS_OHCI1]         = RESET(0x2c0, BIT(29)),
 ```
+
+So to deassert the USB Reset RST_USB_PHY0, we'll set Bit 0 of the CCU Register at `0x0cc` + `0x01C2` `0000`.
+
+This will be similar to setting DE_RST of BUS_SOFT_RST_REG1 as described here...
+
+-   ["Initialising the Allwinner A64 Display Engine"](https://lupyuen.github.io/articles/de#appendix-initialising-the-allwinner-a64-display-engine)
 
 # USB Controller Configuration
 
