@@ -45,6 +45,7 @@
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
 // TODO #include "a641020-evk.h"
+#include "arm64_arch.h"
 
 #include <arch/board/board.h>  /* Must always be included last */
 
@@ -127,55 +128,66 @@ static int ehci_waiter(int argc, char *argv[])
 // #define BUS_SOFT_RST_REG1 (A64_CCU_ADDR + 0x02c4)
 // #define DE_RST            (1 << 12)
 
+// Set the bit
 static void set_bit(unsigned long addr, uint8_t bit)
 {
+  _info("0x%lx Bit %d\n", addr, bit);
   modreg32(1 << bit, 1 << bit, addr);
 }
 
+// Enable USB Clocks
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks
 // https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks
-static void a64_usbhost_clk_enable()
+static void a64_usbhost_clk_enable(void)
 {
   // usb0_phy: CLK_USB_PHY0
   // 0x0cc BIT(8)
+  _info("CLK_USB_PHY0\n");
   #define CLK_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
   #define CLK_USB_PHY0_BIT 8
   set_bit(CLK_USB_PHY0, CLK_USB_PHY0_BIT);
 
   // usb1_phy: CLK_USB_PHY1
   // 0x0cc BIT(9)
+  _info("CLK_USB_PHY1\n");
   #define CLK_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
   #define CLK_USB_PHY1_BIT 9
   set_bit(CLK_USB_PHY1, CLK_USB_PHY1_BIT);
 
   // EHCI0: CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
   // 0x060 BIT(28)
+  _info("CLK_BUS_OHCI0\n");
   #define CLK_BUS_OHCI0 (A64_CCU_ADDR + 0x060)
   #define CLK_BUS_OHCI0_BIT 28
   set_bit(CLK_BUS_OHCI0, CLK_BUS_OHCI0_BIT);
 
   // 0x060 BIT(24)
+  _info("CLK_BUS_EHCI0\n");
   #define CLK_BUS_EHCI0 (A64_CCU_ADDR + 0x060)
   #define CLK_BUS_EHCI0_BIT 24
   set_bit(CLK_BUS_EHCI0, CLK_BUS_EHCI0_BIT);
 
   // 0x0cc BIT(16)
+  _info("CLK_USB_OHCI0\n");
   #define CLK_USB_OHCI0 (A64_CCU_ADDR + 0x0cc)
   #define CLK_USB_OHCI0_BIT 16
   set_bit(CLK_USB_OHCI0, CLK_USB_OHCI0_BIT);
 
   // EHCI1: CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
   // 0x060 BIT(29)
+  _info("CLK_BUS_OHCI1\n");
   #define CLK_BUS_OHCI1 (A64_CCU_ADDR + 0x060)
   #define CLK_BUS_OHCI1_BIT 29
   set_bit(CLK_BUS_OHCI1, CLK_BUS_OHCI1_BIT);
 
   // 0x060 BIT(25)
+  _info("CLK_BUS_EHCI1\n");
   #define CLK_BUS_EHCI1 (A64_CCU_ADDR + 0x060)
   #define CLK_BUS_EHCI1_BIT 25
   set_bit(CLK_BUS_EHCI1, CLK_BUS_EHCI1_BIT);
 
   // 0x0cc BIT(17)
+  _info("CLK_USB_OHCI1\n");
   #define CLK_USB_OHCI1 (A64_CCU_ADDR + 0x0cc)
   #define CLK_USB_OHCI1_BIT 17
   set_bit(CLK_USB_OHCI1, CLK_USB_OHCI1_BIT);
@@ -191,40 +203,47 @@ static void a64_usbhost_clk_enable()
   // modreg32(clk, clk_mask, DE_CLK_REG);
 }
 
+// Deassert USB Resets
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset
 // https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller
-static void a64_usbhost_reset_deassert()
+static void a64_usbhost_reset_deassert(void)
 {
   // usb0_reset: RST_USB_PHY0
   // 0x0cc BIT(0)
+  _info("RST_USB_PHY0\n");
   #define RST_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
   #define RST_USB_PHY0_BIT 0
   set_bit(RST_USB_PHY0, RST_USB_PHY0_BIT);
 
   // usb1_reset: RST_USB_PHY1
   // 0x0cc BIT(1)
+  _info("RST_USB_PHY1\n");
   #define RST_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
   #define RST_USB_PHY1_BIT 1
   set_bit(RST_USB_PHY1, RST_USB_PHY1_BIT);
 
   // EHCI0: RST_BUS_OHCI0, RST_BUS_EHCI0
   // 0x2c0 BIT(28)
+  _info("RST_BUS_OHCI0\n");
   #define RST_BUS_OHCI0 (A64_CCU_ADDR + 0x2c0)
   #define RST_BUS_OHCI0_BIT 28
   set_bit(RST_BUS_OHCI0, RST_BUS_OHCI0_BIT);
 
   // 0x2c0 BIT(24)
+  _info("RST_BUS_EHCI0\n");
   #define RST_BUS_EHCI0 (A64_CCU_ADDR + 0x2c0)
   #define RST_BUS_EHCI0_BIT 24
   set_bit(RST_BUS_EHCI0, RST_BUS_EHCI0_BIT);
 
   // EHCI1: RST_BUS_OHCI1, RST_BUS_EHCI1
   // 0x2c0 BIT(29)
+  _info("RST_BUS_OHCI1\n");
   #define RST_BUS_OHCI1 (A64_CCU_ADDR + 0x2c0)
   #define RST_BUS_OHCI1_BIT 29
   set_bit(RST_BUS_OHCI1, RST_BUS_OHCI1_BIT);
 
   // 0x2c0 BIT(25)
+  _info("RST_BUS_EHCI1\n");
   #define RST_BUS_EHCI1 (A64_CCU_ADDR + 0x2c0)
   #define RST_BUS_EHCI1_BIT 25
   set_bit(RST_BUS_EHCI1, RST_BUS_EHCI1_BIT);
