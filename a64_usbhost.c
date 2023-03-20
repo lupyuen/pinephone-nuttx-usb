@@ -114,6 +114,17 @@ static int ehci_waiter(int argc, char *argv[])
   return 0;
 }
 
+/* Display Engine Clock Register (A64 Page 117) */
+// #define DE_CLK_REG       (A64_CCU_ADDR + 0x0104)
+// #define CLK_SRC_SEL(n)   ((n) << 24)
+// #define CLK_SRC_SEL_MASK (0b111 << 24)
+// #define SCLK_GATING      (1 << 31)
+// #define SCLK_GATING_MASK (0b1 << 31)
+
+/* Bus Software Reset Register 1 (A64 Page 140) */
+// #define BUS_SOFT_RST_REG1 (A64_CCU_ADDR + 0x02c4)
+// #define DE_RST            (1 << 12)
+
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks
 static void a64_usbhost_clk_enable()
 {
@@ -121,6 +132,16 @@ static void a64_usbhost_clk_enable()
   // usb1_phy: CLK_USB_PHY1
   // EHCI0: CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
   // EHCI1: CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
+
+  /* Display Engine Clock Register (A64 Page 117)
+   * Set SCLK_GATING (Bit 31) to 1
+   *   (Enable Special Clock)
+   * Set CLK_SRC_SEL (Bits 24 to 26) to 1
+   *   (Clock Source is Display Engine PLL)
+   */
+  // clk = SCLK_GATING | CLK_SRC_SEL(1);
+  // clk_mask = SCLK_GATING_MASK | CLK_SRC_SEL_MASK;
+  // modreg32(clk, clk_mask, DE_CLK_REG);
 }
 
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset
@@ -130,6 +151,11 @@ static void a64_usbhost_reset_deassert()
   // usb1_reset: RST_USB_PHY1
   // EHCI0: RST_BUS_OHCI0, RST_BUS_EHCI0
   // EHCI1: RST_BUS_OHCI1, RST_BUS_EHCI1
+
+  /* Bus Software Reset Register 1 (A64 Page 140)
+   * Set DE_RST (Bit 12) to 1 (De-Assert Display Engine)
+   */
+  // modreg32(DE_RST, DE_RST, BUS_SOFT_RST_REG1);
 }
 
 /****************************************************************************
