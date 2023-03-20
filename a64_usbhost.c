@@ -114,6 +114,8 @@ static int ehci_waiter(int argc, char *argv[])
   return 0;
 }
 
+#define A64_CCU_ADDR        0x01c20000 /* CCU             0x01c2:0000-0x01c2:03ff 1K */
+
 /* Display Engine Clock Register (A64 Page 117) */
 // #define DE_CLK_REG       (A64_CCU_ADDR + 0x0104)
 // #define CLK_SRC_SEL(n)   ((n) << 24)
@@ -126,12 +128,36 @@ static int ehci_waiter(int argc, char *argv[])
 // #define DE_RST            (1 << 12)
 
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks
+// https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks
 static void a64_usbhost_clk_enable()
 {
   // usb0_phy: CLK_USB_PHY0
+  // 0x0cc BIT(8)
+  #define CLK_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
+
   // usb1_phy: CLK_USB_PHY1
+  // 0x0cc BIT(9)
+  #define CLK_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
+
   // EHCI0: CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
+  // 0x060 BIT(28)
+  #define CLK_BUS_OHCI0 (A64_CCU_ADDR + 0x060)
+
+  // 0x060 BIT(24)
+  #define CLK_BUS_EHCI0 (A64_CCU_ADDR + 0x060)
+
+  // 0x0cc BIT(16)
+  #define CLK_USB_OHCI0 (A64_CCU_ADDR + 0x0cc)
+
   // EHCI1: CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
+  // 0x060 BIT(29)
+  #define CLK_BUS_OHCI1 (A64_CCU_ADDR + 0x060)
+
+  // 0x060 BIT(25)
+  #define CLK_BUS_EHCI1 (A64_CCU_ADDR + 0x060)
+
+  // 0x0cc BIT(17)
+  #define CLK_USB_OHCI1 (A64_CCU_ADDR + 0x0cc)
 
   /* Display Engine Clock Register (A64 Page 117)
    * Set SCLK_GATING (Bit 31) to 1
@@ -145,12 +171,30 @@ static void a64_usbhost_clk_enable()
 }
 
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset
+// https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller
 static void a64_usbhost_reset_deassert()
 {
   // usb0_reset: RST_USB_PHY0
+  // 0x0cc BIT(0)
+  #define RST_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
+
   // usb1_reset: RST_USB_PHY1
+  // 0x0cc BIT(1)
+  #define RST_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
+
   // EHCI0: RST_BUS_OHCI0, RST_BUS_EHCI0
+  // 0x2c0 BIT(28)
+  #define RST_BUS_OHCI0 (A64_CCU_ADDR + 0x2c0)
+
+  // 0x2c0 BIT(24)
+  #define RST_BUS_EHCI0 (A64_CCU_ADDR + 0x2c0)
+
   // EHCI1: RST_BUS_OHCI1, RST_BUS_EHCI1
+  // 0x2c0 BIT(29)
+  #define RST_BUS_OHCI1 (A64_CCU_ADDR + 0x2c0)
+
+  // 0x2c0 BIT(25)
+  #define RST_BUS_EHCI1 (A64_CCU_ADDR + 0x2c0)
 
   /* Bus Software Reset Register 1 (A64 Page 140)
    * Set DE_RST (Bit 12) to 1 (De-Assert Display Engine)
