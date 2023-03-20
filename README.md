@@ -795,7 +795,7 @@ Earlier the NuttX USB EHCI Driver fails during startup...
 
 TODO
 
-Then we discovered how U-Boot enables the USB Clocks and deasserts the USB Resets...
+Then we discovered how the U-Boot Bootloader enables the USB Clocks and deasserts the USB Resets...
 
 TODO
 
@@ -803,7 +803,7 @@ So we do the same for NuttX. And now the NuttX EHCI Driver starts OK on PinePhon
 
 This is how we enable the USB Clocks and deassert the USB Resets on PinePhone...
 
-TODO
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/0e1632ed351975a6432b7e4fde1857d6bcc0940a/a64_usbhost.c#L118-L279
 
 Here's the log...
 
