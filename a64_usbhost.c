@@ -127,6 +127,11 @@ static int ehci_waiter(int argc, char *argv[])
 // #define BUS_SOFT_RST_REG1 (A64_CCU_ADDR + 0x02c4)
 // #define DE_RST            (1 << 12)
 
+static void set_bit(unsigned long addr, uint8_t bit)
+{
+  modreg32(1 << bit, 1 << bit, addr);
+}
+
 // https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks
 // https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks
 static void a64_usbhost_clk_enable()
