@@ -524,7 +524,9 @@ And we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https
   ret = clk_enable(&usb_phy->clocks);
 ```
 
-[(`clk_enable` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L58-L61)
+`clk_enable` is explained here...
+
+-   ["Enable USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks)
 
 _What's `usb_phy->clocks`?_
 
@@ -636,7 +638,9 @@ And we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init
   ret = reset_deassert(&usb_phy->resets);
 ```
 
-[(`reset_deassert` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L66-L69)
+`reset_deassert` is explained here...
+
+-   ["Reset USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller)
 
 _What's `usb_phy->resets`?_
 
