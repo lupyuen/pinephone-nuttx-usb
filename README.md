@@ -789,17 +789,21 @@ This will be similar to setting DE_RST of BUS_SOFT_RST_REG1 as described here...
 
 # NuttX EHCI Driver Starts OK on PinePhone
 
-TODO
+Earlier the NuttX USB EHCI Driver fails during PinePhone startup...
 
-Earlier the NuttX USB EHCI Driver fails during startup...
-
-TODO
+-   ["Halt Timeout for USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#halt-timeout-for-usb-controller)
 
 Then we discovered how the U-Boot Bootloader enables the USB Clocks and deasserts the USB Resets...
 
-TODO
+-   ["USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks)
 
-So we do the same for NuttX. And now the NuttX EHCI Driver starts OK on PinePhone yay!
+-   ["Enable USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks)
+
+-   ["USB Controller Reset"](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset)
+
+-   ["Reset USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller)
+
+So we do the same for NuttX. And now the NuttX EHCI Driver starts OK on PinePhone yay! 🎉
 
 This is how we enable the USB Clocks and deassert the USB Resets on PinePhone...
 
@@ -840,7 +844,17 @@ set_bit: 0x1c202c0 Bit 25
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/5238bc5246bcae896883f056d24691ebaa050f83/README.md#output-log)
 
-TODO
+This log above shows NuttX enabling the USB Clocks and deasserting the USB Resets for...
+
+-   USB PHY0 and USB PHY1
+
+-   EHCI0 and OHCI0
+
+-   EHCI1 and OHCI1
+
+(Yeah this looks excessive. We probably need only USB PHY1, EHCI1 and OHCI1)
+
+Then the NuttX EHCI Driver starts...
 
 ```text
 a64_usbhost_initialize: TODO: a64_clockall_usboh3
@@ -892,6 +906,17 @@ nsh>
 ```
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/5238bc5246bcae896883f056d24691ebaa050f83/README.md#output-log)
+
+The log above says that NuttX has successfully started the EHCI Controller. Yay!
+
+```text
+EHCI HCIVERSION 1.00
+EHCI nports=1, HCSPARAMS=1101
+EHCI HCCPARAMS=00a026
+EHCI USB EHCI Initialized
+```
+
+TODO: What next?
 
 # Set USB Magnitude / Rate / Threshold
 
