@@ -134,30 +134,38 @@ static void a64_usbhost_clk_enable()
   // usb0_phy: CLK_USB_PHY0
   // 0x0cc BIT(8)
   #define CLK_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
+  #define CLK_USB_PHY0_BIT 8
 
   // usb1_phy: CLK_USB_PHY1
   // 0x0cc BIT(9)
   #define CLK_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
+  #define CLK_USB_PHY1_BIT 9
 
   // EHCI0: CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
   // 0x060 BIT(28)
   #define CLK_BUS_OHCI0 (A64_CCU_ADDR + 0x060)
+  #define CLK_BUS_OHCI0_BIT 28
 
   // 0x060 BIT(24)
   #define CLK_BUS_EHCI0 (A64_CCU_ADDR + 0x060)
+  #define CLK_BUS_EHCI0_BIT 24
 
   // 0x0cc BIT(16)
   #define CLK_USB_OHCI0 (A64_CCU_ADDR + 0x0cc)
+  #define CLK_USB_OHCI0_BIT 16
 
   // EHCI1: CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
   // 0x060 BIT(29)
   #define CLK_BUS_OHCI1 (A64_CCU_ADDR + 0x060)
+  #define CLK_BUS_OHCI1_BIT 29
 
   // 0x060 BIT(25)
   #define CLK_BUS_EHCI1 (A64_CCU_ADDR + 0x060)
+  #define CLK_BUS_EHCI1_BIT 25
 
   // 0x0cc BIT(17)
   #define CLK_USB_OHCI1 (A64_CCU_ADDR + 0x0cc)
+  #define CLK_USB_OHCI1_BIT 17
 
   /* Display Engine Clock Register (A64 Page 117)
    * Set SCLK_GATING (Bit 31) to 1
@@ -177,24 +185,30 @@ static void a64_usbhost_reset_deassert()
   // usb0_reset: RST_USB_PHY0
   // 0x0cc BIT(0)
   #define RST_USB_PHY0 (A64_CCU_ADDR + 0x0cc)
+  #define RST_USB_PHY0_BIT 0
 
   // usb1_reset: RST_USB_PHY1
   // 0x0cc BIT(1)
   #define RST_USB_PHY1 (A64_CCU_ADDR + 0x0cc)
+  #define RST_USB_PHY1_BIT 1
 
   // EHCI0: RST_BUS_OHCI0, RST_BUS_EHCI0
   // 0x2c0 BIT(28)
   #define RST_BUS_OHCI0 (A64_CCU_ADDR + 0x2c0)
+  #define RST_BUS_OHCI0_BIT 28
 
   // 0x2c0 BIT(24)
   #define RST_BUS_EHCI0 (A64_CCU_ADDR + 0x2c0)
+  #define RST_BUS_EHCI0_BIT 24
 
   // EHCI1: RST_BUS_OHCI1, RST_BUS_EHCI1
   // 0x2c0 BIT(29)
   #define RST_BUS_OHCI1 (A64_CCU_ADDR + 0x2c0)
+  #define RST_BUS_OHCI1_BIT 29
 
   // 0x2c0 BIT(25)
   #define RST_BUS_EHCI1 (A64_CCU_ADDR + 0x2c0)
+  #define RST_BUS_EHCI1_BIT 25
 
   /* Bus Software Reset Register 1 (A64 Page 140)
    * Set DE_RST (Bit 12) to 1 (De-Assert Display Engine)
