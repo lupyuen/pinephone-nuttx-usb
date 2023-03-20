@@ -731,6 +731,8 @@ This will be similar to setting SCLK_GATING of DE_CLK_REG as described here...
 
 -   ["Initialising the Allwinner A64 Display Engine"](https://lupyuen.github.io/articles/de#appendix-initialising-the-allwinner-a64-display-engine)
 
+TODO: What about OHCI1_12M_SRC_SEL, OHCI0_12M_SRC_SEL? (Allwinner A64 User Manual Page 113)
+
 # Reset USB Controller
 
 Earlier we saw this code that will deassert the USB Reset: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
