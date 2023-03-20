@@ -557,7 +557,9 @@ The USB Clocks are defined in [clock/sun50i-a64-ccu.h](https://github.com/u-boot
 
 Which are consistent with the values in the PinePhone JumpDrive Device Tree: [sun50i-a64-pinephone-1.2.dts](https://github.com/lupyuen/pinephone-nuttx/blob/main/sun50i-a64-pinephone-1.2.dts#L661-L721)
 
-[(Allwinner A64 Register Addresses are defined here)](https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks)
+The Allwinner A64 Register Addresses for USB Clocks are defined here...
+
+-   ["Enable USB Controller Clocks"](https://github.com/lupyuen/pinephone-nuttx-usb#enable-usb-controller-clocks)
 
 Here's the definition of USB Clocks in our U-Boot Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
@@ -671,7 +673,9 @@ The USB Resets are defined in [reset/sun50i-a64-ccu.h](https://github.com/u-boot
 
 Which are consistent with the values in the PinePhone JumpDrive Device Tree: [sun50i-a64-pinephone-1.2.dts](https://github.com/lupyuen/pinephone-nuttx/blob/main/sun50i-a64-pinephone-1.2.dts#L661-L721)
 
-[(Allwinner A64 Register Addresses are defined here)](https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller)
+The Allwinner A64 Register Addresses for USB Resets are defined here...
+
+-   ["Reset USB Controller"](https://github.com/lupyuen/pinephone-nuttx-usb#reset-usb-controller)
 
 Here's the definition of USB Resets in our U-Boot Device Tree: [sun50i-a64.dtsi](https://github.com/u-boot/u-boot/blob/master/arch/arm/dts/sun50i-a64.dtsi#L575-L659)
 
