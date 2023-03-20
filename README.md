@@ -871,10 +871,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-356930 bytes read in 20 ms (17 MiB/s)
+357308 bytes read in 20 ms (17 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
-36162 bytes read in 5 ms (6.9 MiB/s)
-1078500 bytes read in 50 ms (20.6 MiB/s)
+36162 bytes read in 4 ms (8.6 MiB/s)
+1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -882,6 +882,34 @@ Uncompressed size: 10534912 = 0xA0C000
 
 Starting kernel ...
 
+a64_usbhost_clk_enable: CLK_USB_PHY0
+set_bit: 0x1c200cc Bit 8
+a64_usbhost_clk_enable: CLK_USB_PHY1
+set_bit: 0x1c200cc Bit 9
+a64_usbhost_clk_enable: CLK_BUS_OHCI0
+set_bit: 0x1c20060 Bit 28
+a64_usbhost_clk_enable: CLK_BUS_EHCI0
+set_bit: 0x1c20060 Bit 24
+a64_usbhost_clk_enable: CLK_USB_OHCI0
+set_bit: 0x1c200cc Bit 16
+a64_usbhost_clk_enable: CLK_BUS_OHCI1
+set_bit: 0x1c20060 Bit 29
+a64_usbhost_clk_enable: CLK_BUS_EHCI1
+set_bit: 0x1c20060 Bit 25
+a64_usbhost_clk_enable: CLK_USB_OHCI1
+set_bit: 0x1c200cc Bit 17
+a64_usbhost_reset_deassert: RST_USB_PHY0
+set_bit: 0x1c200cc Bit 0
+a64_usbhost_reset_deassert: RST_USB_PHY1
+set_bit: 0x1c200cc Bit 1
+a64_usbhost_reset_deassert: RST_BUS_OHCI0
+set_bit: 0x1c202c0 Bit 28
+a64_usbhost_reset_deassert: RST_BUS_EHCI0
+set_bit: 0x1c202c0 Bit 24
+a64_usbhost_reset_deassert: RST_BUS_OHCI1
+set_bit: 0x1c202c0 Bit 29
+a64_usbhost_reset_deassert: RST_BUS_EHCI1
+set_bit: 0x1c202c0 Bit 25
 a64_usbhost_initialize: TODO: a64_clockall_usboh3
 a64_usbhost_initialize: TODO: switch off USB bus power
 a64_usbhost_initialize: TODO: Setup pins, with power initially off
@@ -899,13 +927,39 @@ a64_ehci_initialize: TODO: a64_clockall_usboh3
 a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
 a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 a64_printreg: 01c1b010<-00000000
+a64_printreg: 01c1b014->00001000
+a64_printreg: 01c1b010->00000000
+a64_printreg: 01c1b010<-00000002
+a64_printreg: 01c1b010->00080b00
+a64_ehci_initialize: TODO: Re-program the USB host controller
+a64_printreg: 01c1b018<-00000000
+a64_printreg: 01c1b014<-0000003f
+EHCI HCIVERSION 1.00
+a64_printreg: 01c1b004->00001101
+EHCI nports=1, HCSPARAMS=1101
+a64_printreg: 01c1b008->0000a026
+EHCI HCCPARAMS=00a026
+a64_printreg: 01c1b028<-40a87fa0
+a64_printreg: 01c1b024<-40a95000
+a64_printreg: 01c1b010->00080b00
+a64_printreg: 01c1b010<-00080b30
+a64_printreg: 01c1b010->00080b30
+a64_printreg: 01c1b010<-00080b31
+a64_printreg: 01c1b050->00000000
+a64_printreg: 01c1b050<-00000001
 a64_printreg: 01c1b014->00000000
-EHCI ERROR: Timed out waiting for HCHalted. USBSTS: 000000
-EHCI ERROR: a64_reset failed: 110
-a64_usbhost_initialize: ERROR: a64_ehci_initialize failed
-ERROR: Couldn't start usb -19
-nsh: mkfatfs: command not found
-
-NuttShell (NSH) NuttX-12.0.3
+a64_ehci_initialize: TODO: irq_attach
+a64_printreg: 01c1b018<-00000037
+a64_ehci_initialize: TODO: up_enable_irq
+a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
+a64_printreg: 01c1b054->00001000
+EHCI USB EHCI Initialized
+nshe:h cmik_fwaatiftse:r :c oemhmcain_dw aniotte rf:o u nRdu
+n
+n
+i
+nNgu
+t
+tShell (NSH) NuttX-12.0.3
 nsh> 
 ```
