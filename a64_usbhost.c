@@ -114,6 +114,24 @@ static int ehci_waiter(int argc, char *argv[])
   return 0;
 }
 
+// https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks
+static void a64_usbhost_clk_enable()
+{
+  // usb0_phy: CLK_USB_PHY0
+  // usb1_phy: CLK_USB_PHY1
+  // EHCI0: CLK_BUS_OHCI0, CLK_BUS_EHCI0, CLK_USB_OHCI0
+  // EHCI1: CLK_BUS_OHCI1, CLK_BUS_EHCI1, CLK_USB_OHCI1
+}
+
+// https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-reset
+static void a64_usbhost_reset_deassert()
+{
+  // usb0_reset: RST_USB_PHY0
+  // usb1_reset: RST_USB_PHY1
+  // EHCI0: RST_BUS_OHCI0, RST_BUS_EHCI0
+  // EHCI1: RST_BUS_OHCI1, RST_BUS_EHCI1
+}
+
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
@@ -132,6 +150,10 @@ static int ehci_waiter(int argc, char *argv[])
 int a64_usbhost_initialize(void)
 {
   int ret;
+
+  a64_usbhost_clk_enable();
+
+  a64_usbhost_reset_deassert();
 
   _info("TODO: a64_clockall_usboh3\n");////
   // TODO: a64_clockall_usboh3();
