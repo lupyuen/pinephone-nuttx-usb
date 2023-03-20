@@ -689,6 +689,64 @@ ehci1: usb@1c1b000 {
     <&ccu RST_BUS_EHCI1>;
 ```
 
+# Enable USB Controller Clocks
+
+TODO
+
+Earlier we saw this code that will enable the USB Clocks: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L266-L271)
+
+```c
+  ret = clk_enable(&usb_phy->clocks);
+```
+
+[(`clk_enable` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_sunxi.c#L58-L61)
+
+CCU Register List: Allwinner A64 User Manual, Page 81
+
+CCU Base Address: `0x01C2` `0000`
+
+[clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L16-L66)
+
+```c
+static const struct ccu_clk_gate a64_gates[] = {
+  [CLK_BUS_EHCI0]		= GATE(0x060, BIT(24)),
+  [CLK_BUS_EHCI1]		= GATE(0x060, BIT(25)),
+  [CLK_BUS_OHCI0]		= GATE(0x060, BIT(28)),
+  [CLK_BUS_OHCI1]		= GATE(0x060, BIT(29)),
+  [CLK_USB_PHY0]		= GATE(0x0cc, BIT(8)),
+  [CLK_USB_PHY1]		= GATE(0x0cc, BIT(9)),
+  [CLK_USB_OHCI0]		= GATE(0x0cc, BIT(16)),
+  [CLK_USB_OHCI1]		= GATE(0x0cc, BIT(17)),
+```
+
+# Reset USB Controller
+
+TODO
+
+Earlier we saw this code that will deassert the USB Reset GPIOs: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L273-L278)
+
+```c
+  ret = reset_deassert(&usb_phy->resets);
+```
+
+[(`reset_deassert` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/reset/reset-sunxi.c#L66-L69)
+
+CCU Register List: Allwinner A64 User Manual, Page 81
+
+CCU Base Address: `0x01C2` `0000`
+
+[clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L68-L100)
+
+```c
+static const struct ccu_reset a64_resets[] = {
+  [RST_USB_PHY0]          = RESET(0x0cc, BIT(0)),
+  [RST_USB_PHY1]          = RESET(0x0cc, BIT(1)),
+  [RST_BUS_EHCI0]         = RESET(0x2c0, BIT(24)),
+  [RST_BUS_EHCI1]         = RESET(0x2c0, BIT(25)),
+  [RST_BUS_OHCI0]         = RESET(0x2c0, BIT(28)),
+  [RST_BUS_OHCI1]         = RESET(0x2c0, BIT(29)),
+```
+
 # USB Controller Configuration
 
 TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
