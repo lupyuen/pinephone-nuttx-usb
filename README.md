@@ -783,6 +783,33 @@ This will be similar to setting DE_RST of BUS_SOFT_RST_REG1 as described here...
 
 -   ["Initialising the Allwinner A64 Display Engine"](https://lupyuen.github.io/articles/de#appendix-initialising-the-allwinner-a64-display-engine)
 
+# Set USB Magnitude / Rate / Threshold
+
+Earlier we saw this code for setting the USB Magnitude, Rate and Threshold in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+
+```c
+static int sun4i_usb_phy_init(struct phy *phy) {
+  ...
+  // Assume ID is 1 for Port USB 1
+  if (usb_phy->id == 0)
+    sun4i_usb_phy_write(phy, PHY_RES45_CAL_EN,
+            PHY_RES45_CAL_DATA,
+            PHY_RES45_CAL_LEN);
+
+  /* Adjust PHY's magnitude and rate */
+  sun4i_usb_phy_write(phy, PHY_TX_AMPLITUDE_TUNE,
+          PHY_TX_MAGNITUDE | PHY_TX_RATE,
+          PHY_TX_AMPLITUDE_LEN);
+
+  /* Disconnect threshold adjustment */
+  sun4i_usb_phy_write(phy, PHY_DISCON_TH_SEL,
+          data->cfg->disc_thresh, PHY_DISCON_TH_LEN);
+```
+
+[(`sun4i_usb_phy_write` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L145-L188)
+
+TODO
+
 # USB Controller Configuration
 
 TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
