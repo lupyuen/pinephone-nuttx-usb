@@ -793,20 +793,22 @@ static int sun4i_usb_phy_init(struct phy *phy) {
   // Assume ID is 1 for Port USB 1
   if (usb_phy->id == 0)
     sun4i_usb_phy_write(phy, PHY_RES45_CAL_EN,
-            PHY_RES45_CAL_DATA,
-            PHY_RES45_CAL_LEN);
+      PHY_RES45_CAL_DATA,
+      PHY_RES45_CAL_LEN);
 
   /* Adjust PHY's magnitude and rate */
   sun4i_usb_phy_write(phy, PHY_TX_AMPLITUDE_TUNE,
-          PHY_TX_MAGNITUDE | PHY_TX_RATE,
-          PHY_TX_AMPLITUDE_LEN);
+    PHY_TX_MAGNITUDE | PHY_TX_RATE,
+    PHY_TX_AMPLITUDE_LEN);
 
   /* Disconnect threshold adjustment */
   sun4i_usb_phy_write(phy, PHY_DISCON_TH_SEL,
-          data->cfg->disc_thresh, PHY_DISCON_TH_LEN);
+    data->cfg->disc_thresh, PHY_DISCON_TH_LEN);
 ```
 
 [(`sun4i_usb_phy_write` is defined here)](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L145-L188)
+
+[(`disc_thresh` is 3)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-configuration)
 
 TODO
 
