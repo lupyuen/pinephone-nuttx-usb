@@ -448,6 +448,10 @@ Which will...
 
 -   Disconnect USB PHY Threshold Adjustment
 
+As explained here...
+
+-   ["Set USB Magnitude / Rate / Threshold"](https://github.com/lupyuen/pinephone-nuttx-usb#set-usb-magnitude--rate--threshold)
+
 TODO: Is `usb_phy->id` set to 1 for USB Port 1?
 
 Assume `CONFIG_USB_MUSB_SUNXI` is undefined. So we skip this part...
@@ -785,7 +789,7 @@ This will be similar to setting DE_RST of BUS_SOFT_RST_REG1 as described here...
 
 # Set USB Magnitude / Rate / Threshold
 
-Earlier we saw this code for setting the USB Magnitude, Rate and Threshold in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
+Earlier we saw this code for setting the [USB Magnitude, Rate and Threshold](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller) in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
 
 ```c
 static int sun4i_usb_phy_init(struct phy *phy) {
