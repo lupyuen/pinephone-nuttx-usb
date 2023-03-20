@@ -658,7 +658,7 @@ According to the [PinePhone Device Tree](https://github.com/lupyuen/pinephone-nu
 
 -   __usb1_reset:__ RST_USB_PHY1
 
--   __EHCI0:__ RST_BUS_OHCI0, RST_BUS_EHCI0, 
+-   __EHCI0:__ RST_BUS_OHCI0, RST_BUS_EHCI0
 
 -   __EHCI1:__ RST_BUS_OHCI1, RST_BUS_EHCI1
 
@@ -723,7 +723,7 @@ Our NuttX USB Driver will set the CCU Registers, defined in Allwinner A64 User M
 
 (CCU Base Address is `0x01C2` `0000`)
 
-Based on the [USB Clocks `usb_phy->clocks`)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks), our NuttX USB Driver will set the following CCU Registers: [clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L16-L66)
+Based on the [USB Clocks `usb_phy->clocks`](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-clocks), our NuttX USB Driver will set the following CCU Registers: [clk_a64.c](https://github.com/u-boot/u-boot/blob/master/drivers/clk/sunxi/clk_a64.c#L16-L66)
 
 ```c
 static const struct ccu_clk_gate a64_gates[] = {
