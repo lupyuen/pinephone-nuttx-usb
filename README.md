@@ -2,7 +2,9 @@
 
 # PinePhone USB Driver for Apache NuttX RTOS
 
-Read the article...
+Read the articles...
+
+-   ["NuttX RTOS for PinePhone: Simpler USB with EHCI (Enhanced Host Controller Interface)"](https://lupyuen.github.io/articles/usb3)
 
 -   ["NuttX RTOS for PinePhone: Exploring USB"](https://lupyuen.github.io/articles/usb2)
 
