@@ -56,34 +56,6 @@ Select these options in `menuconfig`...
 
     And "CDC/ACM Support"
 
--   Enable "Application Configuration > Examples > USB serial test example"
-
-    "USB Trace Initialization"
-
-    "USB Trace Class"
-
-    "USB Trace Transfers"
-
-    "USB Trace Device Controller Events"
-
-    "USB Trace Device Controller Interrupt Events"
-
-Edit `apps/examples/usbserial/usbserial_main.c` and change...
-
-```c
-#ifdef CONFIG_CDCACM
-...
-#ifdef CONFIG_CDCACM
-```
-
-To...
-
-```c
-#ifdef CONFIG_USBHOST_CDCACM
-...
-#ifdef CONFIG_USBHOST_CDCACM
-```
-
 Let's boot the NuttX USB EHCI Driver on PinePhone...
 
 # 64-Bit Update for EHCI Driver
