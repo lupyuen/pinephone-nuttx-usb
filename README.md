@@ -48,9 +48,41 @@ Select these options in `menuconfig`...
 
 -   Enable "RTOS Features > Work queue support > Low priority (kernel) worker thread"
 
+    Set "Number of low-priority worker threads" to 2
+
 -   Enable "Device Drivers > USB Host Driver Support"
 
 -   Enable "Device Drivers > USB Host Driver Support > USB Hub Support"
+
+    And "CDC/ACM Support"
+
+-   Enable "Application Configuration > Examples > USB serial test example"
+
+    "USB Trace Initialization"
+
+    "USB Trace Class"
+
+    "USB Trace Transfers"
+
+    "USB Trace Device Controller Events"
+
+    "USB Trace Device Controller Interrupt Events"
+
+Edit `apps/examples/usbserial/usbserial_main.c` and change...
+
+```c
+#ifdef CONFIG_CDCACM
+...
+#ifdef CONFIG_CDCACM
+```
+
+To...
+
+```c
+#ifdef CONFIG_USBHOST_CDCACM
+...
+#ifdef CONFIG_USBHOST_CDCACM
+```
 
 Let's boot the NuttX USB EHCI Driver on PinePhone...
 
