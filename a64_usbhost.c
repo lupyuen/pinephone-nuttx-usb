@@ -117,18 +117,7 @@ static int ehci_waiter(int argc, char *argv[])
 
 #define A64_CCU_ADDR        0x01c20000 /* CCU             0x01c2:0000-0x01c2:03ff 1K */
 
-/* Display Engine Clock Register (A64 Page 117) */
-// #define DE_CLK_REG       (A64_CCU_ADDR + 0x0104)
-// #define CLK_SRC_SEL(n)   ((n) << 24)
-// #define CLK_SRC_SEL_MASK (0b111 << 24)
-// #define SCLK_GATING      (1 << 31)
-// #define SCLK_GATING_MASK (0b1 << 31)
-
-/* Bus Software Reset Register 1 (A64 Page 140) */
-// #define BUS_SOFT_RST_REG1 (A64_CCU_ADDR + 0x02c4)
-// #define DE_RST            (1 << 12)
-
-// Set the bit
+// Set the bit at an address
 static void set_bit(unsigned long addr, uint8_t bit)
 {
   _info("0x%lx Bit %d\n", addr, bit);
@@ -191,16 +180,6 @@ static void a64_usbhost_clk_enable(void)
   #define CLK_USB_OHCI1 (A64_CCU_ADDR + 0x0cc)
   #define CLK_USB_OHCI1_BIT 17
   set_bit(CLK_USB_OHCI1, CLK_USB_OHCI1_BIT);
-
-  /* Display Engine Clock Register (A64 Page 117)
-   * Set SCLK_GATING (Bit 31) to 1
-   *   (Enable Special Clock)
-   * Set CLK_SRC_SEL (Bits 24 to 26) to 1
-   *   (Clock Source is Display Engine PLL)
-   */
-  // clk = SCLK_GATING | CLK_SRC_SEL(1);
-  // clk_mask = SCLK_GATING_MASK | CLK_SRC_SEL_MASK;
-  // modreg32(clk, clk_mask, DE_CLK_REG);
 }
 
 // Deassert USB Resets
@@ -247,11 +226,6 @@ static void a64_usbhost_reset_deassert(void)
   #define RST_BUS_EHCI1 (A64_CCU_ADDR + 0x2c0)
   #define RST_BUS_EHCI1_BIT 25
   set_bit(RST_BUS_EHCI1, RST_BUS_EHCI1_BIT);
-
-  /* Bus Software Reset Register 1 (A64 Page 140)
-   * Set DE_RST (Bit 12) to 1 (De-Assert Display Engine)
-   */
-  // modreg32(DE_RST, DE_RST, BUS_SOFT_RST_REG1);
 }
 
 /****************************************************************************
@@ -273,8 +247,10 @@ int a64_usbhost_initialize(void)
 {
   int ret;
 
+  // Enable the USB Clocks
   a64_usbhost_clk_enable();
 
+  // Deassert the USB Resets
   a64_usbhost_reset_deassert();
 
   _info("TODO: a64_clockall_usboh3\n");////
