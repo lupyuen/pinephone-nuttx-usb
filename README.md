@@ -947,6 +947,24 @@ Here's the response...
 
 (TODO: Verify the response)
 
+>   EHCI stands for Enhanced Host Controller Interface, which is a standard for programming the USB controller on any hardware platform. HCSPARAMS is one of the EHCI registers that contains some parameters of the host controller. According to the EHCI specification, HCSPARAMS=1101 means:
+
+>   The host controller supports one port routing rule (bit 0-7).
+
+>   The host controller has one companion controller (bit 8-11).
+
+>   The host controller has sixteen ports per companion controller (bit 12-15).
+
+>   The host controller has one port indicator (bit 16).
+
+>   The host controller does not support port power control (bit 17).
+
+>   The host controller does not support debug port capability (bit 20-23).
+
+>   The host controller does not support park mode for high-speed queue heads (bit 24).
+
+>   The number of asynchronous schedule microframes is one (bit 25-27).
+
 Then we asked Bing AI (ChatGPT) about HCCPARAMS...
 
 >   "EHCI HCCPARAMS=00a026. What does it mean?"
@@ -954,6 +972,36 @@ Then we asked Bing AI (ChatGPT) about HCCPARAMS...
 Here's the response...
 
 (TODO: Verify the response)
+
+>   EHCI HCCPARAMS is a register that contains information about the capabilities of the Enhanced Host Controller Interface (EHCI) for USB 2.0. The value of this register is a hexadecimal number that can be interpreted as follows:
+
+>   Bit 0: 64-bit addressing capability. If set to 1, the host controller supports 64-bit addressing for data structures.
+
+>   Bit 1: Programmable frame list flag. If set to 1, the host controller supports a system memory frame list structure of 1024, 512, or 256 elements.
+
+>   Bit 2: Asynchronous schedule park capability. If set to 1, the host controller supports the park feature for high-speed queue heads in the asynchronous schedule.
+
+>   Bit 3: Reserved. Must be zero.
+
+>   Bit 4: Isochronous scheduling threshold. This field indicates, relative to the current position of the executing host controller, where software can reliably update the isochronous schedule.
+
+>   Bit 5-7: EHCI extended capabilities pointer. This optional field indicates an offset into PCI configuration space for a capabilities list. This list may support extended features beyond EHCI compliance.
+
+>   Bit 8-15: Reserved. Must be zero.
+
+>   In your case, the value of EHCI HCCPARAMS is 00a026, which means:
+
+>   The host controller supports 64-bit addressing (bit 0 is 1).
+
+>   The host controller supports a programmable frame list (bit 1 is 1).
+
+>   The host controller does not support asynchronous schedule park (bit 2 is 0).
+
+>   The isochronous scheduling threshold is 2 microframes (bit 4 is 1).
+
+>   The EHCI extended capabilities pointer is at offset A0h in PCI configuration space (bit 5-7 are A).
+
+TODO: Is this expected for PinePhone?
 
 # Testing CDC ACM
 
