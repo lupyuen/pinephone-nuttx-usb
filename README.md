@@ -924,7 +924,91 @@ EHCI HCCPARAMS=00a026
 EHCI USB EHCI Initialized
 ```
 
-TODO: What next?
+# USB ECHI HCSPARAMS and HCCPARAMS
+
+Earlier we saw this log...
+
+```text
+EHCI HCIVERSION 1.00
+EHCI nports=1, HCSPARAMS=1101
+EHCI HCCPARAMS=00a026
+EHCI USB EHCI Initialized
+```
+
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/5238bc5246bcae896883f056d24691ebaa050f83/README.md#output-log)
+
+_What are HCSPARAMS and HCCPARAMS? What do the values mean?_
+
+We asked Bing AI (ChatGPT) about HCSPARAMS...
+
+>   "EHCI HCSPARAMS=1101. What does it mean?"
+
+Here's the response...
+
+(TODO: Verify the response)
+
+Then we asked Bing AI (ChatGPT) about HCCPARAMS...
+
+>   "EHCI HCCPARAMS=00a026. What does it mean?"
+
+Here's the response...
+
+(TODO: Verify the response)
+
+# Testing CDC ACM
+
+We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
+
+Select these options in `menuconfig`...
+
+-   Enable "RTOS Features > Work queue support > Low priority (kernel) worker thread"
+
+    Set "Number of low-priority worker threads" to 2
+
+-   Enable "Device Drivers > USB Host Driver Support > USB Hub Support"
+
+    And "CDC/ACM Support"
+
+# "ls" Crashes
+
+NuttX crashes when we run `ls`...
+
+TODO: Why?
+
+```text
+NuttShell (NSH) NuttX-12.0.3
+nsh> ls /dev
+_assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
+_assert: Assertion failed : at file: mm_heap/mm_malloc.c:200 task: nsh_main 0x4008b380
+up_dump_register: stack = 0x4012e660
+up_dump_register: x0:   0x4012e660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f3b22
+up_dump_register: x4:   0x4a10              x5:   0x0
+up_dump_register: x6:   0x4                 x7:   0x88
+up_dump_register: x8:   0x40a8e218          x9:   0x0
+up_dump_register: x10:  0x2                 x11:  0xa200023
+up_dump_register: x12:  0x1c                x13:  0x1
+up_dump_register: x14:  0x0                 x15:  0x1c28000
+up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x18:  0x0                 x19:  0x0
+up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x22:  0x0                 x23:  0xc8
+up_dump_register: x24:  0x400f1277          x25:  0x40125000
+up_dump_register: x26:  0x0                 x27:  0x0
+up_dump_register: x28:  0x0                 x29:  0x0
+up_dump_register: x30:  0x4008b328        
+up_dump_register: 
+up_dump_register: STATUS Registers:
+up_dump_register: SPSR:      0x40000005        
+up_dump_register: ELR:       0x40081000        
+up_dump_register: SP_EL0:    0x40a97900        
+up_dump_register: SP_ELX:    0x40a97610        
+up_dump_register: TPIDR_EL0: 0x40a95608        
+up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: EXE_DEPTH: 0xffffffffffffffff
+```
+
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/0ba3be1b69937f3e31ea57c13c21645550859f44/README.md#output-log)
 
 # Set USB Magnitude / Rate / Threshold
 
