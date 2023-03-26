@@ -1058,6 +1058,14 @@ up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/0ba3be1b69937f3e31ea57c13c21645550859f44/README.md#output-log)
 
+_Does this happen when we disable USB CDC ACM?_
+
+Yes this crash happens even when we disable USB CDC ACM.
+
+_Does this happen when we disable USB Host?_
+
+TODO: Disable USB Host
+
 # Set USB Magnitude / Rate / Threshold
 
 Earlier we saw this code for setting the [USB Magnitude, Rate and Threshold](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller) in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
