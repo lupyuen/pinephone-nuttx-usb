@@ -1070,6 +1070,8 @@ TODO: What does this mean?
 
 TODO: Enable Memory Allocation Log
 
+TODO: Lookup the addresses in the Register Dump
+
 # Set USB Magnitude / Rate / Threshold
 
 Earlier we saw this code for setting the [USB Magnitude, Rate and Threshold](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller) in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
@@ -1154,8 +1156,8 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-360561 bytes read in 20 ms (17.2 MiB/s)
-Uncompressed size: 10539008 = 0xA0D000
+353217 bytes read in 21 ms (16 MiB/s)
+Uncompressed size: 10522624 = 0xA09000
 36162 bytes read in 4 ms (8.6 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
@@ -1196,8 +1198,6 @@ set_bit: 0x1c202c0 Bit 25
 a64_usbhost_initialize: TODO: a64_clockall_usboh3
 a64_usbhost_initialize: TODO: switch off USB bus power
 a64_usbhost_initialize: TODO: Setup pins, with power initially off
-usbhost_registerclass: Registering class:0x40125838 nids:2
-usbhost_registerclass: Registering class:0x40125858 nids:4
 a64_ehci_initialize: sizeof(struct a64_qh_s)=96
 a64_ehci_initialize: sizeof(struct a64_qtd_s)=32
 a64_ehci_initialize: sizeof(struct ehci_itd_s)=64
@@ -1223,8 +1223,8 @@ a64_printreg: 01c1b004->00001101
 EHCI nports=1, HCSPARAMS=1101
 a64_printreg: 01c1b008->0000a026
 EHCI HCCPARAMS=00a026
-a64_printreg: 01c1b028<-40a88fa0
-a64_printreg: 01c1b024<-40a99000
+a64_printreg: 01c1b028<-40a84fa0
+a64_printreg: 01c1b024<-40a95000
 a64_printreg: 01c1b010->00080b00
 a64_printreg: 01c1b010<-00080b30
 a64_printreg: 01c1b010->00080b30
@@ -1245,873 +1245,871 @@ i
 nNgu
 t
 tShell (NSH) NuttX-12.0.3
-nsh> 
-nsh> 
-nsh> ls /dev
+nsh> ls
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: mm_heap/mm_malloc.c:200 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: mm_heap/mm_malloc.c:167 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
-up_dump_register: x8:   0x40a8e218          x9:   0x0
+up_dump_register: x8:   0x40a8a218          x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
-up_dump_register: x22:  0x0                 x23:  0xc8
-up_dump_register: x24:  0x400f1277          x25:  0x40125000
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
+up_dump_register: x22:  0x0                 x23:  0xa7
+up_dump_register: x24:  0x400ee277          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97610        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93610        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
-up_dump_register: x4:   0x4a10              x5:   0x0
-up_dump_register: x6:   0x4                 x7:   0x88
-up_dump_register: x8:   0x888               x9:   0x0
-up_dump_register: x10:  0x2                 x11:  0xa200023
-up_dump_register: x12:  0x1c                x13:  0x1
-up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
-up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
-up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
-up_dump_register: x26:  0x0                 x27:  0x0
-up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
-up_dump_register: 
-up_dump_register: STATUS Registers:
-up_dump_register: SPSR:      0x40000005        
-up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97550        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
-up_dump_register: EXE_DEPTH: 0xffffffffffffffff
-_assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97490        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93550        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a973d0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93490        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97310        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a933d0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97250        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93310        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97190        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93250        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a970d0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93190        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a97010        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a930d0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96f50        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a93010        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96e90        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92f50        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96dd0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92e90        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96d10        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92dd0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96c50        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92d10        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96b90        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92c50        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96ad0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92b90        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96a10        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92ad0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96950        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92a10        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96890        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92950        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a967d0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92890        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96710        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a927d0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96650        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92710        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96590        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92650        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a964d0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92590        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96410        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a924d0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96350        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92410        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96290        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92350        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a961d0        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92290        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96110        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a921d0        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
-_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b380
-up_dump_register: stack = 0x4012e660
-up_dump_register: x0:   0x4012e660          x1:   0xa
-up_dump_register: x2:   0x20                x3:   0x400f3b22
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
 up_dump_register: x4:   0x4a10              x5:   0x0
 up_dump_register: x6:   0x4                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
+up_dump_register: x16:  0x4008eb70          x17:  0x1
 up_dump_register: x18:  0x0                 x19:  0x0
-up_dump_register: x20:  0x40a95608          x21:  0x400f392d
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
 up_dump_register: x22:  0x0                 x23:  0xc2
-up_dump_register: x24:  0x400f0fd8          x25:  0x40125000
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008b328        
+up_dump_register: x30:  0x4008b1d8        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x40000005        
 up_dump_register: ELR:       0x40081000        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a96050        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92110        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0xffffffffffffffff
-up_dump_register: stack = 0x40a95f90
+_assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
+_assert: Assertion failed : at file: misc/lib_mutex.c:194 task: nsh_main 0x4008b230
+up_dump_register: stack = 0x4012a660
+up_dump_register: x0:   0x4012a660          x1:   0xa
+up_dump_register: x2:   0x20                x3:   0x400f0b22
+up_dump_register: x4:   0x4a10              x5:   0x0
+up_dump_register: x6:   0x4                 x7:   0x88
+up_dump_register: x8:   0x888               x9:   0x0
+up_dump_register: x10:  0x2                 x11:  0xa200023
+up_dump_register: x12:  0x1c                x13:  0x1
+up_dump_register: x14:  0x0                 x15:  0x1c28000
+up_dump_register: x16:  0x4008eb70          x17:  0x1
+up_dump_register: x18:  0x0                 x19:  0x0
+up_dump_register: x20:  0x40a91608          x21:  0x400f092d
+up_dump_register: x22:  0x0                 x23:  0xc2
+up_dump_register: x24:  0x400edfd8          x25:  0x40121000
+up_dump_register: x26:  0x0                 x27:  0x0
+up_dump_register: x28:  0x0                 x29:  0x0
+up_dump_register: x30:  0x4008b1d8        
+up_dump_register: 
+up_dump_register: STATUS Registers:
+up_dump_register: SPSR:      0x40000005        
+up_dump_register: ELR:       0x40081000        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a92050        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
+up_dump_register: EXE_DEPTH: 0xffffffffffffffff
+up_dump_register: stack = 0x40a91f90
 up_dump_register: x0:   0x66                x1:   0xffffffff
-up_dump_register: x2:   0x0                 x3:   0x400f3b22
+up_dump_register: x2:   0x0                 x3:   0x400f0b22
 up_dump_register: x4:   0x4                 x5:   0xfffffffffffffffc
 up_dump_register: x6:   0xf                 x7:   0x88
 up_dump_register: x8:   0x888               x9:   0x0
 up_dump_register: x10:  0x2                 x11:  0xa200023
 up_dump_register: x12:  0x1c                x13:  0x1
 up_dump_register: x14:  0x0                 x15:  0x1c28000
-up_dump_register: x16:  0x4008ecc0          x17:  0x1
-up_dump_register: x18:  0x0                 x19:  0x40a95848
-up_dump_register: x20:  0x40a958c8          x21:  0x66
-up_dump_register: x22:  0x0                 x23:  0x40a978a8
-up_dump_register: x24:  0x400f25a7          x25:  0x400f1957
+up_dump_register: x16:  0x4008eb70          x17:  0x1
+up_dump_register: x18:  0x0                 x19:  0x40a91848
+up_dump_register: x20:  0x40a918c8          x21:  0x66
+up_dump_register: x22:  0x0                 x23:  0x40a938a8
+up_dump_register: x24:  0x400ef5a7          x25:  0x400ee957
 up_dump_register: x26:  0x0                 x27:  0x0
 up_dump_register: x28:  0x0                 x29:  0x0
-up_dump_register: x30:  0x4008919c        
+up_dump_register: x30:  0x4008904c        
 up_dump_register: 
 up_dump_register: STATUS Registers:
 up_dump_register: SPSR:      0x60000005        
-up_dump_register: ELR:       0x400891cc        
-up_dump_register: SP_EL0:    0x40a97900        
-up_dump_register: SP_ELX:    0x40a95f90        
-up_dump_register: TPIDR_EL0: 0x40a95608        
-up_dump_register: TPIDR_EL1: 0x40a95608        
+up_dump_register: ELR:       0x4008907c        
+up_dump_register: SP_EL0:    0x40a93900        
+up_dump_register: SP_ELX:    0x40a91f90        
+up_dump_register: TPIDR_EL0: 0x40a91608        
+up_dump_register: TPIDR_EL1: 0x40a91608        
 up_dump_register: EXE_DEPTH: 0x0               
 ```
