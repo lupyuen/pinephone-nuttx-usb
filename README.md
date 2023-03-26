@@ -1060,11 +1060,13 @@ up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 
 _Does this happen when we disable USB CDC ACM?_
 
-Yes this crash happens even when we disable USB CDC ACM.
+Yes `ls` crashes even when we disable USB CDC ACM.
 
 _Does this happen when we disable USB Host?_
 
-TODO: Disable USB Host
+When we disable Allwinner A64 USB EHCI and USB Host, `ls` doesn't crash.
+
+So something in USB Host Driver is crashing `ls`.
 
 # Set USB Magnitude / Rate / Threshold
 
