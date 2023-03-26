@@ -1017,6 +1017,12 @@ Select these options in `menuconfig`...
 
     And "CDC/ACM Support"
 
+The `lsusb` and `dmesg` logs for PinePhone might be helpful later...
+
+-   [`lsusb` log for PinePhone](https://gist.github.com/lupyuen/5410d76a7e9851b42b69c2058ce448ae)
+
+-   [`dmesg` log for PinePhone](https://gist.github.com/lupyuen/9e6f9acdc4ecec24445d726884609b1f)
+
 _Why is "Number of low-priority worker threads" set to 2?_
 
 Because "CDC/ACM Support" won't compile with the default value of 1.
