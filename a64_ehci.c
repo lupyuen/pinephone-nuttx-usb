@@ -462,8 +462,8 @@ static int a64_qh_dump(struct a64_qh_s *qh, uint32_t **bp, void *arg);
 #else
 #  define a64_qtd_print(qtd)
 #  define a64_qh_print(qh)
-#  define a64_qtd_dump(qtd, bp, arg) OK
-#  define a64_qh_dump(qh, bp, arg)   OK
+#  define a64_qtd_dump(qtd, bp, arg) //// OK
+#  define a64_qh_dump(qh, bp, arg)   //// OK
 #endif
 
 static inline uint8_t a64_ehci_speed(uint8_t usbspeed);
@@ -2145,7 +2145,7 @@ static int a64_async_setup(struct a64_rhport_s *rhport,
 #ifdef CONFIG_USBHOST_TRACE
   usbhost_vtrace2(EHCI_VTRACE2_ASYNCXFR, epinfo->epno, buflen);
 #else
-  uinfo("RHport%d EP%d: buffer=%p, buflen=%d, req=%p\n",
+  uinfo("RHport%d EP%d: buffer=%p, buflen=%ld, req=%p\n",
         RHPORT(rhport), epinfo->epno, buffer, buflen, req);
 #endif
 
@@ -2426,7 +2426,7 @@ static int a64_intr_setup(struct a64_rhport_s *rhport,
 #ifdef CONFIG_USBHOST_TRACE
   usbhost_vtrace2(EHCI_VTRACE2_INTRXFR, epinfo->epno, buflen);
 #else
-  uinfo("RHport%d EP%d: buffer=%p, buflen=%d\n",
+  uinfo("RHport%d EP%d: buffer=%p, buflen=%ld\n",
         RHPORT(rhport), epinfo->epno, buffer, buflen);
 #endif
 
