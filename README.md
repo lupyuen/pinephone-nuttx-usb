@@ -1017,6 +1017,12 @@ Select these options in `menuconfig`...
 
     And "CDC/ACM Support"
 
+_Why is "Number of low-priority worker threads" set to 2?_
+
+Because "CDC/ACM Support" won't compile with the default value of 1.
+
+But when we set the value to 2, we hit an Assertion Failure...
+
 # "ls" Crashes
 
 When we set "Number of low-priority worker threads" to 2 and run `ls`, NuttX crashes with an Assertion Failure...
