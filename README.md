@@ -1019,7 +1019,7 @@ Select these options in `menuconfig`...
 
 # "ls" Crashes
 
-NuttX crashes when we run `ls`...
+NuttX crashes with an Assertion Failure when we set "Number of low-priority worker threads" to 2 and run `ls`...
 
 ```text
 NuttShell (NSH) NuttX-12.0.3
@@ -1068,17 +1068,7 @@ FAR void *mm_malloc(FAR struct mm_heap_s *heap, size_t size) {
 
 TODO: What does this mean?
 
-_Does this happen when we disable USB CDC ACM?_
-
-Yes `ls` crashes even when we disable USB CDC ACM.
-
-_Does this happen when we disable USB Host?_
-
-When we disable Allwinner A64 USB EHCI and USB Host, `ls` doesn't crash.
-
-So something in USB Host Driver is crashing `ls`.
-
-TODO: What is crashing USB Host Driver?
+TODO: Enable Memory Allocation Log
 
 # Set USB Magnitude / Rate / Threshold
 
