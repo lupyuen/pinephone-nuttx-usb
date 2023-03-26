@@ -1021,8 +1021,6 @@ Select these options in `menuconfig`...
 
 NuttX crashes when we run `ls`...
 
-TODO: Why?
-
 ```text
 NuttShell (NSH) NuttX-12.0.3
 nsh> ls /dev
@@ -1058,6 +1056,18 @@ up_dump_register: EXE_DEPTH: 0xffffffffffffffff
 
 [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/0ba3be1b69937f3e31ea57c13c21645550859f44/README.md#output-log)
 
+Here's the Assertion Failure: [mm/mm_heap/mm_malloc.c](https://github.com/apache/nuttx/blob/master/mm/mm_heap/mm_malloc.c#L200-L202)
+
+```c
+FAR void *mm_malloc(FAR struct mm_heap_s *heap, size_t size) {
+  ...
+  DEBUGASSERT((next->size & MM_ALLOC_BIT) != 0 &&
+              (next->size & MM_PREVFREE_BIT) != 0 &&
+              next->preceding == nodesize);
+```
+
+TODO: What does this mean?
+
 _Does this happen when we disable USB CDC ACM?_
 
 Yes `ls` crashes even when we disable USB CDC ACM.
@@ -1067,6 +1077,8 @@ _Does this happen when we disable USB Host?_
 When we disable Allwinner A64 USB EHCI and USB Host, `ls` doesn't crash.
 
 So something in USB Host Driver is crashing `ls`.
+
+TODO: What is crashing USB Host Driver?
 
 # Set USB Magnitude / Rate / Threshold
 
