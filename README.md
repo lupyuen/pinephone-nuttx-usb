@@ -48,13 +48,9 @@ Select these options in `menuconfig`...
 
 -   Enable "RTOS Features > Work queue support > Low priority (kernel) worker thread"
 
-    Set "Number of low-priority worker threads" to 2
-
 -   Enable "Device Drivers > USB Host Driver Support"
 
 -   Enable "Device Drivers > USB Host Driver Support > USB Hub Support"
-
-    And "CDC/ACM Support"
 
 Let's boot the NuttX USB EHCI Driver on PinePhone...
 
@@ -1017,11 +1013,15 @@ Select these options in `menuconfig`...
 
     And "CDC/ACM Support"
 
+_Does the Quectel LTE Modem run on USB CDC ACM?_
+
 The `lsusb` and `dmesg` logs for PinePhone might be helpful later...
 
 -   [`lsusb` log for PinePhone](https://gist.github.com/lupyuen/5410d76a7e9851b42b69c2058ce448ae)
 
 -   [`dmesg` log for PinePhone](https://gist.github.com/lupyuen/9e6f9acdc4ecec24445d726884609b1f)
+
+TODO: Get the USB Config File for PinePhone: /etc/udev/rules.d
 
 _Why is "Number of low-priority worker threads" set to 2?_
 
@@ -1084,6 +1084,10 @@ TODO: Enable Memory Allocation Log
 
 TODO: Lookup the addresses in the Register Dump
 
+TODO: Can we skip the USB CDC ACM Driver?
+
+TODO: How does NuttX enumerate USB Devices?
+
 # Set USB Magnitude / Rate / Threshold
 
 Earlier we saw this code for setting the [USB Magnitude, Rate and Threshold](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller) in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
@@ -1111,11 +1115,11 @@ static int sun4i_usb_phy_init(struct phy *phy) {
 
 [(`disc_thresh` is 3)](https://github.com/lupyuen/pinephone-nuttx-usb#usb-controller-configuration)
 
-TODO
+TODO: Is this needed for NuttX?
 
 # USB Controller Configuration
 
-TODO: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
+Here's the PinePhone USB Controller Configuration in U-Boot Bootloader: [phy-sun4i-usb.c](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L622-L630)
 
 ```c
 static const struct sun4i_usb_phy_cfg sun50i_a64_cfg = {
