@@ -1086,6 +1086,8 @@ TODO: Lookup the addresses in the Register Dump
 
 TODO: Can we skip the USB CDC ACM Driver?
 
+# Enumerate USB Devices on PinePhone
+
 TODO: How does NuttX enumerate USB Devices?
 
 # Set USB Magnitude / Rate / Threshold
