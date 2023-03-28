@@ -1081,25 +1081,25 @@ a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 
 // Write USBCMD
 // Run/Stop (RS, Bit 0) = 0
-// Halt the Host Controller
+// - Halt the Host Controller
 a64_printreg: 01c1b010<-00000000
 
 // Read USBSTS
 // HCHalted (Bit 12) = 1
-// Host Controller has halted
+// - Host Controller has halted
 a64_printreg: 01c1b014->00001000
 
 // Read USBCMD
 // Run/Stop (RS, Bit 0) = 0
-// Host Controller has halted
+// - Host Controller has halted
 a64_printreg: 01c1b010->00000000
 
 // Write USBCMD
 // Host Controller Reset (HCRESET, Bit 1) = 1
-// Reset the Host Controller
+// - Reset the Host Controller
 a64_printreg: 01c1b010<-00000002
 
-// Read USBCMD:
+// Read USBCMD
 // Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
 // Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
 // Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
@@ -1109,7 +1109,13 @@ a64_ehci_initialize: TODO: Re-program the USB host controller
 // USBINTR
 a64_printreg: 01c1b018<-00000000
 
-// USBSTS
+// Write USBSTS
+// USB Interrupt (USBINT, Bit 0) = 1 (Reset)
+// USB Error Interrupt (USBERRINT, Bit 1) = 1 (Reset)
+// Port Change Detect (Bit 2) = 1 (Reset)
+// Frame List Rollover (Bit 3) = 1 (Reset)
+// Host System Error (Bit 4) = 1 (Reset)
+// Interrupt on Async Advance (Bit 5) = 1 (Reset)
 a64_printreg: 01c1b014<-0000003f
 
 // HCSPARAMS
@@ -1124,16 +1130,25 @@ a64_printreg: 01c1b028<-40a86fa0
 // PERIODICLISTBASE
 a64_printreg: 01c1b024<-40a97000
 
-// USBCMD
+// Read USBCMD: Same as above
 a64_printreg: 01c1b010->00080b00
 
-// USBCMD
+// Write USBCMD
+// Periodic Schedule Enable (Bit 4) = 1
+// - Use the PERIODICLISTBASE register to access the Periodic Schedule
+// Asynchronous Schedule Enable (Bit 5) = 1
+// - Use the ASYNCLISTADDR register to access the Asynchronous Schedule
+// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
+// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
+// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
 a64_printreg: 01c1b010<-00080b30
 
-// USBCMD
+// Read USBCMD: Same as above
 a64_printreg: 01c1b010->00080b30
 
-// USBCMD
+// Write USBCMD: Same as above, plus...
+// Run/Stop (RS, Bit 0) = 1
+// - Start Host Controller
 a64_printreg: 01c1b010<-00080b31
 
 // CONFIGFLAG
@@ -1142,7 +1157,9 @@ a64_printreg: 01c1b050->00000000
 // CONFIGFLAG
 a64_printreg: 01c1b050<-00000001
 
-// USBSTS
+// Read USBSTS
+// HCHalted (Bit 12) = 0
+// - Host Controller has started
 a64_printreg: 01c1b014->00000000
 a64_ehci_initialize: TODO: irq_attach
 
