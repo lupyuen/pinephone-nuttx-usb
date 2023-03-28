@@ -924,85 +924,6 @@ EHCI HCCPARAMS=00a026
 EHCI USB EHCI Initialized
 ```
 
-# USB ECHI HCSPARAMS and HCCPARAMS
-
-Earlier we saw this log...
-
-```text
-EHCI HCIVERSION 1.00
-EHCI nports=1, HCSPARAMS=1101
-EHCI HCCPARAMS=00a026
-EHCI USB EHCI Initialized
-```
-
-[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/5238bc5246bcae896883f056d24691ebaa050f83/README.md#output-log)
-
-_What are HCSPARAMS and HCCPARAMS? What do the values mean?_
-
-We asked Bing AI (ChatGPT) about HCSPARAMS...
-
->   "EHCI HCSPARAMS=1101. What does it mean?"
-
-Here's the response...
-
-(TODO: Verify the response)
-
->   EHCI stands for Enhanced Host Controller Interface, which is a standard for programming the USB controller on any hardware platform. HCSPARAMS is one of the EHCI registers that contains some parameters of the host controller. According to the EHCI specification, HCSPARAMS=1101 means:
-
->   The host controller supports one port routing rule (bit 0-7).
-
->   The host controller has one companion controller (bit 8-11).
-
->   The host controller has sixteen ports per companion controller (bit 12-15).
-
->   The host controller has one port indicator (bit 16).
-
->   The host controller does not support port power control (bit 17).
-
->   The host controller does not support debug port capability (bit 20-23).
-
->   The host controller does not support park mode for high-speed queue heads (bit 24).
-
->   The number of asynchronous schedule microframes is one (bit 25-27).
-
-Then we asked Bing AI (ChatGPT) about HCCPARAMS...
-
->   "EHCI HCCPARAMS=00a026. What does it mean?"
-
-Here's the response...
-
-(TODO: Verify the response)
-
->   EHCI HCCPARAMS is a register that contains information about the capabilities of the Enhanced Host Controller Interface (EHCI) for USB 2.0. The value of this register is a hexadecimal number that can be interpreted as follows:
-
->   Bit 0: 64-bit addressing capability. If set to 1, the host controller supports 64-bit addressing for data structures.
-
->   Bit 1: Programmable frame list flag. If set to 1, the host controller supports a system memory frame list structure of 1024, 512, or 256 elements.
-
->   Bit 2: Asynchronous schedule park capability. If set to 1, the host controller supports the park feature for high-speed queue heads in the asynchronous schedule.
-
->   Bit 3: Reserved. Must be zero.
-
->   Bit 4: Isochronous scheduling threshold. This field indicates, relative to the current position of the executing host controller, where software can reliably update the isochronous schedule.
-
->   Bit 5-7: EHCI extended capabilities pointer. This optional field indicates an offset into PCI configuration space for a capabilities list. This list may support extended features beyond EHCI compliance.
-
->   Bit 8-15: Reserved. Must be zero.
-
->   In your case, the value of EHCI HCCPARAMS is 00a026, which means:
-
->   The host controller supports 64-bit addressing (bit 0 is 1).
-
->   The host controller supports a programmable frame list (bit 1 is 1).
-
->   The host controller does not support asynchronous schedule park (bit 2 is 0).
-
->   The isochronous scheduling threshold is 2 microframes (bit 4 is 1).
-
->   The EHCI extended capabilities pointer is at offset A0h in PCI configuration space (bit 5-7 are A).
-
-TODO: Is this expected for PinePhone?
-
 # "ls" Crashes
 
 When we enable USB Hub Support and run `ls`, NuttX crashes with an Assertion Failure...
@@ -1106,10 +1027,10 @@ a64_printreg: 01c1b010<-00000002
 a64_printreg: 01c1b010->00080b00
 a64_ehci_initialize: TODO: Re-program the USB host controller
 
-// USBINTR
+// Write USBINTR: Disable all interrupts
 a64_printreg: 01c1b018<-00000000
 
-// Write USBSTS
+// Write USBSTS: USB Interrupt Enable Register
 // USB Interrupt (USBINT, Bit 0) = 1 (Reset)
 // USB Error Interrupt (USBERRINT, Bit 1) = 1 (Reset)
 // Port Change Detect (Bit 2) = 1 (Reset)
@@ -1118,10 +1039,20 @@ a64_printreg: 01c1b018<-00000000
 // Interrupt on Async Advance (Bit 5) = 1 (Reset)
 a64_printreg: 01c1b014<-0000003f
 
-// HCSPARAMS
+// Read HCSPARAMS: Structural Parameters
+// N_PORTS (Bits 0 to 3) = 1 (Number of physical downstream ports)
+// Number of Ports per Companion Controller (N_PCC, Bits 8 to 11) = 1 (Number of ports supported per companion host controller)
+// Number of Companion Controller (N_CC, Bits 12 to 15) = 1 (Number of companion controllers)
 a64_printreg: 01c1b004->00001101
 
-// HCCPARAMS
+// Read HCCPARAMS: Capability Parameters
+// 64-bit Addressing Capability (Bit 0) = 0 (32-bit address memory pointers)
+// Programmable Frame List Flag (Bit 1) = 1
+// - System software can specify and use a smaller frame list
+// Asynchronous Schedule Part Capability (Bit 2) = 1
+// - Support park feature for high-speed queue heads in the Asynchronous Schedule
+// Isochronous Scheduling Threshold (Bits 4 to 7) = 2
+// EHCI Extended Capabilities Pointer (EECP, Bits 8 to 15) = 0xA0
 a64_printreg: 01c1b008->0000a026
 
 // ASYNCLISTADDR
@@ -1163,7 +1094,12 @@ a64_printreg: 01c1b050<-00000001
 a64_printreg: 01c1b014->00000000
 a64_ehci_initialize: TODO: irq_attach
 
-// USBINTR
+// Write USBINTR: USB Interrupt Enable Register
+// USB Interrupt Enable (Bit 0) = 1
+// USB Error Interrupt Enable (Bit 1) = 1
+// Port Change Interrupt Enable (Bit 2) = 1
+// Host System Error Enable (Bit 4) = 1
+// Interrupt on Async Advance Enable (Bit 5) = 1
 a64_printreg: 01c1b018<-00000037
 a64_ehci_initialize: TODO: up_enable_irq
 a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
