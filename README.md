@@ -1079,19 +1079,30 @@ a64_ehci_initialize: TODO: a64_clockall_usboh3
 a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
 a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 
-// USBCMD
+// Write USBCMD
+// Run/Stop (RS, Bit 0) = 0
+// Halt the Host Controller
 a64_printreg: 01c1b010<-00000000
 
-// USBSTS
+// Read USBSTS
+// HCHalted (Bit 12) = 1
+// Host Controller has halted
 a64_printreg: 01c1b014->00001000
 
-// USBCMD
+// Read USBCMD
+// Run/Stop (RS, Bit 0) = 0
+// Host Controller has halted
 a64_printreg: 01c1b010->00000000
 
-// USBCMD
+// Write USBCMD
+// Host Controller Reset (HCRESET, Bit 1) = 1
+// Reset the Host Controller
 a64_printreg: 01c1b010<-00000002
 
-// USBCMD
+// Read USBCMD:
+// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
+// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
+// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
 a64_printreg: 01c1b010->00080b00
 a64_ehci_initialize: TODO: Re-program the USB host controller
 
