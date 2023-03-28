@@ -1078,29 +1078,69 @@ TODO: Decode these EHCI Register Values
 a64_ehci_initialize: TODO: a64_clockall_usboh3
 a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
 a64_ehci_initialize: TODO: Program the controller to be the USB host controller
+
+// USBCMD
 a64_printreg: 01c1b010<-00000000
+
+// USBSTS
 a64_printreg: 01c1b014->00001000
+
+// USBCMD
 a64_printreg: 01c1b010->00000000
+
+// USBCMD
 a64_printreg: 01c1b010<-00000002
+
+// USBCMD
 a64_printreg: 01c1b010->00080b00
 a64_ehci_initialize: TODO: Re-program the USB host controller
+
+// USBINTR
 a64_printreg: 01c1b018<-00000000
+
+// USBSTS
 a64_printreg: 01c1b014<-0000003f
+
+// HCSPARAMS
 a64_printreg: 01c1b004->00001101
+
+// HCCPARAMS
 a64_printreg: 01c1b008->0000a026
+
+// ASYNCLISTADDR
 a64_printreg: 01c1b028<-40a86fa0
+
+// PERIODICLISTBASE
 a64_printreg: 01c1b024<-40a97000
+
+// USBCMD
 a64_printreg: 01c1b010->00080b00
+
+// USBCMD
 a64_printreg: 01c1b010<-00080b30
+
+// USBCMD
 a64_printreg: 01c1b010->00080b30
+
+// USBCMD
 a64_printreg: 01c1b010<-00080b31
+
+// CONFIGFLAG
 a64_printreg: 01c1b050->00000000
+
+// CONFIGFLAG
 a64_printreg: 01c1b050<-00000001
+
+// USBSTS
 a64_printreg: 01c1b014->00000000
 a64_ehci_initialize: TODO: irq_attach
+
+// USBINTR
 a64_printreg: 01c1b018<-00000037
 a64_ehci_initialize: TODO: up_enable_irq
 a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
+
+// PORTSC
 a64_printreg: 01c1b054->00001000
 ```
 
