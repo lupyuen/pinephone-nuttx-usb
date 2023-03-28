@@ -1090,6 +1090,8 @@ TODO: Can we skip the USB CDC ACM Driver?
 
 TODO: How does NuttX enumerate USB Devices?
 
+TODO: Can we enumerate the LTE Modem on PinePhone?
+
 # Set USB Magnitude / Rate / Threshold
 
 Earlier we saw this code for setting the [USB Magnitude, Rate and Threshold](https://github.com/lupyuen/pinephone-nuttx-usb#power-on-the-usb-controller) in the USB PHY Driver: [sun4i_usb_phy_init](https://github.com/u-boot/u-boot/blob/master/drivers/phy/allwinner/phy-sun4i-usb.c#L259-L327)
