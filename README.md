@@ -1088,9 +1088,15 @@ TODO: Can we skip the USB CDC ACM Driver?
 
 # Enumerate USB Devices on PinePhone
 
+TODO: Can we enumerate the LTE Modem on PinePhone?
+
 TODO: How does NuttX enumerate USB Devices?
 
-TODO: Can we enumerate the LTE Modem on PinePhone?
+[usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581)
+
+- Called by [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
+
+TODO: What's inside usbhost_enumerate?
 
 # Set USB Magnitude / Rate / Threshold
 
