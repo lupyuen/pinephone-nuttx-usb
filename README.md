@@ -920,6 +920,133 @@ EHCI HCCPARAMS=00a026
 EHCI USB EHCI Initialized
 ```
 
+# Decode EHCI Register Values
+
+_In the log above, what are the values of the EHCI Registers?_
+
+Let's decode the values of the USB EHCI Registers, to make sure that PinePhone is returning the right values...
+
+```text
+EHCI Initializing EHCI Stack
+a64_ehci_initialize: TODO: a64_clockall_usboh3
+a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
+a64_ehci_initialize: TODO: Program the controller to be the USB host controller
+
+// Write USBCMD: USB Command Register (EHCI Page 18)
+// Run/Stop (RS, Bit 0) = 0
+// - Halt the Host Controller
+a64_printreg: 01c1b010<-00000000
+
+// Read USBSTS: USB Status Register (EHCI Page 21)
+// HCHalted (Bit 12) = 1
+// - Host Controller has halted
+a64_printreg: 01c1b014->00001000
+
+// Read USBCMD: USB Command Register (EHCI Page 18)
+// Run/Stop (RS, Bit 0) = 0
+// - Host Controller has halted
+a64_printreg: 01c1b010->00000000
+
+// Write USBCMD: USB Command Register (EHCI Page 18)
+// Host Controller Reset (HCRESET, Bit 1) = 1
+// - Reset the Host Controller
+a64_printreg: 01c1b010<-00000002
+
+// Read USBCMD: USB Command Register (EHCI Page 18)
+// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
+// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
+// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
+a64_printreg: 01c1b010->00080b00
+a64_ehci_initialize: TODO: Re-program the USB host controller
+
+// Write USBINTR: USB Interrupt Enable Register (EHCI Page 22)
+// Disable all interrupts
+a64_printreg: 01c1b018<-00000000
+
+// Write USBSTS: USB Status Register (EHCI Page 21)
+// USB Interrupt (USBINT, Bit 0) = 1 (Reset)
+// USB Error Interrupt (USBERRINT, Bit 1) = 1 (Reset)
+// Port Change Detect (Bit 2) = 1 (Reset)
+// Frame List Rollover (Bit 3) = 1 (Reset)
+// Host System Error (Bit 4) = 1 (Reset)
+// Interrupt on Async Advance (Bit 5) = 1 (Reset)
+a64_printreg: 01c1b014<-0000003f
+EHCI HCIVERSION 1.00
+
+// Read HCSPARAMS: Structural Parameters (EHCI Page 14)
+// N_PORTS (Bits 0 to 3) = 1 (Number of physical downstream ports)
+// Number of Ports per Companion Controller (N_PCC, Bits 8 to 11) = 1 (Number of ports supported per companion host controller)
+// Number of Companion Controller (N_CC, Bits 12 to 15) = 1 (Number of companion controllers)
+a64_printreg: 01c1b004->00001101
+EHCI nports=1, HCSPARAMS=1101
+
+// Read HCCPARAMS: Capability Parameters (EHCI Page 15)
+// 64-bit Addressing Capability (Bit 0) = 0 (32-bit address memory pointers)
+// Programmable Frame List Flag (Bit 1) = 1
+// - System software can specify and use a smaller frame list
+// Asynchronous Schedule Part Capability (Bit 2) = 1
+// - Support park feature for high-speed queue heads in the Asynchronous Schedule
+// Isochronous Scheduling Threshold (Bits 4 to 7) = 2
+// EHCI Extended Capabilities Pointer (EECP, Bits 8 to 15) = 0xA0
+a64_printreg: 01c1b008->0000a026
+EHCI HCCPARAMS=00a026
+
+// ASYNCLISTADDR
+a64_printreg: 01c1b028<-40a86fa0
+
+// PERIODICLISTBASE
+a64_printreg: 01c1b024<-40a97000
+
+// Read USBCMD: Same as above (EHCI Page 18)
+a64_printreg: 01c1b010->00080b00
+
+// Write USBCMD: USB Command Register (EHCI Page 18)
+// Periodic Schedule Enable (Bit 4) = 1
+// - Use the PERIODICLISTBASE register to access the Periodic Schedule
+// Asynchronous Schedule Enable (Bit 5) = 1
+// - Use the ASYNCLISTADDR register to access the Asynchronous Schedule
+// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
+// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
+// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
+a64_printreg: 01c1b010<-00080b30
+
+// Read USBCMD: Same as above (EHCI Page 18)
+a64_printreg: 01c1b010->00080b30
+
+// Write USBCMD: Same as above, plus... (EHCI Page 18)
+// Run/Stop (RS, Bit 0) = 1
+// - Start Host Controller
+a64_printreg: 01c1b010<-00080b31
+
+// CONFIGFLAG
+a64_printreg: 01c1b050->00000000
+
+// CONFIGFLAG
+a64_printreg: 01c1b050<-00000001
+
+// Read USBSTS: USB Status Register (EHCI Page 21)
+// HCHalted (Bit 12) = 0
+// - Host Controller has started
+a64_printreg: 01c1b014->00000000
+a64_ehci_initialize: TODO: irq_attach
+
+// Write USBINTR: USB Interrupt Enable Register
+// USB Interrupt Enable (Bit 0) = 1
+// USB Error Interrupt Enable (Bit 1) = 1
+// Port Change Interrupt Enable (Bit 2) = 1
+// Host System Error Enable (Bit 4) = 1
+// Interrupt on Async Advance Enable (Bit 5) = 1
+a64_printreg: 01c1b018<-00000037
+a64_ehci_initialize: TODO: up_enable_irq
+a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
+
+// PORTSC
+a64_printreg: 01c1b054->00001000
+EHCI USB EHCI Initialized
+```
+
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/73e2c24be48a2eb9e0a9c478e0b2a121e6ac8e6a/README.md#output-log)
+
 # "ls" Crashes
 
 When we enable USB Hub Support and run `ls`, NuttX crashes with an Assertion Failure...
@@ -988,130 +1115,6 @@ TODO: How does NuttX enumerate USB Devices?
 TODO: What's inside usbhost_enumerate?
 
 [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) is supposed to print the USB Descriptor. But it doesn't. Why?
-
-# Decode EHCI Register Values
-
-TODO: Decode these EHCI Register Values
-
-```text
-EHCI Initializing EHCI Stack
-a64_ehci_initialize: TODO: a64_clockall_usboh3
-a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
-a64_ehci_initialize: TODO: Program the controller to be the USB host controller
-
-// Write USBCMD
-// Run/Stop (RS, Bit 0) = 0
-// - Halt the Host Controller
-a64_printreg: 01c1b010<-00000000
-
-// Read USBSTS
-// HCHalted (Bit 12) = 1
-// - Host Controller has halted
-a64_printreg: 01c1b014->00001000
-
-// Read USBCMD
-// Run/Stop (RS, Bit 0) = 0
-// - Host Controller has halted
-a64_printreg: 01c1b010->00000000
-
-// Write USBCMD
-// Host Controller Reset (HCRESET, Bit 1) = 1
-// - Reset the Host Controller
-a64_printreg: 01c1b010<-00000002
-
-// Read USBCMD
-// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
-// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
-// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
-a64_printreg: 01c1b010->00080b00
-a64_ehci_initialize: TODO: Re-program the USB host controller
-
-// Write USBINTR: Disable all interrupts
-a64_printreg: 01c1b018<-00000000
-
-// Write USBSTS: USB Interrupt Enable Register
-// USB Interrupt (USBINT, Bit 0) = 1 (Reset)
-// USB Error Interrupt (USBERRINT, Bit 1) = 1 (Reset)
-// Port Change Detect (Bit 2) = 1 (Reset)
-// Frame List Rollover (Bit 3) = 1 (Reset)
-// Host System Error (Bit 4) = 1 (Reset)
-// Interrupt on Async Advance (Bit 5) = 1 (Reset)
-a64_printreg: 01c1b014<-0000003f
-EHCI HCIVERSION 1.00
-
-// Read HCSPARAMS: Structural Parameters
-// N_PORTS (Bits 0 to 3) = 1 (Number of physical downstream ports)
-// Number of Ports per Companion Controller (N_PCC, Bits 8 to 11) = 1 (Number of ports supported per companion host controller)
-// Number of Companion Controller (N_CC, Bits 12 to 15) = 1 (Number of companion controllers)
-a64_printreg: 01c1b004->00001101
-EHCI nports=1, HCSPARAMS=1101
-
-// Read HCCPARAMS: Capability Parameters
-// 64-bit Addressing Capability (Bit 0) = 0 (32-bit address memory pointers)
-// Programmable Frame List Flag (Bit 1) = 1
-// - System software can specify and use a smaller frame list
-// Asynchronous Schedule Part Capability (Bit 2) = 1
-// - Support park feature for high-speed queue heads in the Asynchronous Schedule
-// Isochronous Scheduling Threshold (Bits 4 to 7) = 2
-// EHCI Extended Capabilities Pointer (EECP, Bits 8 to 15) = 0xA0
-a64_printreg: 01c1b008->0000a026
-EHCI HCCPARAMS=00a026
-
-// ASYNCLISTADDR
-a64_printreg: 01c1b028<-40a86fa0
-
-// PERIODICLISTBASE
-a64_printreg: 01c1b024<-40a97000
-
-// Read USBCMD: Same as above
-a64_printreg: 01c1b010->00080b00
-
-// Write USBCMD
-// Periodic Schedule Enable (Bit 4) = 1
-// - Use the PERIODICLISTBASE register to access the Periodic Schedule
-// Asynchronous Schedule Enable (Bit 5) = 1
-// - Use the ASYNCLISTADDR register to access the Asynchronous Schedule
-// Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
-// Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
-// Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
-a64_printreg: 01c1b010<-00080b30
-
-// Read USBCMD: Same as above
-a64_printreg: 01c1b010->00080b30
-
-// Write USBCMD: Same as above, plus...
-// Run/Stop (RS, Bit 0) = 1
-// - Start Host Controller
-a64_printreg: 01c1b010<-00080b31
-
-// CONFIGFLAG
-a64_printreg: 01c1b050->00000000
-
-// CONFIGFLAG
-a64_printreg: 01c1b050<-00000001
-
-// Read USBSTS
-// HCHalted (Bit 12) = 0
-// - Host Controller has started
-a64_printreg: 01c1b014->00000000
-a64_ehci_initialize: TODO: irq_attach
-
-// Write USBINTR: USB Interrupt Enable Register
-// USB Interrupt Enable (Bit 0) = 1
-// USB Error Interrupt Enable (Bit 1) = 1
-// Port Change Interrupt Enable (Bit 2) = 1
-// Host System Error Enable (Bit 4) = 1
-// Interrupt on Async Advance Enable (Bit 5) = 1
-a64_printreg: 01c1b018<-00000037
-a64_ehci_initialize: TODO: up_enable_irq
-a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
-
-// PORTSC
-a64_printreg: 01c1b054->00001000
-EHCI USB EHCI Initialized
-```
-
-[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/73e2c24be48a2eb9e0a9c478e0b2a121e6ac8e6a/README.md#output-log)
 
 # Testing CDC ACM
 
