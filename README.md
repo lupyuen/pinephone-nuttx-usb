@@ -1072,6 +1072,38 @@ TODO: What's inside usbhost_enumerate?
 
 [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) is supposed to print the USB Descriptor. But it doesn't. Why?
 
+TODO: Decode these EHCI Register Values
+
+```text
+a64_ehci_initialize: TODO: a64_clockall_usboh3
+a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
+a64_ehci_initialize: TODO: Program the controller to be the USB host controller
+a64_printreg: 01c1b010<-00000000
+a64_printreg: 01c1b014->00001000
+a64_printreg: 01c1b010->00000000
+a64_printreg: 01c1b010<-00000002
+a64_printreg: 01c1b010->00080b00
+a64_ehci_initialize: TODO: Re-program the USB host controller
+a64_printreg: 01c1b018<-00000000
+a64_printreg: 01c1b014<-0000003f
+a64_printreg: 01c1b004->00001101
+a64_printreg: 01c1b008->0000a026
+a64_printreg: 01c1b028<-40a86fa0
+a64_printreg: 01c1b024<-40a97000
+a64_printreg: 01c1b010->00080b00
+a64_printreg: 01c1b010<-00080b30
+a64_printreg: 01c1b010->00080b30
+a64_printreg: 01c1b010<-00080b31
+a64_printreg: 01c1b050->00000000
+a64_printreg: 01c1b050<-00000001
+a64_printreg: 01c1b014->00000000
+a64_ehci_initialize: TODO: irq_attach
+a64_printreg: 01c1b018<-00000037
+a64_ehci_initialize: TODO: up_enable_irq
+a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
+a64_printreg: 01c1b054->00001000
+```
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
