@@ -1144,6 +1144,8 @@ a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 ```
 
+[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/73e2c24be48a2eb9e0a9c478e0b2a121e6ac8e6a/README.md#output-log)
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
