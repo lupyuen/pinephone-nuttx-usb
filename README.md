@@ -935,6 +935,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_ehci_initialize: TODO: Program the controller to be the USB host controller
     ```
 
+    Then we see the EHCI Registers and their values...
+
 1.  Write USBCMD: USB Command Register (EHCI Page 18)
 
     Run / Stop (RS, Bit 0) = 0
@@ -1015,9 +1017,11 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
     N_PORTS (Bits 0 to 3) = 1 (Number of physical downstream ports)
 
-    Number of Ports per Companion Controller (N_PCC, Bits 8 to 11) = 1 (Number of ports supported per companion host controller)
+    Number of Ports per Companion Controller (N_PCC, Bits 8 to 11) = 1
+    - Number of ports supported per companion host controller
     
-    Number of Companion Controller (N_CC, Bits 12 to 15) = 1 (Number of companion controllers)
+    Number of Companion Controller (N_CC, Bits 12 to 15) = 1
+    - Number of companion controllers
 
     ```text
     a64_printreg: 01c1b004->00001101
@@ -1026,7 +1030,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Read HCCPARAMS: Capability Parameters (EHCI Page 15)
 
-    64-bit Addressing Capability (Bit 0) = 0 (32-bit address memory pointers)
+    64-bit Addressing Capability (Bit 0) = 0
+    - 32-bit address memory pointers only
 
     Programmable Frame List Flag (Bit 1) = 1
     - System software can specify and use a smaller frame list
@@ -1073,7 +1078,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     
     Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
 
-    Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
+    Interrupt Threshold Control (Bits 16-23) = 8 (default)
+    - 8 micro-frames / 1 ms
 
     ```text
     a64_printreg: 01c1b010<-00080b30
