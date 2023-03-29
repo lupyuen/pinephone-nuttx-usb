@@ -922,7 +922,7 @@ EHCI USB EHCI Initialized
 
 # Decode EHCI Register Values
 
-_In the log above, what are the values of the EHCI Registers?_
+_In the NuttX Log above, what are the values of the EHCI Registers?_
 
 Let's decode the values of the USB EHCI Registers, to make sure that PinePhone is returning the right values...
 
