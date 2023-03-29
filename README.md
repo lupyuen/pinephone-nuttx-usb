@@ -939,7 +939,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
     Then we see the EHCI Registers and their values...
 
-1.  Write USBCMD: USB Command Register (EHCI Page 18)
+1.  Write USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Run / Stop (RS, Bit 0) = 0
     - Halt the Host Controller
@@ -948,7 +948,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b010<-00000000
     ```
 
-1.  Read USBSTS: USB Status Register (EHCI Page 21)
+1.  Read USBSTS: USB Status Register [(EHCI Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     HCHalted (Bit 12) = 1
     - Host Controller has halted
@@ -957,7 +957,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b014->00001000
     ```
 
-1.  Read USBCMD: USB Command Register (EHCI Page 18)
+1.  Read USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Run / Stop (RS, Bit 0) = 0
     - Host Controller has halted
@@ -975,20 +975,21 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b010<-00000002
     ```
 
-1.  Read USBCMD: USB Command Register (EHCI Page 18)
+1.  Read USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Asynchronous Schedule Park Mode Count (Bits 8-9) = 3 (default)
 
     Asynchronous Schedule Park Mode Enable (Bit 11) = 1 (default)
 
-    Interrupt Threshold Control (Bits 16-23) = 8 (8 micro-frames / 1 ms / default)
+    Interrupt Threshold Control (Bits 16-23) = 8 (default)
+    - 8 micro-frames / 1 ms
 
     ```text
     a64_printreg: 01c1b010->00080b00
     a64_ehci_initialize: TODO: Re-program the USB host controller
     ```
 
-1.  Write USBINTR: USB Interrupt Enable Register (EHCI Page 22)
+1.  Write USBINTR: USB Interrupt Enable Register [(EHCI Page 22)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Disable all interrupts
 
@@ -996,7 +997,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b018<-00000000
     ```
 
-1.  Write USBSTS: USB Status Register (EHCI Page 21)
+1.  Write USBSTS: USB Status Register [(EHCI Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     USB Interrupt (USBINT, Bit 0) = 1 (Reset)
 
@@ -1015,7 +1016,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI HCIVERSION 1.00
     ```
 
-1.  Read HCSPARAMS: Structural Parameters (EHCI Page 14)
+1.  Read HCSPARAMS: Structural Parameters [(EHCI Page 14)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     N_PORTS (Bits 0 to 3) = 1 (Number of physical downstream ports)
 
@@ -1030,7 +1031,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI nports=1, HCSPARAMS=1101
     ```
 
-1.  Read HCCPARAMS: Capability Parameters (EHCI Page 15)
+1.  Read HCCPARAMS: Capability Parameters [(EHCI Page 15)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     64-bit Addressing Capability (Bit 0) = 0
     - 32-bit address memory pointers only
@@ -1050,7 +1051,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI HCCPARAMS=00a026
     ```
 
-1.  Write ASYNCLISTADDR: Current Asynchronous List Address Register (EHCI Page 25)
+1.  Write ASYNCLISTADDR: Current Asynchronous List Address Register [(EHCI Page 25)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Address of the next asynchronous queue head to be executed
 
@@ -1058,7 +1059,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b028<-40a86fa0
     ```
 
-1.  Write PERIODICLISTBASE: Periodic Frame List Base Address Register (EHCI Page 24)
+1.  Write PERIODICLISTBASE: Periodic Frame List Base Address Register [(EHCI Page 24)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Beginning address of the Periodic Frame List in the system memory
 
@@ -1072,7 +1073,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b010->00080b00
     ```
 
-1.  Write USBCMD: USB Command Register (EHCI Page 18)
+1.  Write USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Periodic Schedule Enable (Bit 4) = 1
     - Use the PERIODICLISTBASE register to access the Periodic Schedule
@@ -1106,7 +1107,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b010<-00080b31
     ```
 
-1.  Read CONFIGFLAG: Configure Flag Register (EHCI Page 25)
+1.  Read CONFIGFLAG: Configure Flag Register [(EHCI Page 25)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Configure Flag (CF, Bit 0) = 0
     - Route each port to an implementation dependent classic host controller
@@ -1115,7 +1116,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b050->00000000
     ```
 
-1.  Write CONFIGFLAG: Configure Flag Register (EHCI Page 25)
+1.  Write CONFIGFLAG: Configure Flag Register [(EHCI Page 25)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Configure Flag (CF, Bit 0) = 1
     - Route all ports to this host controller
@@ -1124,7 +1125,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b050<-00000001
     ```
 
-1.  Read USBSTS: USB Status Register (EHCI Page 21)
+1.  Read USBSTS: USB Status Register [(EHCI Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     HCHalted (Bit 12) = 0
     - Host Controller has started
@@ -1152,7 +1153,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
     ```
 
-1.  Read PORTSC: Port Status and Control Register (EHCI Page 26)
+1.  Read PORTSC: Port Status and Control Register [(EHCI Page 26)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
     Port Power (PP, Bit 12) = 1
     - Host controller has port power control switches
@@ -1162,7 +1163,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI USB EHCI Initialized
     ```
 
-The above values look OK.
+The above values look OK for PinePhone.
 
 # "ls" crashes when USB Hub Support is enabled
 
