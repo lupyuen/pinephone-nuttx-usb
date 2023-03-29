@@ -935,6 +935,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_ehci_initialize: TODO: Program the controller to be the USB host controller
     ```
 
+    [(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/73e2c24be48a2eb9e0a9c478e0b2a121e6ac8e6a/README.md#output-log)
+
     Then we see the EHCI Registers and their values...
 
 1.  Write USBCMD: USB Command Register (EHCI Page 18)
@@ -1048,19 +1050,23 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI HCCPARAMS=00a026
     ```
 
-1.  ASYNCLISTADDR
+1.  Write ASYNCLISTADDR: Current Asynchronous List Address Register (EHCI Page 25)
+
+    Address of the next asynchronous queue head to be executed
 
     ```text
     a64_printreg: 01c1b028<-40a86fa0
     ```
 
-1.  PERIODICLISTBASE
+1.  Write PERIODICLISTBASE: Periodic Frame List Base Address Register (EHCI Page 24)
+
+    Beginning address of the Periodic Frame List in the system memory
 
     ```text
     a64_printreg: 01c1b024<-40a97000
     ```
 
-1.  Read USBCMD: Same as above (EHCI Page 18)
+1.  Read USBCMD: Same as above
 
     ```text
     a64_printreg: 01c1b010->00080b00
@@ -1085,28 +1091,34 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_printreg: 01c1b010<-00080b30
     ```
 
-1.  Read USBCMD: Same as above (EHCI Page 18)
+1.  Read USBCMD: Same as above
 
     ```text
     a64_printreg: 01c1b010->00080b30
     ```
 
-1.  Write USBCMD: Same as above, plus... (EHCI Page 18)
+1.  Write USBCMD: Same as above, plus...
 
-    Run/Stop (RS, Bit 0) = 1
+    Run / Stop (RS, Bit 0) = 1
     - Start Host Controller
 
     ```text
     a64_printreg: 01c1b010<-00080b31
     ```
 
-1.  CONFIGFLAG
+1.  Read CONFIGFLAG: Configure Flag Register (EHCI Page 25)
+
+    Configure Flag (CF, Bit 0) = 0
+    - Route each port to an implementation dependent classic host controller
 
     ```text
     a64_printreg: 01c1b050->00000000
     ```
 
-1.  CONFIGFLAG
+1.  Write CONFIGFLAG: Configure Flag Register (EHCI Page 25)
+
+    Configure Flag (CF, Bit 0) = 1
+    - Route all ports to this host controller
 
     ```text
     a64_printreg: 01c1b050<-00000001
@@ -1140,14 +1152,15 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
     ```
 
-1.  PORTSC
+1.  Read PORTSC: Port Status and Control Register (EHCI Page 26)
+
+    Port Power (PP, Bit 12) = 1
+    - Host controller has port power control switches
 
     ```text
     a64_printreg: 01c1b054->00001000
     EHCI USB EHCI Initialized
     ```
-
-[(Source)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/73e2c24be48a2eb9e0a9c478e0b2a121e6ac8e6a/README.md#output-log)
 
 # "ls" Crashes
 
