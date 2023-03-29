@@ -937,7 +937,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Write USBCMD: USB Command Register (EHCI Page 18)
 
-    Run/Stop (RS, Bit 0) = 0
+    Run / Stop (RS, Bit 0) = 0
     - Halt the Host Controller
 
     ```text
@@ -955,7 +955,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Read USBCMD: USB Command Register (EHCI Page 18)
 
-    Run/Stop (RS, Bit 0) = 0
+    Run / Stop (RS, Bit 0) = 0
     - Host Controller has halted
 
     ```text
