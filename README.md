@@ -1162,6 +1162,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     EHCI USB EHCI Initialized
     ```
 
+The above values look OK.
+
 # "ls" Crashes
 
 When we enable USB Hub Support and run `ls`, NuttX crashes with an Assertion Failure...
