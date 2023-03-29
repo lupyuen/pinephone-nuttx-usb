@@ -1164,7 +1164,7 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 The above values look OK.
 
-# "ls" Crashes
+# "ls" crashes when USB Hub Support is enabled
 
 When we enable USB Hub Support and run `ls`, NuttX crashes with an Assertion Failure...
 
