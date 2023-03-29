@@ -1166,7 +1166,7 @@ The above values look OK.
 
 # "ls" crashes when USB Hub Support is enabled
 
-When we enable USB Hub Support and run `ls`, NuttX crashes with an Assertion Failure...
+When we enable USB Hub Support and run `ls`, NuttX halts with an Assertion Failure...
 
 ```text
 NuttShell (NSH) NuttX-12.0.3
