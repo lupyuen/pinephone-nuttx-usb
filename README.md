@@ -1238,21 +1238,24 @@ TODO: Lookup the addresses in the Register Dump
 
 TODO: Can we enumerate the LTE Modem on PinePhone?
 
-TODO: How does NuttX enumerate USB Devices?
+_How does NuttX enumerate USB Devices?_
 
-[usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581)
+[a64_usbhost_initialize](https://github.com/lupyuen/pinephone-nuttx-usb/blob/9eb27ca0cc7b1087e0a6b49316bf6ce568337dbd/a64_usbhost.c#L330-L341) creates a thread for...
 
-- Called by [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
+-   [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118), which calls....
 
-TODO: What's inside usbhost_enumerate?
+-   [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) to wait for a USB Device to be connected...
 
-[usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) is supposed to print the USB Descriptor. But it doesn't. Why?
+    But it blocks on a Semaphore.
 
-# EHCI Waiter not running
+If [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) is successful, [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118) will call [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
 
-TODO: Why is EHCI Waiter not running?
+[a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861) 
+calls...
 
-https://github.com/lupyuen/pinephone-nuttx-usb/blob/9eb27ca0cc7b1087e0a6b49316bf6ce568337dbd/a64_usbhost.c#L330-L341
+-   [usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581) 
+
+-   [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) will print the USB Descriptor
 
 # Testing CDC ACM
 
@@ -1366,7 +1369,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-357619 bytes read in 21 ms (16.2 MiB/s)
+357662 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -1450,15 +1453,20 @@ a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
-nshe:h cmik_fwaatiftse:r :c o1m
-m
-aenhdc in_owta iftoeurn:d 
+nshe:h cmik_fwaatiftse:r :c o!m!m!a
+n
+de hncoit_ wfaoiutnedr
+:
+ 
 e
-h
-c
-iN_uwtatiStheerl:l   (RNuSnHn)i nNgu
+hNcuit_twSahietlelr :( N SRHu)n nNiuntgt
+X
+-a1624._0w.a3i
 t
-tX-12.0.3
+:n s#h#># 
+.
+[K
+nsh> 
 nsh> 
 
 nsh> ls
