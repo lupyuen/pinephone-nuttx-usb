@@ -1252,7 +1252,7 @@ TODO: What's inside usbhost_enumerate?
 
 TODO: Why is EHCI Waiter not running?
 
-https://github.com/lupyuen/pinephone-nuttx-usb/blob/c7e1e8f081ea4fb36c959c0b410069dd091a66b5/a64_usbhost.c#L330-L341
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/9eb27ca0cc7b1087e0a6b49316bf6ce568337dbd/a64_usbhost.c#L330-L341
 
 # Testing CDC ACM
 
