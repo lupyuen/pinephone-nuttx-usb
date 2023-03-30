@@ -1246,7 +1246,9 @@ _How does NuttX enumerate USB Devices?_
 
 -   [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) to wait for a USB Device to be connected...
 
-    But it blocks on a Semaphore waiting for a Root Hub Port.
+    But it blocks on a Semaphore `pscsem`, waiting for a change in the Connection State of a Root Hub Port.
+
+    `pcsem` is signalled by [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815)
 
 If [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) is successful, [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118) will call [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
 
