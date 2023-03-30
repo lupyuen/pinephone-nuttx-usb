@@ -1385,7 +1385,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-357754 bytes read in 20 ms (17.1 MiB/s)
+357724 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -1475,10 +1475,8 @@ e
 h
 cNuttShell (NSH) NuttX-12.0.3
 i
-_nsh>waiter: !!!
-ehci_waiter: ehci_waiter:  Running
-a64_wait: ###
-nsh> 
+_nsh>waiter: ehci_waiter:  Running
+a64_wait: 
 
 nsh> ls
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64

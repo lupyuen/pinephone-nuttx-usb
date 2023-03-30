@@ -89,7 +89,6 @@ static struct usbhost_connection_s *g_ehciconn;
 
 static int ehci_waiter(int argc, char *argv[])
 {
-  _info("!!!\n");////
   struct usbhost_hubport_s *hport;
 
   uinfo("ehci_waiter:  Running\n");
@@ -107,7 +106,6 @@ static int ehci_waiter(int argc, char *argv[])
         {
           /* Yes.. enumerate the newly connected device */
 
-          _info("@@@\n");////
           CONN_ENUMERATE(g_ehciconn, hport);
         }
     }

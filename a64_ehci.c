@@ -3500,7 +3500,7 @@ static int a64_ehci_interrupt(int irq, void *context, void *arg)
 static int a64_wait(struct usbhost_connection_s *conn,
                       struct usbhost_hubport_s **hport)
 {
-  _info("###\n");////
+  _info("\n");////
   irqstate_t flags;
   int rhpndx;
   int ret;
@@ -3604,7 +3604,7 @@ static int a64_wait(struct usbhost_connection_s *conn,
 static int a64_rh_enumerate(struct usbhost_connection_s *conn,
                               struct usbhost_hubport_s *hport)
 {
-  _info("^^^\n");////
+  _info("1\n");////
   struct a64_rhport_s *rhport;
   volatile uint32_t *regaddr;
   uint32_t regval;
