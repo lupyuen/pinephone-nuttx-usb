@@ -1385,7 +1385,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-357662 bytes read in 20 ms (17.1 MiB/s)
+357754 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -1469,20 +1469,15 @@ a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
-nshe:h cmik_fwaatiftse:r :c o!m!m!a
-n
-de hncoit_ wfaoiutnedr
-:
- 
+nsh: mkfatfs: command not found
+
 e
-hNcuit_twSahietlelr :( N SRHu)n nNiuntgt
-X
--a1624._0w.a3i
-t
-:n s#h#># 
-.
-[K
-nsh> 
+h
+cNuttShell (NSH) NuttX-12.0.3
+i
+_nsh>waiter: !!!
+ehci_waiter: ehci_waiter:  Running
+a64_wait: ###
 nsh> 
 
 nsh> ls
