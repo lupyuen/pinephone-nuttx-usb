@@ -941,6 +941,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Write USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
+    (To halt the USB Controller)
+
     Run / Stop (RS, Bit 0) = 0
     - Halt the Host Controller
 
@@ -949,6 +951,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     ```
 
 1.  Read USBSTS: USB Status Register [(EHCI Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
+
+    (To verify that USB Controller has been halted)
 
     HCHalted (Bit 12) = 1
     - Host Controller has halted
@@ -959,6 +963,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Read USBCMD: USB Command Register [(EHCI Page 18)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
+    (To verify that USB Controller has been halted)
+
     Run / Stop (RS, Bit 0) = 0
     - Host Controller has halted
 
@@ -967,6 +973,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     ```
 
 1.  Write USBCMD: USB Command Register (EHCI Page 18)
+
+    (To reset the USB Controller)
 
     Host Controller Reset (HCRESET, Bit 1) = 1
     - Reset the Host Controller
@@ -1100,6 +1108,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Write USBCMD: Same as above, plus...
 
+    (To start the USB Controller)
+
     Run / Stop (RS, Bit 0) = 1
     - Start Host Controller
 
@@ -1127,6 +1137,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
 
 1.  Read USBSTS: USB Status Register [(EHCI Page 21)](https://www.intel.sg/content/www/xa/en/products/docs/io/universal-serial-bus/ehci-specification-for-usb.html)
 
+    (To verify that USB Controller has been started)
+
     HCHalted (Bit 12) = 0
     - Host Controller has started
 
@@ -1136,6 +1148,8 @@ Let's decode the values of the USB EHCI Registers, to make sure that PinePhone i
     ```
 
 1.  Write USBINTR: USB Interrupt Enable Register
+
+    (To enable the USB Interrupts)
 
     USB Interrupt Enable (Bit 0) = 1
 
