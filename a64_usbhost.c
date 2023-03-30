@@ -89,6 +89,7 @@ static struct usbhost_connection_s *g_ehciconn;
 
 static int ehci_waiter(int argc, char *argv[])
 {
+  _info("1\n");////
   struct usbhost_hubport_s *hport;
 
   uinfo("ehci_waiter:  Running\n");
@@ -106,6 +107,7 @@ static int ehci_waiter(int argc, char *argv[])
         {
           /* Yes.. enumerate the newly connected device */
 
+          _info("2\n");////
           CONN_ENUMERATE(g_ehciconn, hport);
         }
     }
@@ -327,11 +329,13 @@ int a64_usbhost_initialize(void)
 
   /* Start a thread to handle device connection. */
 
+  _info("1\n");////
   ret = kthread_create("EHCI Monitor", CONFIG_USBHOST_DEFPRIO,
                        CONFIG_USBHOST_STACKSIZE,
                        ehci_waiter, NULL);
   if (ret < 0)
     {
+      _info("1\n");////
       uerr("ERROR: Failed to create ehci_waiter task: %d\n", ret);
       return -ENODEV;
     }

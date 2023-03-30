@@ -3602,6 +3602,7 @@ static int a64_wait(struct usbhost_connection_s *conn,
 static int a64_rh_enumerate(struct usbhost_connection_s *conn,
                               struct usbhost_hubport_s *hport)
 {
+  _info("1\n");////
   struct a64_rhport_s *rhport;
   volatile uint32_t *regaddr;
   uint32_t regval;
@@ -3622,6 +3623,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
       /* No, return an error */
 
       usbhost_vtrace1(EHCI_VTRACE1_ENUM_DISCONN, 0);
+      _info("2\n");////
       return -ENODEV;
     }
 
@@ -3651,6 +3653,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
    * however, also appears to work.
    */
 
+  _info("3\n");////
   regval = a64_getreg(&HCOR->portsc[rhpndx]);
   if ((regval & EHCI_PORTSC_LSTATUS_MASK) == EHCI_PORTSC_LSTATUS_KSTATE)
     {
@@ -3682,12 +3685,14 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
        *    repeat."
        */
 
+      _info("4\n");////
       hport->speed = USB_SPEED_LOW;
     }
   else
     {
       /* Assume full-speed for now */
 
+      _info("5\n");////
       hport->speed = USB_SPEED_FULL;
     }
 
@@ -3713,6 +3718,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
    *   one, it must also write a zero to the Port Enable bit."
    */
 
+  _info("6\n");////
   regaddr = &HCOR->portsc[RHPNDX(rhport)];
   regval  = a64_getreg(regaddr);
   regval &= ~EHCI_PORTSC_PE;
@@ -3725,6 +3731,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
 
   nxsig_usleep(50 * 1000);
 
+  _info("7\n");////
   regval  = a64_getreg(regaddr);
   regval &= ~EHCI_PORTSC_RESET;
   a64_putreg(regval, regaddr);
@@ -3743,6 +3750,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
    *   this bit from a one to a zero ..."
    */
 
+  _info("8\n");////
   while ((a64_getreg(regaddr) & EHCI_PORTSC_RESET) != 0);
   nxsig_usleep(200 * 1000);
 
@@ -3776,12 +3784,14 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
    *   will be indicated by the PSPD field in PORTSC1.
    */
 
+  _info("9\n");////
   regval = a64_getreg(&HCOR->portsc[rhpndx]);
 
   if ((regval & USBDEV_PRTSC1_PSPD_MASK) == USBDEV_PRTSC1_PSPD_HS)
     {
       /* High speed device */
 
+      _info("10\n");////
       hport->speed = USB_SPEED_HIGH;
     }
   else if ((regval & USBDEV_PRTSC1_PSPD_MASK) == USBDEV_PRTSC1_PSPD_FS)
@@ -3802,6 +3812,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
        *    repeat."
        */
 
+      _info("11\n");////
       DEBUGASSERT(hport->speed == USB_SPEED_FULL);
     }
 
@@ -3809,6 +3820,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
 
   else
     {
+      _info("12\n");////
       DEBUGASSERT(hport->speed == USB_SPEED_LOW);
       DEBUGASSERT((regval & USBDEV_PRTSC1_PSPD_MASK) ==
                   USBDEV_PRTSC1_PSPD_LS);
@@ -3820,6 +3832,7 @@ static int a64_rh_enumerate(struct usbhost_connection_s *conn,
 static int a64_enumerate(struct usbhost_connection_s *conn,
                            struct usbhost_hubport_s *hport)
 {
+  _info("1\n");////
   int ret;
 
   /* If this is a connection on the root hub, then we need to go to
@@ -3833,8 +3846,10 @@ static int a64_enumerate(struct usbhost_connection_s *conn,
 #endif
     {
       ret = a64_rh_enumerate(conn, hport);
+      _info("2\n");////
       if (ret < 0)
         {
+          _info("3\n");////
           return ret;
         }
     }
@@ -3843,6 +3858,7 @@ static int a64_enumerate(struct usbhost_connection_s *conn,
 
   usbhost_vtrace1(EHCI_VTRACE1_CLASSENUM, hport->port);
   ret = usbhost_enumerate(hport, &hport->devclass);
+  _info("4\n");////
   if (ret < 0)
     {
       /* Failed to enumerate */
@@ -3854,6 +3870,7 @@ static int a64_enumerate(struct usbhost_connection_s *conn,
        * again.
        */
 
+      _info("5\n");////
       hport->connected = false;
     }
 

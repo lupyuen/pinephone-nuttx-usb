@@ -1360,7 +1360,7 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-357309 bytes read in 21 ms (16.2 MiB/s)
+357619 bytes read in 21 ms (16.2 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
@@ -1443,13 +1443,18 @@ a64_ehci_initialize: TODO: up_enable_irq
 a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
-nshe:h cmik_fwaatiftse:r :c oemhmcain_dw aniotte rf:o u nRdu
-n
-n
-i
-nNgu
+a64_usbhost_initialize: 1
+nshe:h cmik_fwaatiftse:r :c o1m
+m
+aenhdc in_owta iftoeurn:d 
+e
+h
+c
+iN_uwtatiStheerl:l   (RNuSnHn)i nNgu
 t
-tShell (NSH) NuttX-12.0.3
+tX-12.0.3
+nsh> 
+
 nsh> ls
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
 _assert: Assertion failed : at file: mm_heap/mm_malloc.c:200 task: nsh_main 0x4008b230
