@@ -3422,6 +3422,7 @@ static void a64_ehci_bottomhalf(void *arg)
 
 static int a64_ehci_interrupt(int irq, void *context, void *arg)
 {
+  _info("\n");////
   uint32_t usbsts;
   // TODO: Check pointer
   unsigned long pending;

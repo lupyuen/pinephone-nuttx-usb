@@ -1261,6 +1261,16 @@ TODO: Handle USB interrupt
 
 [a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472)
 
+USB IRQ:
+
+-   USB-OTG: 103
+-   USB-OTG-EHCI: 104
+-   USB-OTG-OHCI: 105
+-   USB-EHCI0: 106
+-   USB-OHCI0: 107
+
+We will only handle USB-EHCI0 (IRQ 106)
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
