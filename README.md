@@ -1246,7 +1246,7 @@ _How does NuttX enumerate USB Devices?_
 
 -   [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) to wait for a USB Device to be connected...
 
-    But it blocks on a Semaphore.
+    But it blocks on a Semaphore waiting for a Root Hub Port.
 
 If [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) is successful, [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118) will call [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
 
@@ -1256,6 +1256,10 @@ calls...
 -   [usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581) 
 
 -   [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) will print the USB Descriptor
+
+TODO: Handle USB interrupt
+
+[a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472)
 
 # Testing CDC ACM
 
