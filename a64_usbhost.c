@@ -335,7 +335,7 @@ int a64_usbhost_initialize(void)
                        ehci_waiter, NULL);
   if (ret < 0)
     {
-      _info("1\n");////
+      _info("2\n");////
       uerr("ERROR: Failed to create ehci_waiter task: %d\n", ret);
       return -ENODEV;
     }

@@ -1248,6 +1248,12 @@ TODO: What's inside usbhost_enumerate?
 
 [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) is supposed to print the USB Descriptor. But it doesn't. Why?
 
+# EHCI Waiter not running
+
+TODO: Why is EHCI Waiter not running?
+
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/c7e1e8f081ea4fb36c959c0b410069dd091a66b5/a64_usbhost.c#L330-L341
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
