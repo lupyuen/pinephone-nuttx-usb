@@ -1236,28 +1236,37 @@ TODO: Lookup the addresses in the Register Dump
 
 # Enumerate USB Devices on PinePhone
 
-TODO: Can we enumerate the LTE Modem on PinePhone?
-
 _How does NuttX enumerate USB Devices?_
 
-[a64_usbhost_initialize](https://github.com/lupyuen/pinephone-nuttx-usb/blob/9eb27ca0cc7b1087e0a6b49316bf6ce568337dbd/a64_usbhost.c#L330-L341) creates a thread for...
+Let's figure out how NuttX will enumerate the LTE Modem on PinePhone.
+
+At startup, [a64_usbhost_initialize](https://github.com/lupyuen/pinephone-nuttx-usb/blob/9eb27ca0cc7b1087e0a6b49316bf6ce568337dbd/a64_usbhost.c#L330-L341) creates a thread for...
 
 -   [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118), which calls....
 
 -   [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) to wait for a USB Device to be connected...
 
-    But it blocks on a Semaphore `pscsem`, waiting for a change in the Connection State of a Root Hub Port.
+-   But [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) blocks on a Semaphore `pscsem`, waiting for a change in the Connection State of a Root Hub Port
 
-    `pcsem` is signalled by [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815)
+-   `pcsem` is signalled by [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815)
 
-If [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) is successful, [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118) will call [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861)
+TODO: Who calls [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815)?
 
-[a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861) 
-calls...
+Let's assume [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815) is called by the USB Interrupt Handler [a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472).
 
--   [usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581) 
+If [a64_wait](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3474-L3573) is successful...
 
--   [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) will print the USB Descriptor
+-   [ehci_waiter](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_usbhost.c#L82-L118) will call...
+
+-   [a64_enumerate](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3820-L3861), which calls...
+
+-   [usbhost_enumerate](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L250-L581), which calls...
+
+-   [usbhost_devdesc](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/usb/drivers/usbhost/usbhost_enumerate.c#L91-L121) to print the USB Descriptor
+
+Let's handle the USB Interrupt, so that [a64_connect](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L4766-L4815) will be triggered to begin the above USB Enumeration...
+
+# Handle USB Interrupt
 
 TODO: Handle USB interrupt
 
