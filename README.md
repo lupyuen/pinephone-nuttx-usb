@@ -1394,9 +1394,9 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-357724 bytes read in 20 ms (17.1 MiB/s)
+358765 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
-36162 bytes read in 5 ms (6.9 MiB/s)
+36162 bytes read in 4 ms (8.6 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
@@ -1471,9 +1471,9 @@ a64_printreg: 01c1b010<-00080b31
 a64_printreg: 01c1b050->00000000
 a64_printreg: 01c1b050<-00000001
 a64_printreg: 01c1b014->00000000
-a64_ehci_initialize: TODO: irq_attach
+a64_ehci_initialize: irq_attach
 a64_printreg: 01c1b018<-00000037
-a64_ehci_initialize: TODO: up_enable_irq
+a64_ehci_initialize: up_enable_irq
 a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
