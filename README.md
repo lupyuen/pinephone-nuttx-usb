@@ -1282,6 +1282,10 @@ USB IRQ:
 
 We will only handle USB-EHCI0 (IRQ 106)
 
+TODO: USB Interrupt Handler is not called. Why?
+
+TODO: Need to power on LTE Modem?
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
