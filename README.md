@@ -1394,10 +1394,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-358765 bytes read in 20 ms (17.1 MiB/s)
+358494 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 4 ms (8.6 MiB/s)
-1078500 bytes read in 50 ms (20.6 MiB/s)
+1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1433,28 +1433,15 @@ a64_usbhost_reset_deassert: RST_BUS_OHCI1
 set_bit: 0x1c202c0 Bit 29
 a64_usbhost_reset_deassert: RST_BUS_EHCI1
 set_bit: 0x1c202c0 Bit 25
-a64_usbhost_initialize: TODO: a64_clockall_usboh3
 a64_usbhost_initialize: TODO: switch off USB bus power
 a64_usbhost_initialize: TODO: Setup pins, with power initially off
 usbhost_registerclass: Registering class:0x40124838 nids:2
-a64_ehci_initialize: sizeof(struct a64_qh_s)=96
-a64_ehci_initialize: sizeof(struct a64_qtd_s)=32
-a64_ehci_initialize: sizeof(struct ehci_itd_s)=64
-a64_ehci_initialize: sizeof(struct ehci_sitd_s)=28
-a64_ehci_initialize: sizeof(struct ehci_qtd_s)=32
-a64_ehci_initialize: sizeof(struct ehci_overlay_s)=32
-a64_ehci_initialize: sizeof(struct ehci_qh_s)=48
-a64_ehci_initialize: sizeof(struct ehci_fstn_s)=8
 EHCI Initializing EHCI Stack
-a64_ehci_initialize: TODO: a64_clockall_usboh3
-a64_ehci_initialize: TODO: Reset the controller from the OTG peripheral
-a64_ehci_initialize: TODO: Program the controller to be the USB host controller
 a64_printreg: 01c1b010<-00000000
 a64_printreg: 01c1b014->00001000
 a64_printreg: 01c1b010->00000000
 a64_printreg: 01c1b010<-00000002
 a64_printreg: 01c1b010->00080b00
-a64_ehci_initialize: TODO: Re-program the USB host controller
 a64_printreg: 01c1b018<-00000000
 a64_printreg: 01c1b014<-0000003f
 EHCI HCIVERSION 1.00
@@ -1485,7 +1472,7 @@ h
 cNuttShell (NSH) NuttX-12.0.3
 i
 _nsh>waiter: ehci_waiter:  Running
-a64_wait: 
+a64_wait: Wait for connect / disconnect
 
 nsh> ls
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
