@@ -5008,14 +5008,14 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   int ret;
   int i;
 
-  _info("sizeof(struct a64_qh_s)=%d\n", sizeof(struct a64_qh_s));////
-  _info("sizeof(struct a64_qtd_s)=%d\n", sizeof(struct a64_qtd_s));////
-  _info("sizeof(struct ehci_itd_s)=%d\n", sizeof(struct ehci_itd_s));////
-  _info("sizeof(struct ehci_sitd_s)=%d\n", sizeof(struct ehci_sitd_s));////
-  _info("sizeof(struct ehci_qtd_s)=%d\n", sizeof(struct ehci_qtd_s));////
-  _info("sizeof(struct ehci_overlay_s)=%d\n", sizeof(struct ehci_overlay_s));////
-  _info("sizeof(struct ehci_qh_s)=%d\n", sizeof(struct ehci_qh_s));////
-  _info("sizeof(struct ehci_fstn_s)=%d\n", sizeof(struct ehci_fstn_s));////
+  // _info("sizeof(struct a64_qh_s)=%d\n", sizeof(struct a64_qh_s));////
+  // _info("sizeof(struct a64_qtd_s)=%d\n", sizeof(struct a64_qtd_s));////
+  // _info("sizeof(struct ehci_itd_s)=%d\n", sizeof(struct ehci_itd_s));////
+  // _info("sizeof(struct ehci_sitd_s)=%d\n", sizeof(struct ehci_sitd_s));////
+  // _info("sizeof(struct ehci_qtd_s)=%d\n", sizeof(struct ehci_qtd_s));////
+  // _info("sizeof(struct ehci_overlay_s)=%d\n", sizeof(struct ehci_overlay_s));////
+  // _info("sizeof(struct ehci_qh_s)=%d\n", sizeof(struct ehci_qh_s));////
+  // _info("sizeof(struct ehci_fstn_s)=%d\n", sizeof(struct ehci_fstn_s));////
   DEBUGASSERT(sizeof(struct ehci_itd_s) == SIZEOF_EHCI_ITD_S);////
   DEBUGASSERT(sizeof(struct ehci_sitd_s) == SIZEOF_EHCI_SITD_S);////
   DEBUGASSERT(sizeof(struct ehci_qtd_s) == SIZEOF_EHCI_QTD_S);////
@@ -5159,12 +5159,10 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* EHCI Hardware Configuration ********************************************/
 
-  _info("TODO: a64_clockall_usboh3\n");////
   // TODO: a64_clockall_usboh3();
 
   /* Reset the controller from the OTG peripheral */
 
-  _info("TODO: Reset the controller from the OTG peripheral\n");////
   // TODO: putreg32(USBDEV_USBCMD_RST, A64_USBDEV_USBCMD);
   // while ((getreg32(A64_USBDEV_USBCMD) & USBDEV_USBCMD_RST) != 0);
 
@@ -5179,7 +5177,6 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  _info("TODO: Program the controller to be the USB host controller\n");////
   // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif
@@ -5202,7 +5199,6 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
   putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_SDIS |
            USBHOST_USBMODE_VBPS, A64_USBDEV_USBMODE);
 #  else
-  _info("TODO: Re-program the USB host controller\n");////
   // TODO: putreg32(USBHOST_USBMODE_CM_HOST | USBHOST_USBMODE_VBPS,
   //          A64_USBDEV_USBMODE);
 #  endif

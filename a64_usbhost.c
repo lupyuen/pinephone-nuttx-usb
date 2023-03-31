@@ -253,7 +253,6 @@ int a64_usbhost_initialize(void)
   // Deassert the USB Resets
   a64_usbhost_reset_deassert();
 
-  _info("TODO: a64_clockall_usboh3\n");////
   // TODO: a64_clockall_usboh3();
 
   /* Make sure we don't accidentally switch on USB bus power */
