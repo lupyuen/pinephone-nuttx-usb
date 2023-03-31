@@ -45,6 +45,7 @@
 #include <nuttx/usb/usbhost_trace.h>
 
 #include "arm64_internal.h"
+#include "arm64_gic.h"
 #include "chip.h"
 #include "hardware/a64_usbotg.h"
 // TODO #include "a64_periphclks.h"
@@ -5343,14 +5344,21 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Interrupt Configuration ************************************************/
 
-  _info("TODO: irq_attach\n");////
-  // TODO: ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
-  UNUSED(a64_ehci_interrupt);
-  // if (ret != 0)
-  //   {
-  //     usbhost_trace1(EHCI_TRACE1_IRQATTACH_FAILED, A64_IRQ_USBOTG1);
-  //     return NULL;
-  //   }
+  /* Attach EHCI Interrupt Handler */
+
+  _info("irq_attach\n");////
+  #define A64_IRQ_USBOTG1 106 //// USB-EHCI0
+  ret = irq_attach(A64_IRQ_USBOTG1, a64_ehci_interrupt, NULL);
+
+  /* Set Interrupt Priority in Generic Interrupt Controller v2 */
+
+  arm64_gic_irq_set_priority(A64_IRQ_USBOTG1, 0, IRQ_TYPE_EDGE);
+
+  if (ret != 0)
+    {
+      usbhost_trace1(EHCI_TRACE1_IRQATTACH_FAILED, A64_IRQ_USBOTG1);
+      return NULL;
+    }
 
   /* Enable EHCI interrupts.  Interrupts are still disabled at the level of
    * the interrupt controller.
@@ -5360,8 +5368,8 @@ struct usbhost_connection_s *a64_ehci_initialize(int controller)
 
   /* Enable interrupts at the interrupt controller */
 
-  _info("TODO: up_enable_irq\n");////
-  // TODO: up_enable_irq(A64_IRQ_USBOTG1);
+  _info("up_enable_irq\n");////
+  up_enable_irq(A64_IRQ_USBOTG1);
 
   /* Drive Vbus +5V (the smoke test) */
 
