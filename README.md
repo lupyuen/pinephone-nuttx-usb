@@ -1282,9 +1282,11 @@ USB IRQ:
 
 We will only handle USB-EHCI0 (IRQ 106)
 
+https://github.com/lupyuen/pinephone-nuttx-usb/blob/409a6ed3467536d6234a9b9ab49a40a89b340671/a64_ehci.c#L5343-L5351
+
 TODO: USB Interrupt Handler is not called. Why?
 
-TODO: Need to power on LTE Modem?
+TODO: Need to power on LTE Modem? PMIC -> 4G-BAT
 
 # Testing CDC ACM
 
