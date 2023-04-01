@@ -1284,9 +1284,32 @@ We will only handle USB-EHCI0 (IRQ 106)
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/409a6ed3467536d6234a9b9ab49a40a89b340671/a64_ehci.c#L5343-L5351
 
-TODO: USB Interrupt Handler is not called. Why?
+TODO: USB Interrupt Handler is not called. Why? 
 
-TODO: Need to power on LTE Modem? PMIC -> 4G-BAT
+Maybe we need to power on the LTE Modem?
+
+# Power On LTE Modem
+
+TODO: Power On LTE Modem
+
+According to PinePhone Schematic Page 15...
+
+-   PMIC -> 4G-BAT
+-   PL7-4G-PWR-BAT
+
+TODO: Set PL7 to high?
+
+Reset: BB-RESET -> PC4-RESET-4G
+
+Disable: BB-DISABLE -> PH8-DISABLE-4G
+
+Power Key: BB-PWRKEY -> PB3-PWRKEY-4G
+
+TODO: Set PC4 to Reset LTE Modem?
+
+TODO: Set PH8 to Enable LTE Modem?
+
+TODO: Set PB3 to Power On LTE Modem?
 
 # Testing CDC ACM
 
