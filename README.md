@@ -1311,6 +1311,22 @@ TODO: Set PH8 to Enable LTE Modem?
 
 TODO: Set PB3 to Power On LTE Modem?
 
+From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
+
+__Power-on/off__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|--------------------|--------
+| PWRKEY | 21 | DI | Turn on/off the module | VH = 0.8 V | The output voltage is 0.8V because of the diode drop in the Qualcomm chipset.
+| RESET_N | 20 | DI | Reset signal of the module | VIHmax = 2.1 V, VIHmin = 1.3 V, VILmax = 0.5 V | If unused, keep it open.
+
+__USB Interface__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|--------------------|--------
+| USB_VBUS | 71 | PI | USB connection detection | Vmax = 5.25 V, Vmin = 3.0 V, Vnorm = 5.0 V, Typical: 5.0 V | If unused, keep it
+open.
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
