@@ -1296,23 +1296,26 @@ According to PinePhone Schematic Page 15...
 
 -   PMIC: 4G-BAT
 -   Power: PL7-4G-PWR-BAT
--   Reset: BB-RESET -> PC4-RESET-4G
--   Disable: BB-DISABLE -> PH8-DISABLE-4G
--   Power Key: BB-PWRKEY -> PB3-PWRKEY-4G
+-   Reset: BB-RESET (RESET_N) -> PC4-RESET-4G
+-   Disable: BB-DISABLE (W_DISABLE#) -> PH8-DISABLE-4G
+-   Power Key: BB-PWRKEY (PWRKEY) -> PB3-PWRKEY-4G
 -   Status: PH9-STATUS
--   RI: PL6-RI
+-   Ring Indicator: PL6-RI
+-   AP Ready: BB-AP-READY (AP_READY) -> PH7-AP-READY
 
-TODO: Set PL7 to Power On LTE Modem (4G-PWR-BAT) (High or Low?)
+TODO: Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
 
-TODO: Set PC4 to Deassert LTE Modem Reset (BB-RESET)
+TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
-TODO: Set PH8 to Enable LTE Modem (BB-DISABLE) (High or Low?)
+TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
-TODO: Set PB3 to Power On LTE Modem Switch (BB-PWRKEY) (High or Low?)
+TODO: Set PB3 to High to Power On LTE Modem (BB-PWRKEY / PWRKEY)
 
 TODO: Read PH9 to check LTE Modem Status
 
 TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+
+TODO: Set PH7 to High or Low for Sleep State
 
 _What is the purpose of the above LTE Modem pins?_
 
@@ -1325,6 +1328,30 @@ __Power-on/off__
 | PWRKEY | 21 | DI | Turn on/off the module | VH = 0.8 V | The output voltage is 0.8V because of the diode drop in the Qualcomm chipset.
 | RESET_N | 20 | DI | Reset signal of the module | VIHmax = 2.1 V, VIHmin = 1.3 V, VILmax = 0.5 V | If unused, keep it open.
 
+-   PWRKEY should be pulled down at least 500 ms, then pulled up
+    
+    (EG25-G HW Guide, Page 41)
+
+-   "Make sure that VBAT is stable before pulling down PWRKEY pin. It is recommended that the time between powering up VBAT and pulling down PWRKEY pin is no less than 30 ms."
+    
+    (EG25-G HW Guide, Page 41)
+
+-   "The RESET_N pin can be used to reset the module. The module can be reset by driving RESET_N to a
+low level voltage for 150–460 ms"
+
+    (EG25-G HW Guide, Page 42)
+
+__Other Interface Pins__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|--------------------|--------
+| W_DISABLE# | 4 | DI | Airplane mode control | VILmin = -0.3 V, VILmax = 0.6 V, VIHmin = 1.2 V, VIHmax = 2.0 V | 1.8 V power domain. Pull-up by default. At low voltage level, module can enter into airplane mode. If unused, keep it open.
+| AP_READY | 2 | DI | Application processor sleep state detection | VILmin = -0.3 V, VILmax = 0.6 V, VIHmin = 1.2 V, VIHmax = 2.0 V | 1.8 V power domain. If unused, keep it open.
+
+-   "The W_DISABLE# pin is pulled up by default. Driving it to low level will let the module enter airplane mode"
+
+    (EG25-G HW Guide, Page 37)
+
 __USB Interface__
 
 | Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
@@ -1336,6 +1363,10 @@ __Status Indication__
 | Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
 |----------|---------|-----|-------------|--------------------|--------
 | STATUS | 61 | OD | Indicate the module operating status. | The drive current should be less than 0.9 mA | An external pull-up resistor is required. If unused, keep it open.
+
+-   When PWRKEY is pulled Low, STATUS goes High for ≥2.5 s, then STATUS goes Low
+
+    (EG25-G HW Guide, Page 41)
 
 __Main UART Interface__
 
