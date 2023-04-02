@@ -337,6 +337,14 @@ int a64_usbhost_initialize(void)
       return -ENODEV;
     }
 
+  // TODO: Set PL7 to Power On LTE Modem
+
+  // TODO: Set PC4 to Reset LTE Modem
+
+  // TODO: Set PH8 to Enable LTE Modem
+
+  // TODO: Set PB3 to Power On LTE Modem Switch
+
   return OK;
 }
 

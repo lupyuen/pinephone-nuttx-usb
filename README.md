@@ -1295,21 +1295,18 @@ TODO: Power On LTE Modem
 According to PinePhone Schematic Page 15...
 
 -   PMIC -> 4G-BAT
--   PL7-4G-PWR-BAT
+-   Power: PL7-4G-PWR-BAT
+-   Reset: BB-RESET -> PC4-RESET-4G
+-   Disable: BB-DISABLE -> PH8-DISABLE-4G
+-   Power Key: BB-PWRKEY -> PB3-PWRKEY-4G
 
-TODO: Set PL7 to high?
+TODO: Set PL7 to Power On LTE Modem
 
-Reset: BB-RESET -> PC4-RESET-4G
+TODO: Set PC4 to Reset LTE Modem
 
-Disable: BB-DISABLE -> PH8-DISABLE-4G
+TODO: Set PH8 to Enable LTE Modem
 
-Power Key: BB-PWRKEY -> PB3-PWRKEY-4G
-
-TODO: Set PC4 to Reset LTE Modem?
-
-TODO: Set PH8 to Enable LTE Modem?
-
-TODO: Set PB3 to Power On LTE Modem?
+TODO: Set PB3 to Power On LTE Modem Switch
 
 From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
 
