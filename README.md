@@ -1299,14 +1299,22 @@ According to PinePhone Schematic Page 15...
 -   Reset: BB-RESET -> PC4-RESET-4G
 -   Disable: BB-DISABLE -> PH8-DISABLE-4G
 -   Power Key: BB-PWRKEY -> PB3-PWRKEY-4G
+-   Status: PH9-STATUS
+-   RI: PL6-RI
 
-TODO: Set PL7 to Power On LTE Modem
+TODO: Set PL7 to Power On LTE Modem (4G-PWR-BAT) (High or Low?)
 
-TODO: Set PC4 to Deassert LTE Modem Reset
+TODO: Set PC4 to Deassert LTE Modem Reset (BB-RESET)
 
-TODO: Set PH8 to Enable LTE Modem (High or Low?)
+TODO: Set PH8 to Enable LTE Modem (BB-DISABLE) (High or Low?)
 
-TODO: Set PB3 to Power On LTE Modem Switch
+TODO: Set PB3 to Power On LTE Modem Switch (BB-PWRKEY) (High or Low?)
+
+TODO: Read PH9 to check LTE Modem Status
+
+TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+
+_What is the purpose of the above LTE Modem pins?_
 
 From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
 
@@ -1321,8 +1329,32 @@ __USB Interface__
 
 | Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
 |----------|---------|-----|-------------|--------------------|--------
-| USB_VBUS | 71 | PI | USB connection detection | Vmax = 5.25 V, Vmin = 3.0 V, Vnorm = 5.0 V, Typical: 5.0 V | If unused, keep it
-open.
+| USB_VBUS | 71 | PI | USB connection detection | Vmax = 5.25 V, Vmin = 3.0 V, Vnorm = 5.0 V, Typical: 5.0 V | If unused, keep it open.
+
+__Status Indication__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|--------------------|--------
+| STATUS | 61 | OD | Indicate the module operating status. | The drive current should be less than 0.9 mA | An external pull-up resistor is required. If unused, keep it open.
+
+__Main UART Interface__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|---------|------
+| RI | 62 | DO | Ring indicator | VOLmax = 0.45 V, VOHmin = 1.35 V | 1.8 V power domain. If unused, keep it open
+
+__I/O Parameters Definition__
+
+| Type | Description
+|------|------------
+| AI | Analog Input
+| AO | Analog Output
+| DI | Digital Input
+| DO | Digital Output
+| IO | Bidirectional
+| OD | Open Drain
+| PI | Power Input
+| PO | Power Output
 
 # Testing CDC ACM
 

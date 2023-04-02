@@ -337,13 +337,17 @@ int a64_usbhost_initialize(void)
       return -ENODEV;
     }
 
-  // TODO: Set PL7 to Power On LTE Modem
+  // TODO: Set PL7 to Power On LTE Modem (4G-PWR-BAT) (High or Low?)
 
-  // TODO: Set PC4 to Deassert LTE Modem Reset
+  // TODO: Set PC4 to Deassert LTE Modem Reset (BB-RESET)
 
-  // TODO: Set PH8 to Enable LTE Modem (High or Low?)
+  // TODO: Set PH8 to Enable LTE Modem (BB-DISABLE) (High or Low?)
 
-  // TODO: Set PB3 to Power On LTE Modem Switch
+  // TODO: Set PB3 to Power On LTE Modem Switch (BB-PWRKEY) (High or Low?)
+
+  // TODO: Read PH9 to check LTE Modem Status
+
+  // TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
 
 #ifdef NOTUSED
   /* LCD Backlight Enable connected on PH10 */
