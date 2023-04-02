@@ -1294,7 +1294,7 @@ TODO: Power On LTE Modem
 
 According to PinePhone Schematic Page 15...
 
--   PMIC -> 4G-BAT
+-   PMIC: 4G-BAT
 -   Power: PL7-4G-PWR-BAT
 -   Reset: BB-RESET -> PC4-RESET-4G
 -   Disable: BB-DISABLE -> PH8-DISABLE-4G
@@ -1302,9 +1302,9 @@ According to PinePhone Schematic Page 15...
 
 TODO: Set PL7 to Power On LTE Modem
 
-TODO: Set PC4 to Reset LTE Modem
+TODO: Set PC4 to Deassert LTE Modem Reset
 
-TODO: Set PH8 to Enable LTE Modem
+TODO: Set PH8 to Enable LTE Modem (High or Low?)
 
 TODO: Set PB3 to Power On LTE Modem Switch
 

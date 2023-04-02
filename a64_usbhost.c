@@ -339,9 +339,9 @@ int a64_usbhost_initialize(void)
 
   // TODO: Set PL7 to Power On LTE Modem
 
-  // TODO: Set PC4 to Reset LTE Modem
+  // TODO: Set PC4 to Deassert LTE Modem Reset
 
-  // TODO: Set PH8 to Enable LTE Modem
+  // TODO: Set PH8 to Enable LTE Modem (High or Low?)
 
   // TODO: Set PB3 to Power On LTE Modem Switch
 
