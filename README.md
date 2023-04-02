@@ -1297,8 +1297,8 @@ According to PinePhone Schematic Page 15...
 -   PMIC: 4G-BAT
 -   Power: PL7-4G-PWR-BAT
 -   Reset: BB-RESET (RESET_N) -> PC4-RESET-4G
--   Disable: BB-DISABLE (W_DISABLE#) -> PH8-DISABLE-4G
 -   Power Key: BB-PWRKEY (PWRKEY) -> PB3-PWRKEY-4G
+-   Disable: BB-DISABLE (W_DISABLE#) -> PH8-DISABLE-4G
 -   Status: PH9-STATUS
 -   Ring Indicator: PL6-RI
 -   AP Ready: BB-AP-READY (AP_READY) -> PH7-AP-READY
@@ -1307,9 +1307,11 @@ TODO: Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
 
 TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
-TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+TODO: Wait 30 ms for VBAT to be stable
 
-TODO: Set PB3 to High to Power On LTE Modem (BB-PWRKEY / PWRKEY)
+TODO: Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulled down at least 500 ms, then pulled up.
+
+TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
 TODO: Read PH9 to check LTE Modem Status
 
@@ -1336,8 +1338,7 @@ __Power-on/off__
     
     (EG25-G HW Guide, Page 41)
 
--   "The RESET_N pin can be used to reset the module. The module can be reset by driving RESET_N to a
-low level voltage for 150–460 ms"
+-   "The RESET_N pin can be used to reset the module. The module can be reset by driving RESET_N to a low level voltage for 150–460 ms"
 
     (EG25-G HW Guide, Page 42)
 

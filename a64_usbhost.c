@@ -341,9 +341,11 @@ int a64_usbhost_initialize(void)
 
   // TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
-  // TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+  // TODO: Wait 30 ms for VBAT to be stable
 
-  // TODO: Set PB3 to High to Power On LTE Modem (BB-PWRKEY / PWRKEY)
+  // TODO: Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulled down at least 500 ms, then pulled up.
+
+  // TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
   // TODO: Read PH9 to check LTE Modem Status
 
