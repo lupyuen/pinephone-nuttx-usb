@@ -1372,42 +1372,14 @@ __Status Indication__
 __Main UART Interface__
 
 | Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
-|----------|---------|-----|-------------|---------|------
+|----------|---------|-----|-------------|--------------------|--------
 | RI | 62 | DO | Ring indicator | VOLmax = 0.45 V, VOHmin = 1.35 V | 1.8 V power domain. If unused, keep it open
 
-Power Supply
-Pin Name Pin No. I/O Description DC Characteristics Comment
-VBAT_BB 59, 60 PI
-Power supply for
-module’s baseband
-part
-Vmax = 4.3 V
-Vmin = 3.3 V
-Vnorm = 3.8 V
-It must be provided
-with sufficient current
-up to 0.8 A.
-VBAT_RF 57, 58 PI
-Power supply for
-module’s RF part
-Vmax = 4.3 V
-Vmin = 3.3 V
-It must be provided
-with sufficient current 
- LTE Standard Module Series
- EG25-G Hardware Design
-EG25-G_Hardware_Design 22 / 104
-Vnorm = 3.8 V up to 1.8 A in a burst
-transmission.
-VDD_EXT 7 PO
-Provide 1.8 V for
-external circuit
-Vnorm = 1.8 V
-IOmax = 50 mA
-Power supply for
-external GPIO’s pull up
-circuits.
-If unused, keep it open.
+__Power Supply__
+
+| Pin Name | Pin No. | I/O | Description | DC Characteristics | Comment
+|----------|---------|-----|-------------|--------------------|--------
+| VDD_EXT | 7 | PO | Provide 1.8 V for external circuit | Vnorm = 1.8 V, IOmax = 50 mA | Power supply for external GPIO’s pull up circuits. If unused, keep it open.
 
 __I/O Parameters Definition__
 
@@ -1422,7 +1394,7 @@ __I/O Parameters Definition__
 | PI | Power Input
 | PO | Power Output
 
-TODO: LTE Modem UART and Power
+TODO: LTE Modem UART
 
 -   BB-TX: PD1-UART3_RX
 
@@ -1436,17 +1408,17 @@ TODO: LTE Modem UART and Power
 
 -   BB-AP-READY: PH7-AP-READY
 
--   Power: VDD_EXT, DCDC1 and VBAT
-
--   ALDO2 -> PL6-RI
-
-TODO: Power
-
--   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
+TODO: LTE Modem Power
 
 -   DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
 
--   VBAT: PL7
+-   VBAT: PL7 [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+
+-   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
+
+TODO: Ring Indicator
+
+-   ALDO2: PL6-RI / PMIC 1.8V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
 
 References:
 
