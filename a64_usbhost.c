@@ -395,6 +395,42 @@ int a64_usbhost_initialize(void)
 
   // TODO: Set PH7 to High or Low for Sleep State
 
+  // Test PIO Output with LEDs
+
+  /* Green LED on PD18 */
+  #define LED1 (P_OUTPUT | PIO_PORT_PIOD | PIO_PIN18)
+
+  /* Red LED on PD19 */
+  #define LED2 (P_OUTPUT | PIO_PORT_PIOD | PIO_PIN19)
+
+  /* Blue LED on PD20 */
+  #define LED3 (P_OUTPUT | PIO_PORT_PIOD | PIO_PIN20)
+
+  ret = a64_pio_config(LED1);
+  DEBUGASSERT(ret >= 0);
+  ret = a64_pio_config(LED2);
+  DEBUGASSERT(ret >= 0);
+  ret = a64_pio_config(LED3);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Green LED");
+  a64_pio_write(LED1, true);
+  a64_pio_write(LED2, false);
+  a64_pio_write(LED3, false);
+  up_mdelay(2000);
+
+  _info("Red LED");
+  a64_pio_write(LED1, false);
+  a64_pio_write(LED2, true);
+  a64_pio_write(LED3, false);
+  up_mdelay(2000);
+
+  _info("Blue LED");
+  a64_pio_write(LED1, false);
+  a64_pio_write(LED2, false);
+  a64_pio_write(LED3, true);
+  up_mdelay(2000);
+
 #ifdef NOTUSED
   /* LCD Backlight Enable connected on PH10 */
 
