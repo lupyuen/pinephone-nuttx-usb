@@ -1500,10 +1500,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359276 bytes read in 20 ms (17.1 MiB/s)
+359270 bytes read in 21 ms (16.3 MiB/s)
 Uncompressed size: 10539008 = 0xA0D000
-36162 bytes read in 5 ms (6.9 MiB/s)
-1078500 bytes read in 50 ms (20.6 MiB/s)
+36162 bytes read in 4 ms (8.6 MiB/s)
+1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1573,7 +1573,7 @@ EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
 a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Configure PWR_BAT (PL7) for Output
-a64_usbhost_initialize: Set PWR_BAT (PL7) to High
+a64_usbhost_initialize: Set PWR_BAT (PL7) to Low
 a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Configure RESET_N (PC4) for Output
 a64_usbhost_initialize: Set RESET_N (PC4) to High
