@@ -335,9 +335,9 @@ int a64_usbhost_initialize(void)
     }
 
   #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
-                 PIO_INT_NONE | PIO_OUTPUT_SET)
+                   PIO_INT_NONE | PIO_OUTPUT_SET)
 
-  // TODO: Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
+  // Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
 
   #define PWR_BAT (P_OUTPUT | PIO_PORT_PIOL | PIO_PIN7)
   _info("Configure PWR_BAT (PL7) for Output\n");
@@ -347,7 +347,7 @@ int a64_usbhost_initialize(void)
   _info("Set PWR_BAT (PL7) to High\n");
   a64_pio_write(PWR_BAT, true);
 
-  // TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
+  // Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
   #define RESET_N (P_OUTPUT | PIO_PORT_PIOC | PIO_PIN4)
   _info("Configure RESET_N (PC4) for Output\n");
@@ -357,12 +357,12 @@ int a64_usbhost_initialize(void)
   _info("Set RESET_N (PC4) to High\n");
   a64_pio_write(RESET_N, true);
 
-  // TODO: Wait 30 ms for VBAT to be stable
+  // Wait 30 ms for VBAT to be stable
 
   _info("Wait 30 ms for VBAT to be stable\n");
   up_mdelay(30);
 
-  // TODO: Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY).
+  // Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY).
   // PWRKEY should be pulled down at least 500 ms, then pulled up.
 
   #define PWRKEY (P_OUTPUT | PIO_PORT_PIOB | PIO_PIN3)
@@ -379,7 +379,7 @@ int a64_usbhost_initialize(void)
   _info("Set PWRKEY (PB3) to High\n");
   a64_pio_write(PWRKEY, true);
 
-  // TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+  // Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
   #define W_DISABLE (P_OUTPUT | PIO_PORT_PIOH | PIO_PIN8)
   _info("Configure W_DISABLE (PH8) for Output\n");
