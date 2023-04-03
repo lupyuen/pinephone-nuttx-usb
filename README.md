@@ -1313,7 +1313,7 @@ TODO: Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulle
 
 TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
-TODO: Read PH9 to check LTE Modem Status
+TODO: Read PH9 to check LTE Modem Status. Why does Status change from Low to High and stays at High?
 
 TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
 
@@ -1500,8 +1500,8 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359270 bytes read in 21 ms (16.3 MiB/s)
-Uncompressed size: 10539008 = 0xA0D000
+359159 bytes read in 21 ms (16.3 MiB/s)
+Uncompressed size: 10534912 = 0xA0C000
 36162 bytes read in 4 ms (8.6 MiB/s)
 1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
@@ -1541,7 +1541,7 @@ a64_usbhost_reset_deassert: RST_BUS_EHCI1
 set_bit: 0x1c202c0 Bit 25
 a64_usbhost_initialize: TODO: switch off USB bus power
 a64_usbhost_initialize: TODO: Setup pins, with power initially off
-usbhost_registerclass: Registering class:0x40125838 nids:2
+usbhost_registerclass: Registering class:0x40124838 nids:2
 EHCI Initializing EHCI Stack
 a64_printreg: 01c1b010<-00000000
 a64_printreg: 01c1b014->00001000
@@ -1555,8 +1555,8 @@ a64_printreg: 01c1b004->00001101
 EHCI nports=1, HCSPARAMS=1101
 a64_printreg: 01c1b008->0000a026
 EHCI HCCPARAMS=00a026
-a64_printreg: 01c1b028<-40a88fa0
-a64_printreg: 01c1b024<-40a99000
+a64_printreg: 01c1b028<-40a87fa0
+a64_printreg: 01c1b024<-40a98000
 a64_printreg: 01c1b010->00080b00
 a64_printreg: 01c1b010<-00080b30
 a64_printreg: 01c1b010->00080b30
@@ -1572,24 +1572,22 @@ a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
 a64_usbhost_initialize: Status=0
-a64_usbhost_initialize: Configure PWR_BAT (PL7) for Output
-a64_usbhost_initialize: Set PWR_BAT (PL7) to Low
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Configure RESET_N (PC4) for Output
 a64_usbhost_initialize: Set RESET_N (PC4) to High
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Wait 30 ms for VBAT to be stable
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Configure PWRKEY (PB3) for Output
 a64_usbhost_initialize: Set PWRKEY (PB3) to Low
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Wait 500 ms
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Set PWRKEY (PB3) to High
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Configure W_DISABLE (PH8) for Output
 a64_usbhost_initialize: Set W_DISABLE (PH8) to High
-a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Green LED
 a64_usbhost_initialize: Red LED
 a64_usbhost_initialize: Blue LED
