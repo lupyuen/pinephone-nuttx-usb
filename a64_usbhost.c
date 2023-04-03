@@ -334,11 +334,16 @@ int a64_usbhost_initialize(void)
       return -ENODEV;
     }
 
-  #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
-                   PIO_INT_NONE | PIO_OUTPUT_SET)
+  // Read PH9 to check LTE Modem Status
+  #define STATUS (PIO_INPUT | PIO_PORT_PIOH | PIO_PIN9)
+  ret = a64_pio_config(STATUS);
+  DEBUGASSERT(ret == OK);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
 
+  #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
+                   PIO_INT_NONE | PIO_OUTPUT_SET)
   #define PWR_BAT (P_OUTPUT | PIO_PORT_PIOL | PIO_PIN7)
   _info("Configure PWR_BAT (PL7) for Output\n");
   ret = a64_pio_config(PWR_BAT);
@@ -346,6 +351,7 @@ int a64_usbhost_initialize(void)
 
   _info("Set PWR_BAT (PL7) to High\n");
   a64_pio_write(PWR_BAT, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
@@ -356,11 +362,13 @@ int a64_usbhost_initialize(void)
 
   _info("Set RESET_N (PC4) to High\n");
   a64_pio_write(RESET_N, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Wait 30 ms for VBAT to be stable
 
   _info("Wait 30 ms for VBAT to be stable\n");
   up_mdelay(30);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY).
   // PWRKEY should be pulled down at least 500 ms, then pulled up.
@@ -372,12 +380,15 @@ int a64_usbhost_initialize(void)
 
   _info("Set PWRKEY (PB3) to Low\n");
   a64_pio_write(PWRKEY, false);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   _info("Wait 500 ms\n");
   up_mdelay(500);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   _info("Set PWRKEY (PB3) to High\n");
   a64_pio_write(PWRKEY, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
 
@@ -388,8 +399,7 @@ int a64_usbhost_initialize(void)
 
   _info("Set W_DISABLE (PH8) to High\n");
   a64_pio_write(W_DISABLE, true);
-
-  // TODO: Read PH9 to check LTE Modem Status
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   // TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
 
