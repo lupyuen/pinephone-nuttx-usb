@@ -1402,9 +1402,17 @@ TODO: LTE Modem UART and Power
 
 -   BB-AP-READY: PH7-AP-READY
 
+-   Power: VDD_EXT, DCDC1 and VBAT
+
 -   ALDO2 -> PL6-RI
 
-Depends on VDD_EXT and DCDC1
+References:
+
+-   [PinePhone Power Management](https://wiki.pine64.org/wiki/PinePhone_Power_Management)
+
+-   [OSDev PinePhone](https://wiki.osdev.org/PinePhone)
+
+-   [Genode PinePhone Telephony](https://genodians.org/ssumpf/2022-05-09-telephony)
 
 # Testing CDC ACM
 
