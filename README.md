@@ -42,7 +42,9 @@ make menuconfig
 
 Select these options in `menuconfig`...
 
--   Enable "Build Setup > Debug Options > USB Error, Warninigs and Info"
+-   Enable "Build Setup > Debug Options > USB Debug Features > USB Error, Warninigs and Info"
+
+    And "Battery-related Debug Features > Battery Error, Warnings and Info"
 
 -   Enable "System Type > Allwinner A64 Peripheral Selection > USB EHCI"
 
@@ -1268,11 +1270,17 @@ Let's handle the USB Interrupt, so that [a64_connect](https://github.com/lupyuen
 
 # Handle USB Interrupt
 
-TODO: Handle USB interrupt
+_How will we handle USB Interrupts for NuttX on PinePhone?_
 
-[a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472)
+Here's the Interrupt Handler for the NuttX USB EHCI Driver...
 
-USB IRQ:
+-   [a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472)
+
+We need to attach this Interrupt Handler to the USB Interrupt for PinePhone / Allwinner A64 SoC.
+
+_What's the USB IRQ for PinePhone?_
+
+According to the Allwinner A64 User Manual ("3.12: GIC", Page 212), the IRQ Numbers for USB are...
 
 -   USB-OTG: 103
 -   USB-OTG-EHCI: 104
@@ -1280,13 +1288,13 @@ USB IRQ:
 -   USB-EHCI0: 106
 -   USB-OHCI0: 107
 
-We will only handle USB-EHCI0 (IRQ 106)
+We will only handle USB-EHCI0 (IRQ 106), since it's connected to the LTE Modem.
+
+This is how we attach the USB Interrupt Handler [a64_ehci_interrupt](https://github.com/lupyuen/pinephone-nuttx-usb/blob/main/a64_ehci.c#L3415-L3472) to IRQ 106...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/409a6ed3467536d6234a9b9ab49a40a89b340671/a64_ehci.c#L5343-L5351
 
-TODO: USB Interrupt Handler is not called. Why? 
-
-Maybe we need to power on the LTE Modem?
+But the USB Interrupt Handler is not triggered. Let's power on the LTE Modem...
 
 # Power On LTE Modem
 
