@@ -48,9 +48,7 @@
 #include "arm64_gic.h"
 #include "chip.h"
 #include "hardware/a64_usbotg.h"
-// TODO #include "a64_periphclks.h"
 
-////#define CONFIG_USBHOST_INT_DISABLE // TODO CONFIG_USBHOST_INT_DISABLE
 #define CONFIG_A64_EHCI_REGDEBUG // TODO CONFIG_A64_EHCI_REGDEBUG
 #define ARMV7M_DCACHE_LINESIZE 32 // TODO ARMV7M_DCACHE_LINESIZE
 #define up_udelay(x) up_mdelay(x) // TODO up_udelay
