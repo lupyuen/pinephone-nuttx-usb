@@ -1500,10 +1500,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-358494 bytes read in 20 ms (17.1 MiB/s)
+358870 bytes read in 20 ms (17.1 MiB/s)
 Uncompressed size: 10534912 = 0xA0C000
-36162 bytes read in 4 ms (8.6 MiB/s)
-1078500 bytes read in 51 ms (20.2 MiB/s)
+36162 bytes read in 5 ms (6.9 MiB/s)
+1078500 bytes read in 50 ms (20.6 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1571,6 +1571,17 @@ a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
+a64_usbhost_initialize: Configure PWR_BAT (PL7) for Output
+a64_usbhost_initialize: Set PWR_BAT (PL7) to High
+a64_usbhost_initialize: Configure RESET_N (PC4) for Output
+a64_usbhost_initialize: Set RESET_N (PC4) to High
+a64_usbhost_initialize: Wait 30 ms for VBAT to be stable
+a64_usbhost_initialize: Configure PWRKEY (PB3) for Output
+a64_usbhost_initialize: Set PWRKEY (PB3) to Low
+a64_usbhost_initialize: Wait 500 ms
+a64_usbhost_initialize: Set PWRKEY (PB3) to High
+a64_usbhost_initialize: Configure W_DISABLE (PH8) for Output
+a64_usbhost_initialize: Set W_DISABLE (PH8) to High
 nsh: mkfatfs: command not found
 
 e
