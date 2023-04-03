@@ -1388,6 +1388,24 @@ __I/O Parameters Definition__
 | PI | Power Input
 | PO | Power Output
 
+TODO: LTE Modem UART and Power
+
+-   BB-TX: PD1-UART3_RX
+
+-   BB-RX: PD0-UART3_TX
+
+-   BB-CTS: PD5-UART4_CTS
+
+-   BB-RTS: PD4-UART4_RTS
+
+-   BB-DTR: PB2-DTR
+
+-   BB-AP-READY: PH7-AP-READY
+
+-   ALDO2 -> PL6-RI
+
+Depends on VDD_EXT and DCDC1
+
 # Testing CDC ACM
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
@@ -1500,10 +1518,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359316 bytes read in 20 ms (17.1 MiB/s)
+359328 bytes read in 21 ms (16.3 MiB/s)
 Uncompressed size: 10539008 = 0xA0D000
 36162 bytes read in 4 ms (8.6 MiB/s)
-1078500 bytes read in 50 ms (20.6 MiB/s)
+1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1593,8 +1611,11 @@ a64_usbhost_initialize: Configure W_DISABLE (PH8) for Output
 a64_usbhost_initialize: Set W_DISABLE (PH8) to High
 a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Green LED
+a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Red LED
+a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Blue LED
+a64_usbhost_initialize: Status=1
 nsh: mkfatfs: command not found
 
 e

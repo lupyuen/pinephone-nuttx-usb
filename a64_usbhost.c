@@ -434,18 +434,21 @@ int a64_usbhost_initialize(void)
   a64_pio_write(LED2, false);
   a64_pio_write(LED3, false);
   up_mdelay(2000);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   _info("Red LED");
   a64_pio_write(LED1, false);
   a64_pio_write(LED2, true);
   a64_pio_write(LED3, false);
   up_mdelay(2000);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   _info("Blue LED");
   a64_pio_write(LED1, false);
   a64_pio_write(LED2, false);
   a64_pio_write(LED3, true);
   up_mdelay(2000);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
 #ifdef NOTUSED
   /* LCD Backlight Enable connected on PH10 */
