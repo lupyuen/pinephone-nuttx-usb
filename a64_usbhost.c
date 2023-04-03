@@ -349,12 +349,8 @@ int a64_usbhost_initialize(void)
   ret = a64_pio_config(PWR_BAT);
   DEBUGASSERT(ret >= 0);
 
-  // _info("Set PWR_BAT (PL7) to High\n");
-  // a64_pio_write(PWR_BAT, true);
-  // _info("Status=%d\n", a64_pio_read(STATUS));
-
-  _info("Set PWR_BAT (PL7) to Low\n");
-  a64_pio_write(PWR_BAT, false);
+  _info("Set PWR_BAT (PL7) to High\n");
+  a64_pio_write(PWR_BAT, true);
   _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
