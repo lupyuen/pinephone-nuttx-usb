@@ -1303,7 +1303,7 @@ According to PinePhone Schematic Page 15...
 -   Ring Indicator: PL6-RI
 -   AP Ready: BB-AP-READY (AP_READY) -> PH7-AP-READY
 
-TODO: Set PL7 to High (or Low?) to Power On LTE Modem (4G-PWR-BAT)
+TODO: Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
 
 TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
@@ -1375,6 +1375,40 @@ __Main UART Interface__
 |----------|---------|-----|-------------|---------|------
 | RI | 62 | DO | Ring indicator | VOLmax = 0.45 V, VOHmin = 1.35 V | 1.8 V power domain. If unused, keep it open
 
+Power Supply
+Pin Name Pin No. I/O Description DC Characteristics Comment
+VBAT_BB 59, 60 PI
+Power supply for
+module’s baseband
+part
+Vmax = 4.3 V
+Vmin = 3.3 V
+Vnorm = 3.8 V
+It must be provided
+with sufficient current
+up to 0.8 A.
+VBAT_RF 57, 58 PI
+Power supply for
+module’s RF part
+Vmax = 4.3 V
+Vmin = 3.3 V
+It must be provided
+with sufficient current 
+ LTE Standard Module Series
+ EG25-G Hardware Design
+EG25-G_Hardware_Design 22 / 104
+Vnorm = 3.8 V up to 1.8 A in a burst
+transmission.
+VDD_EXT 7 PO
+Provide 1.8 V for
+external circuit
+Vnorm = 1.8 V
+IOmax = 50 mA
+Power supply for
+external GPIO’s pull up
+circuits.
+If unused, keep it open.
+
 __I/O Parameters Definition__
 
 | Type | Description
@@ -1406,6 +1440,14 @@ TODO: LTE Modem UART and Power
 
 -   ALDO2 -> PL6-RI
 
+TODO: Power
+
+-   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
+
+-   DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+
+-   VBAT: PL7
+
 References:
 
 -   [PinePhone Power Management](https://wiki.pine64.org/wiki/PinePhone_Power_Management)
@@ -1413,6 +1455,10 @@ References:
 -   [OSDev PinePhone](https://wiki.osdev.org/PinePhone)
 
 -   [Genode PinePhone Telephony](https://genodians.org/ssumpf/2022-05-09-telephony)
+
+"Currently STATUS pin is connected to PWRKEY and to PB3. STATUS can't be read reliably since voltage divider from R1526 and R1517 places the STATUS signal at 0V or 0.5\*Vcc-IO, which is unspecified input value according to A64 datasheet (Vih is 0.7\*Vcc-IO, Vil is 0.3\*Vcc-IO, the range in between is unspecified)." 
+
+[(Source)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Open_Questions_2)
 
 # Testing CDC ACM
 
