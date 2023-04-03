@@ -344,13 +344,19 @@ int a64_usbhost_initialize(void)
 
   #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
                    PIO_INT_NONE | PIO_OUTPUT_SET)
-  // #define PWR_BAT (P_OUTPUT | PIO_PORT_PIOL | PIO_PIN7)
-  // _info("Configure PWR_BAT (PL7) for Output\n");
-  // ret = a64_pio_config(PWR_BAT);
-  // DEBUGASSERT(ret >= 0);
+  #define PWR_BAT (P_OUTPUT | PIO_PORT_PIOL | PIO_PIN7)
+  _info("Configure PWR_BAT (PL7) for Output\n");
+  ret = a64_pio_config(PWR_BAT);
+  DEBUGASSERT(ret >= 0);
 
-  // _info("Set PWR_BAT (PL7) to High\n");
-  // a64_pio_write(PWR_BAT, true);
+  _info("Set PWR_BAT (PL7) to High\n");
+  a64_pio_write(PWR_BAT, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Wait 1000 ms
+
+  _info("Wait 1000 ms\n");
+  up_mdelay(1000);
   _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
