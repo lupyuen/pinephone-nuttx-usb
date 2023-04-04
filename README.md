@@ -1302,11 +1302,11 @@ _How to power up PinePhone's LTE Modem?_
 
 According to PinePhone Schematic Page 15, the LTE Modem is connected to...
 
--   DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+-   Power DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
 
--   VBAT: PL7 (4G-PWR-BAT) [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+-   Power VBAT: PL7 (4G-PWR-BAT) [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
 
--   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
+-   Power VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
 
 -   Reset: BB-RESET (RESET_N) -> PC4-RESET-4G
 
