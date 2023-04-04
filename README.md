@@ -1346,9 +1346,7 @@ The code looks like this...
 
 https://github.com/lupyuen/pinephone-nuttx-usb/blob/3ceaf44c23b85ec105a0d85cd377f4a55eff5ef5/a64_usbhost.c#L337-L421
 
-`pinephone_pmic_usb_init` is defined here...
-
-https://github.com/lupyuen2/wip-pinephone-nuttx/blob/0216f6968a82a73b67fb48a276b3c0550c47008a/boards/arm64/a64/pinephone/src/pinephone_pmic.c#L294-L340
+[(`pinephone_pmic_usb_init` is defined here)](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/0216f6968a82a73b67fb48a276b3c0550c47008a/boards/arm64/a64/pinephone/src/pinephone_pmic.c#L294-L340)
 
 TODO: Why does LTE Modem Status change from Low to High, then stay at High? [(See this)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/6fb84655b4ed19af7209817cc01b2a589798620a/README.md#output-log)
 
