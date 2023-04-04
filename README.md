@@ -1298,34 +1298,67 @@ But the USB Interrupt Handler is not triggered. Let's power on the LTE Modem...
 
 # Power On LTE Modem
 
-TODO: Power On LTE Modem
+_How to power up PinePhone's LTE Modem?_
 
-According to PinePhone Schematic Page 15...
+According to PinePhone Schematic Page 15, the LTE Modem is connected to...
+
+-   DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+
+-   VBAT: PL7 (4G-PWR-BAT) [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+
+-   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
 
 -   PMIC: 4G-BAT
--   Power: PL7-4G-PWR-BAT
+
 -   Reset: BB-RESET (RESET_N) -> PC4-RESET-4G
+
 -   Power Key: BB-PWRKEY (PWRKEY) -> PB3-PWRKEY-4G
+
 -   Disable: BB-DISABLE (W_DISABLE#) -> PH8-DISABLE-4G
+
 -   Status: PH9-STATUS
--   Ring Indicator: PL6-RI
+
+-   Ring Indicator: PMIC ALDO2  1.8V / PL6 (RI) [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
+
 -   AP Ready: BB-AP-READY (AP_READY) -> PH7-AP-READY
 
-TODO: Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
+(LTE Modem Pins are explained in the next section)
 
-TODO: Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
+So to power up PinePhone's LTE Modem, we need to...
 
-TODO: Wait 30 ms for VBAT to be stable
+1.  Program PMIC to output DCDC1 at 3.3V
 
-TODO: Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulled down at least 500 ms, then pulled up.
+1.  Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
 
-TODO: Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+1.  Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
 
-TODO: Read PH9 to check LTE Modem Status. Why does Status change from Low to High and stays at High?
+1.  Wait 30 ms for VBAT to be stable
 
-TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+1.  Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulled down at least 500 ms, then pulled up.
 
-TODO: Set PH7 to High or Low for Sleep State
+1.  Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+
+1.  Read PH9 to check LTE Modem Status
+
+1.  In Future: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+
+1.  In Future: Set PH7 to High or Low for Sleep State
+
+TODO: Why does LTE Modem Status change from Low to High, then stay at High?
+
+"Currently STATUS pin is connected to PWRKEY and to PB3. STATUS can't be read reliably since voltage divider from R1526 and R1517 places the STATUS signal at 0V or 0.5\*Vcc-IO, which is unspecified input value according to A64 datasheet (Vih is 0.7\*Vcc-IO, Vil is 0.3\*Vcc-IO, the range in between is unspecified)." 
+
+[(Source)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Open_Questions_2)
+
+References:
+
+-   [PinePhone Power Management](https://wiki.pine64.org/wiki/PinePhone_Power_Management)
+
+-   [OSDev PinePhone](https://wiki.osdev.org/PinePhone)
+
+-   [Genode PinePhone Telephony](https://genodians.org/ssumpf/2022-05-09-telephony)
+
+# LTE Modem Pins
 
 _What is the purpose of the above LTE Modem pins?_
 
@@ -1402,6 +1435,8 @@ __I/O Parameters Definition__
 | PI | Power Input
 | PO | Power Output
 
+# LTE Modem UART
+
 TODO: LTE Modem UART
 
 -   BB-TX: PD1-UART3_RX
@@ -1413,32 +1448,6 @@ TODO: LTE Modem UART
 -   BB-RTS: PD4-UART4_RTS
 
 -   BB-DTR: PB2-DTR
-
--   BB-AP-READY: PH7-AP-READY
-
-TODO: LTE Modem Power
-
--   DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
-
--   VBAT: PL7 [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
-
--   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
-
-TODO: Ring Indicator
-
--   ALDO2: PL6-RI / PMIC 1.8V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
-
-References:
-
--   [PinePhone Power Management](https://wiki.pine64.org/wiki/PinePhone_Power_Management)
-
--   [OSDev PinePhone](https://wiki.osdev.org/PinePhone)
-
--   [Genode PinePhone Telephony](https://genodians.org/ssumpf/2022-05-09-telephony)
-
-"Currently STATUS pin is connected to PWRKEY and to PB3. STATUS can't be read reliably since voltage divider from R1526 and R1517 places the STATUS signal at 0V or 0.5\*Vcc-IO, which is unspecified input value according to A64 datasheet (Vih is 0.7\*Vcc-IO, Vil is 0.3\*Vcc-IO, the range in between is unspecified)." 
-
-[(Source)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Open_Questions_2)
 
 # Testing CDC ACM
 
