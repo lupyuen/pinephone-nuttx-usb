@@ -1308,8 +1308,6 @@ According to PinePhone Schematic Page 15, the LTE Modem is connected to...
 
 -   VDD_EXT: From LTE Modem (EG25-G HW Guide Page 22)
 
--   PMIC: 4G-BAT
-
 -   Reset: BB-RESET (RESET_N) -> PC4-RESET-4G
 
 -   Power Key: BB-PWRKEY (PWRKEY) -> PB3-PWRKEY-4G
