@@ -1552,9 +1552,9 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359715 bytes read in 20 ms (17.2 MiB/s)
+359825 bytes read in 21 ms (16.3 MiB/s)
 Uncompressed size: 10539008 = 0xA0D000
-36162 bytes read in 4 ms (8.6 MiB/s)
+36162 bytes read in 5 ms (6.9 MiB/s)
 1078500 bytes read in 50 ms (20.6 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
@@ -1641,6 +1641,15 @@ a64_ehci_initialize: TODO: a64_usbhost_vbusdrive
 a64_printreg: 01c1b054->00001000
 EHCI USB EHCI Initialized
 a64_usbhost_initialize: 1
+a64_usbhost_initialize: Status=0
+pinephone_pmic_usb_init: Set DCDC1 Voltage to 3.3V
+pmic_write: reg=0x20, val=0x11
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x20, value=0x11
+pmic_clrsetbits: reg=0x10, clr_mask=0x0, set_mask=0x1
+a64_rsb_read: rt_addr=0x2d, reg_addr=0x10
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x10, value=0x37
+a64_usbhost_initialize: Status=0
+a64_usbhost_initialize: Wait 1000 ms
 a64_usbhost_initialize: Status=0
 a64_usbhost_initialize: Configure PWR_BAT (PL7) for Output
 a64_usbhost_initialize: Set PWR_BAT (PL7) to High

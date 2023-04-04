@@ -340,6 +340,17 @@ int a64_usbhost_initialize(void)
   DEBUGASSERT(ret == OK);
   _info("Status=%d\n", a64_pio_read(STATUS));
 
+  // Power on DCDC1
+  int pinephone_pmic_usb_init(void);
+  ret = pinephone_pmic_usb_init();
+  DEBUGASSERT(ret == OK);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Wait 1000 ms
+  _info("Wait 1000 ms\n");
+  up_mdelay(1000);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
   // Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
 
   #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
@@ -354,7 +365,6 @@ int a64_usbhost_initialize(void)
   _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Wait 1000 ms
-
   _info("Wait 1000 ms\n");
   up_mdelay(1000);
   _info("Status=%d\n", a64_pio_read(STATUS));
@@ -371,7 +381,6 @@ int a64_usbhost_initialize(void)
   _info("Status=%d\n", a64_pio_read(STATUS));
 
   // Wait 30 ms for VBAT to be stable
-
   _info("Wait 30 ms for VBAT to be stable\n");
   up_mdelay(30);
   _info("Status=%d\n", a64_pio_read(STATUS));
