@@ -1552,10 +1552,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359328 bytes read in 21 ms (16.3 MiB/s)
+359715 bytes read in 20 ms (17.2 MiB/s)
 Uncompressed size: 10539008 = 0xA0D000
 36162 bytes read in 4 ms (8.6 MiB/s)
-1078500 bytes read in 51 ms (20.2 MiB/s)
+1078500 bytes read in 50 ms (20.6 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1563,6 +1563,24 @@ Uncompressed size: 10539008 = 0xA0D000
 
 Starting kernel ...
 
+pinephone_pmic_init: Set DLDO1 Voltage to 3.3V
+pmic_write: reg=0x15, val=0x1a
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x15, value=0x1a
+pmic_clrsetbits: reg=0x12, clr_mask=0x0, set_mask=0x8
+a64_rsb_read: rt_addr=0x2d, reg_addr=0x12
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x12, value=0xd9
+pinephone_pmic_init: Set LDO Voltage to 3.3V
+pmic_write: reg=0x91, val=0x1a
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x91, value=0x1a
+pinephone_pmic_init: Enable LDO mode on GPIO0
+pmic_write: reg=0x90, val=0x3
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x90, value=0x3
+pinephone_pmic_init: Set DLDO2 Voltage to 1.8V
+pmic_write: reg=0x16, val=0xb
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x16, value=0xb
+pmic_clrsetbits: reg=0x12, clr_mask=0x0, set_mask=0x10
+a64_rsb_read: rt_addr=0x2d, reg_addr=0x12
+a64_rsb_write: rt_addr=0x2d, reg_addr=0x12, value=0xd9
 a64_usbhost_clk_enable: CLK_USB_PHY0
 set_bit: 0x1c200cc Bit 8
 a64_usbhost_clk_enable: CLK_USB_PHY1
