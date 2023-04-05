@@ -1370,6 +1370,8 @@ References:
 
 # LTE Modem Pins
 
+![LTE Modem inside PinePhone](https://lupyuen.github.io/images/lte-title.jpg)
+
 _What's the purpose of the above LTE Modem pins?_
 
 From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
