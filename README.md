@@ -8,6 +8,8 @@ Read the articles...
 
 -   ["NuttX RTOS for PinePhone: Exploring USB"](https://lupyuen.github.io/articles/usb2)
 
+-   ["NuttX RTOS for PinePhone: 4G LTE Modem"](https://lupyuen.github.io/articles/lte)
+
 We're porting the [NXP i.MX RT EHCI USB Driver](https://github.com/apache/nuttx/blob/master/arch/arm/src/imxrt/imxrt_ehci.c#L4970) from Apache NuttX RTOS to PinePhone and Allwinner A64...
 
 -   ["Enhanced Host Controller Interface for USB"](https://lupyuen.github.io/articles/usb2#appendix-enhanced-host-controller-interface-for-usb)
