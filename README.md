@@ -1322,6 +1322,8 @@ According to PinePhone Schematic Page 15, the LTE Modem is connected to...
 
 (LTE Modem Pins are explained in the next section)
 
+![LTE Modem inside PinePhone](https://lupyuen.github.io/images/lte-title.jpg)
+
 So to power up PinePhone's LTE Modem, we need to...
 
 1.  Program PMIC to output DCDC1 at 3.3V
@@ -1366,7 +1368,7 @@ References:
 
 # LTE Modem Pins
 
-_What is the purpose of the above LTE Modem pins?_
+_What's the purpose of the above LTE Modem pins?_
 
 From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
 
