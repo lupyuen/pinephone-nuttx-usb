@@ -380,11 +380,6 @@ int a64_usbhost_initialize(void)
   a64_pio_write(RESET_N, true);
   _info("Status=%d\n", a64_pio_read(STATUS));
 
-  // Wait 30 ms for VBAT to be stable
-  _info("Wait 30 ms for VBAT to be stable\n");
-  up_mdelay(30);
-  _info("Status=%d\n", a64_pio_read(STATUS));
-
   // Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY).
   // PWRKEY should be pulled down at least 500 ms, then pulled up.
 
@@ -392,6 +387,15 @@ int a64_usbhost_initialize(void)
   _info("Configure PWRKEY (PB3) for Output\n");
   ret = a64_pio_config(PWRKEY);
   DEBUGASSERT(ret >= 0);
+
+  _info("Set PWRKEY (PB3) to High\n");
+  a64_pio_write(PWRKEY, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Wait 30 ms for VBAT to be stable
+  _info("Wait 30 ms for VBAT to be stable\n");
+  up_mdelay(30);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
   _info("Set PWRKEY (PB3) to Low\n");
   a64_pio_write(PWRKEY, false);
