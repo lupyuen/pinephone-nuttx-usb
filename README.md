@@ -1573,10 +1573,10 @@ Found U-Boot script /boot.scr
 653 bytes read in 3 ms (211.9 KiB/s)
 ## Executing script at 4fc00000
 gpio: pin 114 (gpio 114) value is 1
-359825 bytes read in 21 ms (16.3 MiB/s)
+359853 bytes read in 21 ms (16.3 MiB/s)
 Uncompressed size: 10539008 = 0xA0D000
 36162 bytes read in 5 ms (6.9 MiB/s)
-1078500 bytes read in 50 ms (20.6 MiB/s)
+1078500 bytes read in 51 ms (20.2 MiB/s)
 ## Flattened Device Tree blob at 4fa00000
    Booting using the fdt blob at 0x4fa00000
    Loading Ramdisk to 49ef8000, end 49fff4e4 ... OK
@@ -1680,9 +1680,11 @@ a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Configure RESET_N (PC4) for Output
 a64_usbhost_initialize: Set RESET_N (PC4) to High
 a64_usbhost_initialize: Status=1
+a64_usbhost_initialize: Configure PWRKEY (PB3) for Output
+a64_usbhost_initialize: Set PWRKEY (PB3) to High
+a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Wait 30 ms for VBAT to be stable
 a64_usbhost_initialize: Status=1
-a64_usbhost_initialize: Configure PWRKEY (PB3) for Output
 a64_usbhost_initialize: Set PWRKEY (PB3) to Low
 a64_usbhost_initialize: Status=1
 a64_usbhost_initialize: Wait 500 ms
@@ -1706,7 +1708,7 @@ cNuttShell (NSH) NuttX-12.0.3
 i
 _nsh>waiter: ehci_waiter:  Running
 a64_wait: Wait for connect / disconnect
-
+ 
 nsh> ls
 _assert: Current Version: NuttX  12.0.3 4d922be-dirty Mar  7 2023 15:54:47 arm64
 _assert: Assertion failed : at file: mm_heap/mm_malloc.c:200 task: nsh_main 0x4008b230
