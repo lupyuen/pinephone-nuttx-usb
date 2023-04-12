@@ -1302,6 +1302,10 @@ But the USB Interrupt Handler is not triggered. Let's power on the LTE Modem...
 
 _How to power up PinePhone's LTE Modem?_
 
+Read the article...
+
+-   ["NuttX RTOS for PinePhone: 4G LTE Modem"](https://lupyuen.github.io/articles/lte)
+
 According to PinePhone Schematic Page 15, the LTE Modem is connected to...
 
 -   Power DCDC1: From PMIC, 3.3V [(See this)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Current_Assignments)
@@ -1373,6 +1377,10 @@ References:
 ![LTE Modem inside PinePhone](https://lupyuen.github.io/images/lte-title.jpg)
 
 _What's the purpose of the above LTE Modem pins?_
+
+Read the article...
+
+-   ["NuttX RTOS for PinePhone: 4G LTE Modem"](https://lupyuen.github.io/articles/lte)
 
 From [Quectel EG25-G Hardware Design Guide](https://wiki.pine64.org/images/2/20/Quectel_EG25-G_Hardware_Design_V1.4.pdf)...
 
