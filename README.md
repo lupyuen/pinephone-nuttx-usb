@@ -1455,7 +1455,7 @@ __I/O Parameters Definition__
 | PI | Power Input
 | PO | Power Output
 
-# LTE Modem UART
+# Test LTE Modem over UART
 
 TODO: LTE Modem UART
 
