@@ -1455,19 +1455,37 @@ __I/O Parameters Definition__
 | PI | Power Input
 | PO | Power Output
 
+![PinePhone Schematic (Page 15)](https://lupyuen.github.io/images/lte-vddext.png)
+
+[_PinePhone Schematic (Page 15)_](https://files.pine64.org/doc/PinePhone/PinePhone%20v1.2b%20Released%20Schematic.pdf)
+
+[(__TXB0104__ is a Voltage Translator)](https://www.ti.com/lit/ds/symlink/txb0104.pdf)
+
 # Test LTE Modem over UART
 
-TODO: LTE Modem UART
+The LTE Modem to connected to PinePhone (Allwinner A64) at these UART Ports (pic above)...
 
--   BB-TX: PD1-UART3_RX
+-   __A64 Port UART3__: RX and TX
 
--   BB-RX: PD0-UART3_TX
+-   __A64 Port UART4__: CTS and RTS
 
--   BB-CTS: PD5-UART4_CTS
+-   __A64 Port PB2__: DTR
 
--   BB-RTS: PD4-UART4_RTS
+    (Default 115.2 kbps, up to 921.6 kbps)
 
--   BB-DTR: PB2-DTR
+Thus we may __check UART3__ to see if the LTE Modem responds to [__AT Commands__](https://lupyuen.github.io/articles/lte#quectel-eg25-g-lte-modem).
+
+[(After 12 seconds from power up)](https://lupyuen.github.io/articles/lte#power-on-lte-modem)
+
+(Do we need UART4 and PB2?)
+
+_UART3 works with NuttX?_
+
+We need to fix the PinePhone UART Driver [__configure the UART Port__](https://github.com/apache/nuttx/blob/master/arch/arm64/src/a64/a64_serial.c#L160-L180).
+
+We'll copy from the NuttX UART Driver for Allwinner A1X: [__a1x_serial.c__](https://github.com/apache/nuttx/blob/master/arch/arm/src/a1x/a1x_serial.c#L695-L987)
+
+TODO
 
 # Testing CDC ACM
 
