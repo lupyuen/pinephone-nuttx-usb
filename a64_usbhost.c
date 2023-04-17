@@ -463,29 +463,6 @@ int a64_usbhost_initialize(void)
   up_mdelay(2000);
   _info("Status=%d\n", a64_pio_read(STATUS));
 
-#ifdef NOTUSED
-  /* LCD Backlight Enable connected on PH10 */
-
-  #define LCD_BL_EN (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
-                    PIO_INT_NONE | PIO_OUTPUT_SET | PIO_PORT_PIOH | \
-                    PIO_PIN10)
-
-  /* Configure PH10 for Output */
-
-  ginfo("Configure PH10 for Output\n");
-  ret = a64_pio_config(LCD_BL_EN);
-  if (ret < 0)
-    {
-      gerr("Configure PH10 failed: %d\n", ret);
-      return ret;
-    }
-
-  /* Set PH10 to High */
-
-  ginfo("Set PH10 to High\n");
-  a64_pio_write(LCD_BL_EN, true);
-#endif // NOTUSED
-
   return OK;
 }
 
