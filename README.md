@@ -1487,7 +1487,7 @@ We'll copy from the NuttX UART Driver for Allwinner A1X: [__a1x_serial.c__](http
 
 TODO
 
-# Testing CDC ACM
+# Test CDC ACM over USB
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
 
