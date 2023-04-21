@@ -1364,6 +1364,19 @@ Is it because of this...
 
 [(Source)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Open_Questions_2)
 
+TODO: What does this mean in the PinePhone Device Tree? Is there something we need to power up in PMIC?
+
+```text
+	usb0-vbus {
+		compatible = "regulator-fixed";
+		regulator-name = "usb0-vbus";
+		regulator-min-microvolt = <0x4c4b40>;
+		regulator-max-microvolt = <0x4c4b40>;
+		vin-supply = <0x68>;
+		phandle = <0x46>;
+	};
+```
+
 References:
 
 -   [PinePhone Power Management](https://wiki.pine64.org/wiki/PinePhone_Power_Management)
@@ -1488,6 +1501,8 @@ We'll copy from the NuttX UART Driver for Allwinner A1X: [__a1x_serial.c__](http
 Like this...
 
 -   ["Configure UART Port"](https://github.com/lupyuen/pinephone-nuttx#configure-uart-port)
+
+-   ["Test UART3 Port"](https://github.com/lupyuen/pinephone-nuttx#test-uart3-port)
 
 TODO: Outcome of UART3 testing
 
