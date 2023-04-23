@@ -1326,55 +1326,158 @@ According to PinePhone Schematic Page 15, the LTE Modem is connected to...
 
 -   AP Ready: BB-AP-READY (AP_READY) -> PH7-AP-READY
 
+Note: RESET_N and PWRKEY are [High-Low Inverted](https://lupyuen.github.io/articles/lte#power-on--off) when accessed through PinePhone’s GPIO Pins.
+
 (LTE Modem Pins are explained in the next section)
 
 ![LTE Modem inside PinePhone](https://lupyuen.github.io/images/lte-title.jpg)
 
 So to power up PinePhone's LTE Modem, we need to...
 
-1.  Program PMIC to output DCDC1 at 3.3V
+1.  Program PinePhone's [__Power Management Integrated Circuit (PMIC)__](https://lupyuen.github.io/articles/de#appendix-power-management-integrated-circuit) to supply __3.3 V on DCDC1__ [(Like this)](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/0216f6968a82a73b67fb48a276b3c0550c47008a/boards/arm64/a64/pinephone/src/pinephone_pmic.c#L294-L340)
 
-1.  Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
+    We skip this because __DCDC1 is already powered on__.
 
-1.  Set PC4 to High to Deassert LTE Modem Reset (BB-RESET / RESET_N)
+1.  Set __PL7 to High__ to power on the RF Transceiver and Baseband Processor
 
-1.  Wait 30 ms for VBAT to be stable
+1.  Set __PC4 to Low__ to deassert LTE Modem Reset
 
-1.  Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY). PWRKEY should be pulled down at least 500 ms, then pulled up.
+1.  Set __PH7 (AP-READY) to Low__ to wake up the modem
 
-1.  Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+1.  Set __PB2 (DTR) to Low__ to wake up the modem
 
-1.  Read PH9 to check LTE Modem Status
+1.  __Wait 30 milliseconds__ for VBAT Power Supply to be stable
 
-1.  In Future: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+1.  Toggle __PB3 (Power Key)__ to start the LTE Modem, like this:
 
-1.  In Future: Set PH7 to High or Low for Sleep State
+    Set __PB3 to High__...
 
-The code looks like this...
+    And wait __600 milliseconds__...
+    
+    Then set __PB3 to Low__.
 
-https://github.com/lupyuen/pinephone-nuttx-usb/blob/3ceaf44c23b85ec105a0d85cd377f4a55eff5ef5/a64_usbhost.c#L337-L421
+1.  Set __PH8 to High__ to disable Airplane Mode
 
-[(`pinephone_pmic_usb_init` is defined here)](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/0216f6968a82a73b67fb48a276b3c0550c47008a/boards/arm64/a64/pinephone/src/pinephone_pmic.c#L294-L340)
+1.  __Read PH9__ to check the LTE Modem Status:
 
-TODO: Why does LTE Modem Status change from Low to High, then stay at High? [(See this)](https://github.com/lupyuen/pinephone-nuttx-usb/blob/6fb84655b4ed19af7209817cc01b2a589798620a/README.md#output-log)
+    PH9 goes from __High to Low__ when the LTE Modem is ready, in 2.5 seconds.
 
-Is it because of this...
+1.  __UART and USB Interfaces__ will be operational in 13 seconds
 
-> "Currently STATUS pin is connected to PWRKEY and to PB3. STATUS can't be read reliably since voltage divider from R1526 and R1517 places the STATUS signal at 0V or 0.5\*Vcc-IO, which is unspecified input value according to A64 datasheet (Vih is 0.7\*Vcc-IO, Vil is 0.3\*Vcc-IO, the range in between is unspecified)." 
+The code looks like this: [pinephone_bringup.c](https://github.com/lupyuen2/wip-pinephone-nuttx/blob/bb1ef61d6dbb5309a1e92583caaf81513308320a/boards/arm64/a64/pinephone/src/pinephone_bringup.c#L226-L356)
 
-[(Source)](https://wiki.pine64.org/wiki/PinePhone_Power_Management#Open_Questions_2)
+```c
+// Init PinePhone LTE Modem
+int pinephone_modem_init(void)
+{
+  int ret;
 
-TODO: What does this mean in the PinePhone Device Tree? Is there something we need to power up in PMIC?
+  // Read PH9 to check LTE Modem Status
+  #define STATUS (PIO_INPUT | PIO_PORT_PIOH | PIO_PIN9)
+  _info("Configure STATUS (PH9) for Input\n");
+  ret = a64_pio_config(STATUS);
+  DEBUGASSERT(ret == OK);
+  _info("Status=%d\n", a64_pio_read(STATUS));
 
-```text
-	usb0-vbus {
-		compatible = "regulator-fixed";
-		regulator-name = "usb0-vbus";
-		regulator-min-microvolt = <0x4c4b40>;
-		regulator-max-microvolt = <0x4c4b40>;
-		vin-supply = <0x68>;
-		phandle = <0x46>;
-	};
+  // Set PL7 to High to Power On LTE Modem (4G-PWR-BAT)
+
+  #define P_OUTPUT (PIO_OUTPUT | PIO_PULL_NONE | PIO_DRIVE_MEDLOW | \
+                   PIO_INT_NONE | PIO_OUTPUT_SET)
+  #define PWR_BAT (P_OUTPUT | PIO_PORT_PIOL | PIO_PIN7)
+  _info("Configure PWR_BAT (PL7) for Output\n");
+  ret = a64_pio_config(PWR_BAT);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set PWR_BAT (PL7) to High\n");
+  a64_pio_write(PWR_BAT, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Set PC4 to Low to Deassert LTE Modem Reset (BB-RESET / RESET_N)
+
+  #define RESET_N (P_OUTPUT | PIO_PORT_PIOC | PIO_PIN4)
+  _info("Configure RESET_N (PC4) for Output\n");
+  ret = a64_pio_config(RESET_N);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set RESET_N (PC4) to Low\n");
+  a64_pio_write(RESET_N, false);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Set AP-READY (PH7) to Low to wake up modem
+
+  #define AP_READY (P_OUTPUT | PIO_PORT_PIOH | PIO_PIN7)
+  _info("Configure AP-READY (PH7) for Output\n");
+  ret = a64_pio_config(AP_READY);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set AP-READY (PH7) to Low to wake up modem\n");
+  a64_pio_write(AP_READY, false);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Set DTR (PB2) to Low to wake up modem
+
+  #define DTR (P_OUTPUT | PIO_PORT_PIOB | PIO_PIN2)
+  _info("Configure DTR (PB2) for Output\n");
+  ret = a64_pio_config(DTR);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set DTR (PB2) to Low to wake up modem\n");
+  a64_pio_write(DTR, false);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  _info("Wait 30 ms\n");
+  up_mdelay(30);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Set PB3 to Power On LTE Modem (BB-PWRKEY / PWRKEY).
+  // PWRKEY should be pulled down at least 500 ms, then pulled up.
+
+  #define PWRKEY (P_OUTPUT | PIO_PORT_PIOB | PIO_PIN3)
+  _info("Configure PWRKEY (PB3) for Output\n");
+  ret = a64_pio_config(PWRKEY);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set PWRKEY (PB3) to High\n");
+  a64_pio_write(PWRKEY, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  _info("Wait 600 ms\n");
+  up_mdelay(600);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  _info("Set PWRKEY (PB3) to Low\n");
+  a64_pio_write(PWRKEY, false);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Set PH8 to High to Enable LTE Modem and Disable Airplane Mode (BB-DISABLE / W_DISABLE#)
+
+  #define W_DISABLE (P_OUTPUT | PIO_PORT_PIOH | PIO_PIN8)
+  _info("Configure W_DISABLE (PH8) for Output\n");
+  ret = a64_pio_config(W_DISABLE);
+  DEBUGASSERT(ret >= 0);
+
+  _info("Set W_DISABLE (PH8) to High\n");
+  a64_pio_write(W_DISABLE, true);
+  _info("Status=%d\n", a64_pio_read(STATUS));
+
+  // Poll for Modem Status until it becomes Low
+  for (int i = 0; i < 30; i++)  // Max 1 minute
+    {
+      // Read the Modem Status
+      uint32_t status = a64_pio_read(STATUS);
+      _info("Status=%d\n", status);
+
+      // Stop if Modem Status is Low
+      if (status == 0) { break; }
+
+      // Wait 2 seconds
+      up_mdelay(2000);
+    }
+
+  // TODO: Read PL6 to handle Ring Indicator / [Unsolicited Result Code](https://embeddedfreak.wordpress.com/2008/08/19/handling-urc-unsolicited-result-code-in-hayes-at-command/)
+
+  return OK;
+}
 ```
 
 References:
@@ -1415,6 +1518,8 @@ __Power-on/off__
 -   "The RESET_N pin can be used to reset the module. The module can be reset by driving RESET_N to a low level voltage for 150–460 ms"
 
     (EG25-G HW Guide, Page 42)
+
+-   Note: RESET_N and PWRKEY are [High-Low Inverted](https://lupyuen.github.io/articles/lte#power-on--off) when accessed through PinePhone’s GPIO Pins.
 
 __Other Interface Pins__
 
@@ -1488,23 +1593,9 @@ The LTE Modem to connected to PinePhone (Allwinner A64) at these UART Ports (pic
 
 Thus we may __check UART3__ to see if the LTE Modem responds to [__AT Commands__](https://lupyuen.github.io/articles/lte#quectel-eg25-g-lte-modem).
 
-[(After 12 seconds from power up)](https://lupyuen.github.io/articles/lte#power-on-lte-modem)
+LTE Modem works OK with UART3 on NuttX yay! See the test log here...
 
-(Do we need UART4 and PB2?)
-
-_UART3 works with NuttX?_
-
-We need to fix the PinePhone UART Driver [__configure the UART Port__](https://github.com/apache/nuttx/blob/master/arch/arm64/src/a64/a64_serial.c#L160-L180).
-
-We'll copy from the NuttX UART Driver for Allwinner A1X: [__a1x_serial.c__](https://github.com/apache/nuttx/blob/master/arch/arm/src/a1x/a1x_serial.c#L695-L987)
-
-Like this...
-
--   ["Configure UART Port"](https://github.com/lupyuen/pinephone-nuttx#configure-uart-port)
-
--   ["Test UART3 Port"](https://github.com/lupyuen/pinephone-nuttx#test-uart3-port)
-
-TODO: Outcome of UART3 testing
+-   ["Test UART with NuttX"](https://lupyuen.github.io/articles/lte#test-uart-with-nuttx)
 
 # Test CDC ACM over USB
 
