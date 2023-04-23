@@ -1597,6 +1597,8 @@ LTE Modem works OK with UART3 on NuttX yay! See the test log here...
 
 -   ["Test UART with NuttX"](https://lupyuen.github.io/articles/lte#test-uart-with-nuttx)
 
+TODO: Test LTE Modem with USB. Does the USB Enumeration work?
+
 # Test CDC ACM over USB
 
 We're now testing USB CDC ACM on PinePhone, to see if NuttX can enumerate USB Devices correctly.
