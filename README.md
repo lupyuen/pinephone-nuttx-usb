@@ -1597,6 +1597,30 @@ LTE Modem works OK with UART3 on NuttX yay! See the test log here...
 
 -   ["Test UART with NuttX"](https://lupyuen.github.io/articles/lte#test-uart-with-nuttx)
 
+__Note:__ Modem UART flow control is broken
+
+> "Not resolved in v1.2 -- assumption is that USB will be used for high-bandwidth modem I/O.
+
+> BB-TX and BB-RX are connected to UART3 (PD0/PD1). BB-RTS and BB-CTS are connected to UART4 (PD4/PD5). To use hardware flow control, TX/RX would need to be connected to UART4, swapping PD0/PD1 with the motor control and rear camera reset GPIOs at PD2/PD3. This would need a device tree change.
+
+> Hardware flow control can be disabled with the AT+IFC command, and USB can also be used for commands instead of the UART. So the impact of this problem is unclear."
+
+[(Source)](https://wiki.pine64.org/wiki/PinePhone_v1.1_-_Braveheart#Modem_UART_flow_control_is_broken)
+
+__Note:__ Modem PWR_KEY signal resistor population
+
+> "Resolved in v1.2 by separating the modem PWRKEY (PB3) and STATUS (PH9) signals.
+
+> On the dev phone (1.0) this signal was connected to PB3. This allows for turning on/off the modem via GPIO from a kernel driver. If proper power down is to be implemented in the kernel for the modem, to allow safe shutdown of the modem before turning off the 4g-pwr-bat, kernel has to be able to signal to the modem to shut down and wait 30s. This is not possible on braveheart. Without this signal, kernel can't do anything to shut down the modem, and would have to rely on userspace to properly manage the modem power up/down sequence. Relying on userspace risks users shutting down the modem without proper wait time of 30s, risking modem damage (flash data corruption).
+
+> It would be nice to also have access to the STATUS signal from the modem, so that the driver can detect whether the modem is on or off (userspace might have turned modem off already via AT commands). Given that PWR_KEY pulse will either turn the modem on or off, based on the current status, it's necessary to know the current status before sending the pulse.
+
+> There's a STATUS signal routed to PWR_KEY on BraveHeart, that keeps the PWRKEY deasserted when the modem is on and it's not possible to pull it up from PB3, even if R1516 would be optionally mounted.
+
+> So after powerup you can't change PWR_KEY signal anymore from PB3 even if R1516 is mounted, and it's not possible to turn off the modem via PB3."
+
+[(Source)](https://wiki.pine64.org/wiki/PinePhone_v1.1_-_Braveheart#Modem_PWR_KEY_signal_resistor_population)
+
 TODO: Test LTE Modem with USB. Does the USB Enumeration work?
 
 # Test CDC ACM over USB
